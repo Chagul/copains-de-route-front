@@ -21,7 +21,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Buttom Navigation Bar',
       home: Scaffold(
         body: const [
           HomePage(),
