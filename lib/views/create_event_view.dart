@@ -15,7 +15,6 @@ class CreateEventView extends StatefulWidget {
 class _CreateEventViewState extends State<CreateEventView> {
   TextEditingController eventDateInput = TextEditingController();
   TimeOfDay? eventTime = TimeOfDay.now();
-  String timeFormatted = "";
 
   @override
   Widget build(BuildContext context) {
