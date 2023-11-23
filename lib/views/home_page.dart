@@ -2,6 +2,7 @@ import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/views/home_page_list.dart';
 import 'package:copains_de_route/views/home_page_map.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,11 +12,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  
   int selectedPageIndex = 0;
 
-  void _changeView() {
-    if(selectedPageIndex == 0){
+  void _changeView() async {
+    if (selectedPageIndex == 0) {
       setState(() {
         selectedPageIndex = 1;
       });
@@ -25,15 +25,15 @@ class _HomePageState extends State<HomePage> {
       });
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CustomColorScheme.customBackground,
       body: [
-          HomePageList(changeView: _changeView),
-          HomePageMap(changeView: _changeView)
-        ][selectedPageIndex],
+        HomePageList(changeView: _changeView),
+        HomePageMap(changeView: _changeView)
+      ][selectedPageIndex],
     );
   }
 }

@@ -4,8 +4,11 @@ import 'package:copains_de_route/views/home_page.dart';
 import 'package:copains_de_route/views/my_itinerary_page.dart';
 import 'package:copains_de_route/views/profil_page.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Permission.location.request();
   runApp(const MyApp());
 }
 
@@ -31,7 +34,7 @@ class _MyAppState extends State<MyApp> {
         bottomNavigationBar: NavigationBar(
           indicatorColor: CustomColorScheme.customSecondaryColor,
           backgroundColor: CustomColorScheme.customBackground,
-        selectedIndex: selectedPageIndex,
+          selectedIndex: selectedPageIndex,
           onDestinationSelected: (int index) {
             setState(() {
               selectedPageIndex = index;
@@ -39,20 +42,25 @@ class _MyAppState extends State<MyApp> {
           },
           destinations: const <NavigationDestination>[
             NavigationDestination(
-              icon: Icon(Icons.home, color: CustomColorScheme.customPrimaryColor),
+              icon:
+                  Icon(Icons.home, color: CustomColorScheme.customPrimaryColor),
               label: 'Accueil',
             ),
             NavigationDestination(
-              icon: ImageIcon(AssetImage('assets/icon_my_itinerary.png'), color: CustomColorScheme.customPrimaryColor),
+              icon: ImageIcon(AssetImage('assets/icon_my_itinerary.png'),
+                  color: CustomColorScheme.customPrimaryColor),
               label: 'Mes itinéraires',
             ),
             NavigationDestination(
-              icon: Icon(Icons.pin_drop,color: CustomColorScheme.customPrimaryColor),
+              icon: Icon(Icons.pin_drop,
+                  color: CustomColorScheme.customPrimaryColor),
               label: 'Créer',
             ),
             NavigationDestination(
-              selectedIcon: Icon(Icons.person, color: CustomColorScheme.customPrimaryColor),
-              icon: Icon(Icons.person,  color: CustomColorScheme.customPrimaryColor),
+              selectedIcon: Icon(Icons.person,
+                  color: CustomColorScheme.customPrimaryColor),
+              icon: Icon(Icons.person,
+                  color: CustomColorScheme.customPrimaryColor),
               label: 'Profil',
             ),
           ],
