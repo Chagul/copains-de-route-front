@@ -15,6 +15,18 @@ class CreateEventView extends StatefulWidget {
 class _CreateEventViewState extends State<CreateEventView> {
   TextEditingController eventDateInput = TextEditingController();
   TimeOfDay? eventTime = TimeOfDay.now();
+  bool isDirtChecked = false;
+  bool isRoadChecked = false;
+  bool isGravelChecked = false;
+  bool isCyclePathChecked = false;
+  bool isPavingStonesChecked = false;
+  bool isOthersChecked = false;
+  bool isPublic = false;
+  bool isPrivate = false;
+  bool isBikeCity = false;
+  bool isBikeAllTerrain = false;
+  bool isBikeGravel = false;
+  bool isBikeBMX = false;
 
   @override
   Widget build(BuildContext context) {
@@ -45,21 +57,29 @@ class _CreateEventViewState extends State<CreateEventView> {
                       color: Colors.black,
                     ),
                     _buildCategoryTitle("Type de route"),
-                    const Column(
-                      children: [
-                        // checkbox makes it a stateful widget https://api.flutter.dev/flutter/material/Checkbox-class.html
-                        // checkbox makes it a stateful widget https://api.flutter.dev/flutter/material/Checkbox-class.html
-                      ],
-                    ),
+                    Row(children: [
+                      Column(children: [
+                        _buildCheckbox("Terre", isDirtChecked, 0, 0),
+                        _buildCheckbox("Gravier", isGravelChecked, 0, 0),
+                        _buildCheckbox("Pavés", isPavingStonesChecked, 0, 0)
+                      ]),
+                      Column(children: [
+                        _buildCheckbox("Route", isRoadChecked, 0, 0),
+                        _buildCheckbox(
+                            "Piste cyclable", isCyclePathChecked, 0, 0),
+                        _buildCheckbox("Autres", isOthersChecked, 0, 0)
+                      ])
+                    ]),
                     const Divider(
                       indent: 100,
                       endIndent: 100,
                       color: Colors.black,
                     ),
                     _buildCategoryTitle("Visibilité"),
-                    const Column(
+                    Row(
                       children: [
-                        // checkbox makes it a stateful widget https://api.flutter.dev/flutter/material/Checkbox-class.html
+                        _buildCheckbox("Public", isPublic, 0, 0),
+                        _buildCheckbox("Privé", isPrivate, 0, 0),
                       ],
                     ),
                     const Divider(
@@ -68,9 +88,17 @@ class _CreateEventViewState extends State<CreateEventView> {
                       color: Colors.black,
                     ),
                     _buildCategoryTitle("Type de vélo"),
-                    const Column(
+                    Row(
                       children: [
-                        // checkbox makes it a stateful widget https://api.flutter.dev/flutter/material/Checkbox-class.html
+                        Column(children: [
+                          _buildCheckbox("Ville", isBikeCity, 0, 0),
+                          _buildCheckbox("Gravel", isBikeGravel, 0, 0),
+                        ]),
+                        Column(children: [
+                          _buildCheckbox("BMX", isBikeBMX, 0, 0),
+                          _buildCheckbox(
+                              "Tout terrains", isBikeAllTerrain, 0, 0),
+                        ])
                       ],
                     ),
                   ],
@@ -212,9 +240,38 @@ class _CreateEventViewState extends State<CreateEventView> {
     ]);
   }
 
+  Widget _buildCheckbox(String name, bool value, int height, int width) {
+    return Row(
+      children: [
+        Text(name, style: const TextStyle(color: Colors.black)),
+        Checkbox(
+            value: value,
+            checkColor: Colors.red,
+            fillColor: MaterialStateProperty.resolveWith(getCheckboxColor),
+            onChanged: (bool? change) {
+              setState(() {
+                value = change!;
+              });
+            }),
+      ],
+    );
+  }
+
   String formatTimeOfDay(TimeOfDay? t) {
     final now = DateTime.now();
-    final dt = DateTime(now.year, now.month, now.day, t!.hour, t!.minute);
+    final dt = DateTime(now.year, now.month, now.day, t!.hour, t.minute);
     return DateFormat("HH:mm").format(dt);
+  }
+
+  Color getCheckboxColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+    };
+    if (states.any(interactiveStates.contains)) {
+      return CustomColorScheme.customSecondaryColor;
+    }
+    return CustomColorScheme.customPrimaryColor;
   }
 }
