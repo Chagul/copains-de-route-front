@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 class CreateEventView extends StatefulWidget {
   const CreateEventView({super.key});
 
+  @override
   State<StatefulWidget> createState() {
     return _CreateEventViewState();
   }
@@ -13,6 +14,8 @@ class CreateEventView extends StatefulWidget {
 
 class _CreateEventViewState extends State<CreateEventView> {
   TextEditingController eventDateInput = TextEditingController();
+  TimeOfDay? eventTime = TimeOfDay.now();
+  String timeFormatted = "";
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +33,8 @@ class _CreateEventViewState extends State<CreateEventView> {
                     _buildTextInputField("Nom de l'événement", 0, 0),
                     Column(
                       children: [
-                        // calendar makes it a stateful widget https://www.fluttercampus.com/guide/39/how-to-show-date-picker-on-textfield-tap-and-get-formatted-date/
-                        _buildDatePicker("Date", 0, 0)
-                        // time picker makes it a stateful widget https://api.flutter.dev/flutter/material/showTimePicker.html
+                        _buildDatePicker("Date", 0, 0),
+                        _buildTimePicker("Heure", 0, 0)
                       ],
                     ),
                     _buildTextInputField("Description", 0, 0),
@@ -46,8 +48,8 @@ class _CreateEventViewState extends State<CreateEventView> {
                     _buildCategoryTitle("Type de route"),
                     const Column(
                       children: [
-                        // calendar makes it a stateful widget https://www.fluttercampus.com/guide/39/how-to-show-date-picker-on-textfield-tap-and-get-formatted-date/
-                        // time picker makes it a stateful widget https://api.flutter.dev/flutter/material/showTimePicker.html
+                        // checkbox makes it a stateful widget https://api.flutter.dev/flutter/material/Checkbox-class.html
+                        // checkbox makes it a stateful widget https://api.flutter.dev/flutter/material/Checkbox-class.html
                       ],
                     ),
                     const Divider(
@@ -127,7 +129,10 @@ class _CreateEventViewState extends State<CreateEventView> {
         Text(name, style: const TextStyle(color: Colors.black)),
         TextField(
           controller: eventDateInput,
-          decoration: const InputDecoration(icon: Icon(Icons.calendar_today)),
+          decoration: const InputDecoration(
+              icon: Icon(Icons.calendar_today,
+                  color: CustomColorScheme.customOnSecondary)),
+          style: const TextStyle(color: CustomColorScheme.customOnSecondary),
           readOnly: true,
           onTap: () async {
             DateTime? eventDate = await showDatePicker(
@@ -135,8 +140,25 @@ class _CreateEventViewState extends State<CreateEventView> {
                 initialDate: DateTime.now(),
                 firstDate: DateTime.now(),
                 lastDate: DateTime.now().add(const Duration(days: 365)),
-                barrierColor: CustomColorScheme.customPrimaryColor);
-
+                barrierColor: CustomColorScheme.customBackground,
+                builder: (context, child) {
+                  return Theme(
+                    data: Theme.of(context).copyWith(
+                      colorScheme: const ColorScheme.light(
+                        primary: CustomColorScheme.customSecondaryColor,
+                        onPrimary: CustomColorScheme.customOnSecondary,
+                        onSurface: CustomColorScheme.customOnSecondary,
+                      ),
+                      textButtonTheme: TextButtonThemeData(
+                        style: TextButton.styleFrom(
+                          foregroundColor: CustomColorScheme
+                              .customOnSecondary, // button text color
+                        ),
+                      ),
+                    ),
+                    child: child!,
+                  );
+                });
             if (eventDate != null) {
               String formattedDate = DateFormat('yyyy-MM-dd').format(eventDate);
 
@@ -148,5 +170,52 @@ class _CreateEventViewState extends State<CreateEventView> {
         )
       ],
     );
+  }
+
+  Widget _buildTimePicker(String name, int height, int width) {
+    return Row(children: <Widget>[
+      ElevatedButton(
+          child: Text(name, style: const TextStyle(color: Colors.black)),
+          onPressed: () async {
+            TimeOfDay? time = await showTimePicker(
+                context: context,
+                initialTime: TimeOfDay.now(),
+                barrierColor: CustomColorScheme.customBackground,
+                builder: (context, child) {
+                  return Theme(
+                    data: Theme.of(context).copyWith(
+                      colorScheme: const ColorScheme.light(
+                        primary: CustomColorScheme.customSecondaryColor,
+                        onPrimary: CustomColorScheme.customOnSecondary,
+                        onSurface: CustomColorScheme.customOnSecondary,
+                      ),
+                      textButtonTheme: TextButtonThemeData(
+                        style: TextButton.styleFrom(
+                          foregroundColor: CustomColorScheme
+                              .customOnSecondary, // button text color
+                        ),
+                      ),
+                    ),
+                    child: child!,
+                  );
+                });
+            if (time != null) {
+              setState(() {
+                eventTime = time;
+              });
+            }
+          }),
+      if (eventTime != null)
+        Text(formatTimeOfDay(eventTime),
+            style: const TextStyle(
+              color: CustomColorScheme.customOnSecondary,
+            )),
+    ]);
+  }
+
+  String formatTimeOfDay(TimeOfDay? t) {
+    final now = DateTime.now();
+    final dt = DateTime(now.year, now.month, now.day, t!.hour, t!.minute);
+    return DateFormat("HH:mm").format(dt);
   }
 }
