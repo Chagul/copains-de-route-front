@@ -1,13 +1,13 @@
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 
-class CheckboxCustom extends StatefulWidget {
+class CustomCheckbox extends StatefulWidget {
   String name;
   bool value;
   int height;
   int width;
 
-  CheckboxCustom(
+  CustomCheckbox(
       {super.key,
       required this.name,
       required this.value,
@@ -15,10 +15,10 @@ class CheckboxCustom extends StatefulWidget {
       required this.width});
 
   @override
-  State<CheckboxCustom> createState() => _CheckboxCustomState();
+  State<CustomCheckbox> createState() => _CustomCheckboxState();
 }
 
-class _CheckboxCustomState extends State<CheckboxCustom> {
+class _CustomCheckboxState extends State<CustomCheckbox> {
   bool isChecked = false;
 
   @override
