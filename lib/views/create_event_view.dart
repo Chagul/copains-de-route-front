@@ -4,10 +4,8 @@ import 'package:copains_de_route/components/custom_number_input.dart';
 import 'package:copains_de_route/components/custom_switch_input.dart';
 import 'package:copains_de_route/components/custom_text_input.dart';
 import 'package:copains_de_route/components/custom_time_picker.dart';
-import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/components/custom_checkbox.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class CreateEventView extends StatefulWidget {
   const CreateEventView({super.key});
@@ -20,6 +18,9 @@ class CreateEventView extends StatefulWidget {
 
 class _CreateEventViewState extends State<CreateEventView> {
   TextEditingController eventNameInput = TextEditingController();
+  TextEditingController eventDescriptionInput = TextEditingController();
+  TextEditingController eventNbParticipantsInput = TextEditingController();
+  TextEditingController eventDateInput = TextEditingController();
   TimeOfDay? eventTime = TimeOfDay.now();
   bool isDirtChecked = false;
   bool isRoadChecked = false;
@@ -49,27 +50,32 @@ class _CreateEventViewState extends State<CreateEventView> {
                       const CustomCategoryTitle(
                           name: 'Détails de l\'événement'),
                       const SizedBox(height: 20),
-                      const CustomTextInput(
+                      CustomTextInput(
                           name: 'Nom de l\'événement',
                           minLines: 1,
-                          maxLines: 1),
+                          maxLines: 1,
+                          value: eventNameInput),
                       const SizedBox(height: 20),
                       Row(
                         children: [
                           Expanded(
                               child: CustomDatePicker(
-                                  name: 'Date', input: eventNameInput)),
+                                  name: 'Date', input: eventDateInput)),
                           Expanded(
                               child: CustomTimePicker(
                                   name: 'Heure', time: eventTime))
                         ],
                       ),
                       const SizedBox(height: 20),
-                      const CustomTextInput(
-                          name: 'Description', minLines: 5, maxLines: 10),
+                      CustomTextInput(
+                          name: 'Description',
+                          minLines: 5,
+                          maxLines: 10,
+                          value: eventDescriptionInput),
                       const SizedBox(height: 20),
-                      const CustomNumberInput(
-                          name: 'Nombre de participants maximum'),
+                      CustomNumberInput(
+                          name: 'Nombre de participants maximum',
+                          value: eventNbParticipantsInput),
                       const Divider(
                         indent: 100,
                         endIndent: 100,
