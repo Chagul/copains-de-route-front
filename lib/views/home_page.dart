@@ -2,7 +2,6 @@ import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/views/home_page_list.dart';
 import 'package:copains_de_route/views/home_page_map.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class MyIntineraryPage extends StatelessWidget {
@@ -6,7 +5,7 @@ class MyIntineraryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Text("Mes itinéraires"),
     );
   }
