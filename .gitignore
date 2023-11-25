@@ -140,3 +140,4 @@ app.*.symbols
 local.properties
 gradlew
 gradlew.bat
+CMakeLists.txt
