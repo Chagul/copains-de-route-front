@@ -138,6 +138,3 @@ app.*.symbols
 !.vscode/settings.json
 
 local.properties
-gradlew
-gradlew.bat
-CMakeLists.txt
