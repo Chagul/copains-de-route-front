@@ -1,4 +1,4 @@
-import 'package:copains_de_route/views/map.dart';
+import 'package:copains_de_route/components/map.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
