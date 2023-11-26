@@ -34,10 +34,10 @@ class StartEndWidgetState extends State<StartEndWidget> {
                     children: [
                       TextButton(
                           onPressed: () => widget.pressedStart(),
-                          child: const Text("depart")),
+                          child: const Text("Départ")),
                       TextButton(
                           onPressed: () => widget.pressedEnd(),
-                          child: const Text("arrivé")),
+                          child: const Text("Arrivée")),
                       if (widget.displayWarning)
                         const Text("Veuillez choisir un départ et une arrivée"),
                       ElevatedButton(

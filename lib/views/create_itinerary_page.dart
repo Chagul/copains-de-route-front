@@ -1,3 +1,4 @@
+import 'package:copains_de_route/components/custom_map.dart';
 import 'package:flutter/material.dart';
 
 class CreateItineraryPage extends StatelessWidget {
@@ -6,7 +7,7 @@ class CreateItineraryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Text("Creer itineraire"),
+      body: CustomMap(),
     );
   }
 }
