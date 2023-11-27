@@ -5,8 +5,13 @@ import 'package:flutter/material.dart';
 class CustomTimePicker extends StatefulWidget {
   final String name;
   TimeOfDay? time;
+  Function updateTime;
 
-  CustomTimePicker({super.key, required this.name, required this.time});
+  CustomTimePicker(
+      {super.key,
+      required this.name,
+      required this.time,
+      required this.updateTime});
 
   @override
   State<StatefulWidget> createState() => _CustomTimePickerState();
@@ -42,9 +47,7 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
                   );
                 });
             if (time != null) {
-              setState(() {
-                widget.time = time;
-              });
+              widget.updateTime(time);
             }
           }),
       const SizedBox(width: 20.0),

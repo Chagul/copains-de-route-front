@@ -4,23 +4,20 @@ import 'package:flutter/material.dart';
 class CustomCheckbox extends StatefulWidget {
   String name;
   bool value;
-  int height;
-  int width;
+  Function updateBoolean;
 
-  CustomCheckbox(
-      {super.key,
-      required this.name,
-      required this.value,
-      required this.height,
-      required this.width});
+  CustomCheckbox({
+    super.key,
+    required this.name,
+    required this.value,
+    required this.updateBoolean,
+  });
 
   @override
   State<CustomCheckbox> createState() => _CustomCheckboxState();
 }
 
 class _CustomCheckboxState extends State<CustomCheckbox> {
-  bool isChecked = false;
-
   @override
   Widget build(BuildContext context) {
     Color getColor(Set<MaterialState> states) {
@@ -35,7 +32,6 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
       return CustomColorScheme.customOnPrimary;
     }
 
-    widget.value = false;
     return StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
       return Row(
@@ -45,9 +41,7 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
               checkColor: CustomColorScheme.customOnSecondary,
               fillColor: MaterialStateProperty.resolveWith(getColor),
               onChanged: (bool? change) {
-                setState(() {
-                  widget.value = change!;
-                });
+                widget.updateBoolean(change);
               }),
           Text(widget.name, style: const TextStyle(color: Colors.black)),
         ],
