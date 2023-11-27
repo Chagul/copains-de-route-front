@@ -1,3 +1,4 @@
+import 'package:copains_de_route/components/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -43,7 +44,7 @@ class _MapState extends State<Map> {
         builder: (context, obj) {
           if (!obj.hasData) {
             return const MaterialApp(
-              home: Text("loading"),
+              home: LoadingWidget(),
             );
           }
           return MaterialApp(

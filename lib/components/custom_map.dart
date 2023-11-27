@@ -4,9 +4,13 @@ import 'package:copains_de_route/components/create_itinerary_widgets/choose_itin
 import 'package:copains_de_route/components/create_itinerary_widgets/draw_itinerary.dart';
 import 'package:copains_de_route/components/create_itinerary_widgets/pick_itinerary.dart';
 import 'package:copains_de_route/components/create_itinerary_widgets/start_end_widget.dart';
+import 'package:copains_de_route/components/loading_widget.dart';
+import 'package:copains_de_route/position/position_cubit.dart';
+import 'package:copains_de_route/position/position_state.dart';
 import 'package:copains_de_route/utils/enum_subcomponent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -19,6 +23,7 @@ class CustomMap extends StatefulWidget {
 }
 
 class CustomMapState extends State<CustomMap> {
+  /*late PositionBloc _positionBloc;
   late GoogleMapController mapController;
   Marker _start = const Marker(markerId: MarkerId("1"));
   Marker _end = const Marker(markerId: MarkerId("2"));
@@ -41,24 +46,14 @@ class CustomMapState extends State<CustomMap> {
 
   @override
   void initState() {
+    _positionBloc = PositionBloc();
     super.initState();
     _zoom = 11.0;
     selectedWidget = 0;
     selectedIdRoute = 0;
     selectedRoute = PolylineResult();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _getPositionUser();
-    });
   }
 
-  Future<Position> _getPositionUser() {
-    Future<Position> pos =
-        Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      position = pos;
-    });
-    return pos;
-  }
 
   void _getDirections() async {
     setState(() {
@@ -117,10 +112,6 @@ class CustomMapState extends State<CustomMap> {
           infoWindow: InfoWindow(title: _step.length.toString())));
       return;
     });
-  }
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
   }
 
   void changeView(SubComponentCreateItineraryPage key) {
@@ -207,11 +198,47 @@ class CustomMapState extends State<CustomMap> {
 
   void clearSteps() {
     setState(() {});
+  }*/
+
+  late GoogleMapController mapController;
+  bool _show = false;
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return Scaffold(
+        body: Stack(
+      children: [
+        BlocConsumer<PositionCubit, PositionState>(
+          listener: (context, state) {
+            if (state is PositionSuccess) {
+              mapController.moveCamera(CameraUpdate.newLatLng(
+                  LatLng(state.position.latitude, state.position.longitude)));
+            } else if (state is PositionLoading) {
+              _show = true;
+            }
+          },
+          builder: (context, state) {
+            return GoogleMap(
+                onMapCreated: _onMapCreated,
+                initialCameraPosition: const CameraPosition(
+                  target: LatLng(48.864716, 2.349014),
+                  zoom: 11,
+                ));
+          },
+        ),
+        Visibility(visible: _show, child: LoadingWidget())
+      ],
+    ));
+  }
+}
+
+    /*
+      }
+        
         future: _getPositionUser(),
         builder: (context, obj) {
           if (!obj.hasData) {
@@ -288,4 +315,4 @@ class CustomMapState extends State<CustomMap> {
                   ]));
         });
   }
-}
+}*/
