@@ -1,4 +1,5 @@
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 abstract class PositionState {}
 
@@ -7,9 +8,9 @@ class PositionInitial extends PositionState {}
 class PositionLoading extends PositionState {}
 
 class PositionSuccess extends PositionState {
-  final Position position;
+  final LatLng latlng;
 
-  PositionSuccess({required this.position});
+  PositionSuccess({required this.latlng});
 }
 
 class PositionFail extends PositionState {

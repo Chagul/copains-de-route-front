@@ -11,7 +11,8 @@ class DrawItineraryWidget extends StatefulWidget {
       {super.key,
       required this.changeView,
       required this.getDirection,
-      required this.clearSteps});
+      required this.clearSteps,
+      });
 
   @override
   DrawItineraryWidgetState createState() => DrawItineraryWidgetState();

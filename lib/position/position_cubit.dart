@@ -1,16 +1,17 @@
 import 'package:copains_de_route/position/position_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PositionCubit extends Cubit<PositionState> {
   PositionCubit() : super(PositionInitial());
 
-  late Position position;
+  LatLng position = LatLng(48.864716, 2.349014);
 
   Future<void> initPosition() async {
     bool isServiceEnabled;
     LocationPermission permission;
-
+    Position positionResult;
     emit(PositionLoading());
     isServiceEnabled = await Geolocator.isLocationServiceEnabled();
     permission = await Geolocator.checkPermission();
@@ -27,14 +28,16 @@ class PositionCubit extends Cubit<PositionState> {
         return Future.error('denied');
       }
     }
-    position = await Geolocator.getCurrentPosition(
+    positionResult = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    emit(PositionSuccess(position: position));
+    position = LatLng(positionResult.latitude, positionResult.longitude);
+    emit(PositionSuccess(latlng: position));
   }
 
   void getPosition() async {
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-    emit(PositionSuccess(position: position));
+    emit(
+        PositionSuccess(latlng: LatLng(position.latitude, position.longitude)));
   }
 }

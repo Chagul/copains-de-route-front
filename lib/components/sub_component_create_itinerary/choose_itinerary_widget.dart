@@ -1,26 +1,18 @@
+import 'package:copains_de_route/components/map/map_cubit.dart';
+import 'package:copains_de_route/components/map/map_state.dart';
 import 'package:copains_de_route/utils/enum_subcomponent.dart';
 import 'package:flutter/material.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ChoseItineraryTypeWidget extends StatefulWidget {
-  final Function changeView;
-  final Function getDirection;
-  @override
+class ChoseItineraryTypeWidget extends StatelessWidget {
   const ChoseItineraryTypeWidget(
-      {super.key, required this.changeView, required this.getDirection});
+      {super.key});
 
-  @override
-  ChoseItineraryTypeWidgetState createState() =>
-      ChoseItineraryTypeWidgetState();
-}
-
-class ChoseItineraryTypeWidgetState extends State<ChoseItineraryTypeWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        alignment: Alignment.bottomCenter,
-        child: PointerInterceptor(
-          child: Card(
+    return BlocBuilder<MapCubit,MapState>( 
+      builder: (context, state) {
+        return Card(
             child: SizedBox(
                 height: 200,
                 width: 200,
@@ -28,27 +20,28 @@ class ChoseItineraryTypeWidgetState extends State<ChoseItineraryTypeWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextButton(
-                          onPressed: () => widget.changeView(
-                              SubComponentCreateItineraryPage
-                                  .drawItineraryWidget),
+                          onPressed: () => {
+                            MapCubit().changeWidget(SubComponentCreateItineraryPage.drawItineraryWidget),
+                            MapCubit().alternative = false,
+                            },
                           child: const Text("Dessiner mon trajet")),
                       TextButton(
                           onPressed: () => {
-                                widget.getDirection(),
-                                widget.changeView(
+                                MapCubit().getDirectionsForPoints(),
+                                MapCubit().changeWidget(
                                     SubComponentCreateItineraryPage
-                                        .pickItineraryWidget)
+                                        .pickItineraryWidget),
+                                MapCubit().alternative = false,
                               },
                           child: const Text("Recommendation de trajet")),
                       ElevatedButton(
-                          onPressed: () => widget.changeView(
+                          onPressed: () => MapCubit().changeWidget(
                               SubComponentCreateItineraryPage.startEndWidget),
                           child: const Text(
                             "Retour",
                             style: TextStyle(color: Colors.black),
                           )),
-                    ])),
-          ),
-        ));
+                    ])));
+    });  
   }
 }
