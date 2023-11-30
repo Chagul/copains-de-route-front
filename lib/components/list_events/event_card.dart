@@ -1,3 +1,4 @@
+import 'package:copains_de_route/components/event_details/event_details.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +14,11 @@ class EventCard extends StatelessWidget {
     return Container(
       height: 150,
       color: CustomColorScheme.customOnPrimary,
-      child: _buildBody(),
+      child: _buildBody(context),
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -55,6 +56,8 @@ class EventCard extends StatelessWidget {
             IconButton(
                 onPressed: () {
                   // emit or navigator to open details
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => EventDetails(event: event)));
                 },
                 icon: const Icon(Icons.arrow_forward_outlined))
           ],

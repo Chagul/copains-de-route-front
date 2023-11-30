@@ -26,12 +26,14 @@ class EventListView extends StatelessWidget {
     }
 
     if (state is ListAllEventsLoadedState) {
-      return ListView.builder(
-        padding: const EdgeInsets.all(8.0),
-        itemCount: state.data.eventList.length,
-        itemBuilder: (context, index) {
-          return EventCard(event: state.data.eventList[index]);
-        },
+      return Scaffold(
+        body: ListView.builder(
+          padding: const EdgeInsets.all(8.0),
+          itemCount: state.data.eventList.length,
+          itemBuilder: (context, index) {
+            return EventCard(event: state.data.eventList[index]);
+          },
+        ),
       );
     }
 
