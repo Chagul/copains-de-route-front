@@ -7,7 +7,7 @@ abstract class ListAllEventsState extends ListEventState {}
 class ListAllEventsLoadingState extends ListAllEventsState {}
 
 class ListAllEventsLoadedState extends ListAllEventsState {
-  EventList? data;
+  final EventList data;
   ListAllEventsLoadedState({required this.data});
 }
 

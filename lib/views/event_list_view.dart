@@ -12,10 +12,6 @@ class EventListView extends StatelessWidget {
     var listEventsCubit = context.read<ListEventCubit>();
     return BlocConsumer<ListEventCubit, ListEventState>(
       listener: (context, state) {
-        // si on a un state ListEventLoadingState -> appeler le fetch vers le back pour get les events
-        if (state is ListAllEventsLoadingState) {
-          listEventsCubit.getEvents();
-        }
         // si on a un state ListEventDetailsState -> Navigatore.push pour aller sur la page de détails
       },
       builder: (context, state) {
@@ -29,19 +25,13 @@ class EventListView extends StatelessWidget {
       return const Center(child: CircularProgressIndicator());
     }
 
-    if (state is ListAllEventsLoadedState && state.data != null) {
+    if (state is ListAllEventsLoadedState) {
       return ListView.builder(
         padding: const EdgeInsets.all(8.0),
-        itemCount: /*state.count*/ 0,
+        itemCount: state.data.eventList.length,
         itemBuilder: (context, index) {
-          return EventCard(event: state.data!.eventList[index]);
+          return EventCard(event: state.data.eventList[index]);
         },
-      );
-    }
-
-    if (state is ListAllEventsLoadedState) {
-      return const Center(
-        child: Text('saluz'),
       );
     }
 

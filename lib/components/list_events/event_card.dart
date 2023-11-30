@@ -29,11 +29,11 @@ class EventCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "${event.name} - ${event.distance} km",
+              "${event.name} - placeholder km",
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
             Text(
-              "Organisé par ${event.promoter}",
+              "Organisé par placeholder",
               style:
                   const TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
             ),
@@ -43,7 +43,7 @@ class EventCard extends StatelessWidget {
                   const TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
             ),
             Text(
-              "${event.nbParticipants} / ${event.maxParticipants} participants",
+              "placeholder / ${event.maxParticipants} participants",
               style:
                   const TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
             ),
