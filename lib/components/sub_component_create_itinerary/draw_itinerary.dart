@@ -1,24 +1,14 @@
+import 'package:copains_de_route/components/map/map_cubit.dart';
 import 'package:copains_de_route/utils/enum_subcomponent.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
-class DrawItineraryWidget extends StatefulWidget {
-  final Function changeView;
-  final Function getDirection;
-  final Function clearSteps;
+class DrawItineraryWidget extends StatelessWidget {
   @override
-  const DrawItineraryWidget(
-      {super.key,
-      required this.changeView,
-      required this.getDirection,
-      required this.clearSteps,
-      });
-
-  @override
-  DrawItineraryWidgetState createState() => DrawItineraryWidgetState();
-}
-
-class DrawItineraryWidgetState extends State<DrawItineraryWidget> {
+  const DrawItineraryWidget({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,7 +28,8 @@ class DrawItineraryWidgetState extends State<DrawItineraryWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                         ElevatedButton(
-                            onPressed: () => widget.getDirection(),
+                            onPressed: () => BlocProvider.of<MapCubit>(context)
+                                .getDirectionsForPoints(),
                             child: const Text(
                               "Calculer un itinéraire",
                               style: TextStyle(color: Colors.black),
@@ -50,10 +41,12 @@ class DrawItineraryWidgetState extends State<DrawItineraryWidget> {
                           children: [
                         ElevatedButton(
                             onPressed: () => {
-                                  widget.clearSteps(),
-                                  widget.changeView(
-                                      SubComponentCreateItineraryPage
-                                          .choseItineraryWidget)
+                                  BlocProvider.of<MapCubit>(context)
+                                      .clearSteps(),
+                                  BlocProvider.of<MapCubit>(context)
+                                      .changeWidget(
+                                          SubComponentCreateItineraryPage
+                                              .choseItineraryWidget)
                                 },
                             child: const Text(
                               "Retour",
@@ -61,10 +54,12 @@ class DrawItineraryWidgetState extends State<DrawItineraryWidget> {
                             )),
                         ElevatedButton(
                             onPressed: () => {
-                                  widget.getDirection(),
-                                  widget.changeView(
-                                      SubComponentCreateItineraryPage
-                                          .pickItineraryWidget)
+                                  BlocProvider.of<MapCubit>(context)
+                                      .getDirectionsForPoints(),
+                                  BlocProvider.of<MapCubit>(context)
+                                      .changeWidget(
+                                          SubComponentCreateItineraryPage
+                                              .pickItineraryWidget)
                                 },
                             child: const Text(
                               "Confirmer",

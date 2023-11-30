@@ -1,7 +1,3 @@
-import 'package:copains_de_route/components/sub_component_create_itinerary/choose_itinerary_widget.dart';
-import 'package:copains_de_route/components/sub_component_create_itinerary/draw_itinerary.dart';
-import 'package:copains_de_route/components/sub_component_create_itinerary/pick_itinerary.dart';
-import 'package:copains_de_route/components/sub_component_create_itinerary/start_end_widget.dart';
 import 'package:copains_de_route/utils/enum_subcomponent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';

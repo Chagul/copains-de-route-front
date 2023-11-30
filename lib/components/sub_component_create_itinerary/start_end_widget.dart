@@ -24,14 +24,17 @@ class StartEndWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   TextButton(
-                      onPressed: () => MapCubit().startPickStart(),
+                      onPressed: () =>
+                          BlocProvider.of<MapCubit>(context).startPickStart(),
                       child: const Text("Départ")),
                   TextButton(
-                      onPressed: () => MapCubit().startPickEnd(),
+                      onPressed: () =>
+                          BlocProvider.of<MapCubit>(context).startPickEnd(),
                       child: const Text("Arrivée")),
                   ElevatedButton(
-                      onPressed: () => MapCubit().changeWidget(
-                          SubComponentCreateItineraryPage.choseItineraryWidget),
+                      onPressed: () => BlocProvider.of<MapCubit>(context)
+                          .changeWidget(SubComponentCreateItineraryPage
+                              .choseItineraryWidget),
                       child: const Text(
                         "Confirmer",
                         style: TextStyle(color: Colors.black),

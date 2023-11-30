@@ -1,14 +1,10 @@
-import 'package:copains_de_route/utils/enum_subcomponent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 abstract class MapState {}
 
-class MapInitial extends MapState {
-  
-  
-}
+class MapInitial extends MapState {}
 
 class MapPolylinesLoaded extends MapState {
   List<PolylineResult> polylines;
@@ -30,31 +26,36 @@ class MapEndMarkerAdded extends MapState {
   MapEndMarkerAdded(this.markerEnd);
 }
 
-class MapStartAndEndMarkerAdded extends MapState{
+class MapStartAndEndMarkerAdded extends MapState {
   Marker markerStart;
   Marker markerEnd;
 
   MapStartAndEndMarkerAdded(this.markerStart, this.markerEnd);
 }
 
-class MapStateError extends MapState{
+class MapStateError extends MapState {
   String error;
 
   MapStateError(this.error);
 }
 
-class MapWithWidget extends MapState{
+class MapWithWidget extends MapState {
   Widget widget;
 
   MapWithWidget(this.widget);
 }
 
-class MapValidated extends MapState {
+class MapValidated extends MapState {}
 
-}
-
-class DisplayWarning extends MapState{
+class DisplayWarning extends MapState {
   String warning;
 
   DisplayWarning(this.warning);
 }
+
+class PositionUserLoaded extends MapState {
+  LatLng positionUser;
+  PositionUserLoaded(this.positionUser);
+}
+
+class MapMarkerUpdated extends MapState {}
