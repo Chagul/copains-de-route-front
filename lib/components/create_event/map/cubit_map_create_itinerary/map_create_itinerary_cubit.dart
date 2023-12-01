@@ -1,19 +1,20 @@
-import 'package:copains_de_route/components/map/map_state.dart';
-import 'package:copains_de_route/components/sub_component_create_itinerary/choose_itinerary_widget.dart';
-import 'package:copains_de_route/components/sub_component_create_itinerary/draw_itinerary.dart';
-import 'package:copains_de_route/components/sub_component_create_itinerary/pick_itinerary.dart';
-import 'package:copains_de_route/components/sub_component_create_itinerary/start_end_widget.dart';
+import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_state.dart';
+import 'package:copains_de_route/components/create_event/map/sub_component_create_itinerary_map/pick_itinerary_type_widget.dart';
+import 'package:copains_de_route/components/create_event/map/sub_component_create_itinerary_map/add_steps_itinerary.dart';
+import 'package:copains_de_route/components/create_event/map/sub_component_create_itinerary_map/pick_recommanded_recommanded.dart';
+import 'package:copains_de_route/components/create_event/map/sub_component_create_itinerary_map/pick_start_end_itinerary.dart';
 import 'package:copains_de_route/utils/enum_subcomponent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MapCubit extends Cubit<MapState> {
-  MapCubit() : super(MapInitial());
+class MapCreateItineraryCubit extends Cubit<MapCreateItineraryState> {
+  MapCreateItineraryCubit() : super(MapCreateItineraryStateInitial());
 
   Set<Polyline> polylines = {};
 
+  List<PolylineResult> polylinesResult = [];
   late Polyline polylineSelected;
 
   late PolylineResult routeSelected;
@@ -42,22 +43,19 @@ class MapCubit extends Cubit<MapState> {
   Color notSelectedColor = Colors.grey;
 
   List<Widget> widgets = [
-    const StartEndWidget(),
-    const ChoseItineraryTypeWidget(),
-    const DrawItineraryWidget(),
-    const PickItineraryWidget(),
+    const PickStartEndItinerary(),
+    const PickItineraryType(),
+    const AddStepsItinerary(),
+    const PickRecommandedItinerary(),
   ];
 
   int selectedIdRoute = 0;
 
   Future<void> getDirectionsForPoints() async {
-    if (markerStart == null || markerEnd == null) {
-      emit(MapStateError("start or end null"));
-      return;
-    }
+    emit(MapPolylinesLoading());
     List<PolylineResult> res = await PolylinePoints().getRouteWithAlternatives(
         request: PolylineRequest(
-      apiKey: "{API.KEY}",
+      apiKey: "AIzaSyBmTuVlxx7E58O3dVKioKprGaDK31mC4TE",
       origin: PointLatLng(
           markerStart!.position.latitude, markerStart!.position.longitude),
       destination: PointLatLng(
@@ -73,7 +71,9 @@ class MapCubit extends Cubit<MapState> {
           .toList(),
       optimizeWaypoints: false,
     ));
-    buildPolyline(res);
+    polylinesResult = res;
+    firstRoute = true;
+    buildPolyline();
     emit(MapPolylinesLoaded(res));
   }
 
@@ -118,13 +118,16 @@ class MapCubit extends Cubit<MapState> {
         markerStartInit = false;
         markerEndInit = false;
         alternative = true;
+        clearSteps();
         selectedWidget = 1;
         if (markerStart == null || markerEnd == null) {
           emit(DisplayWarning("Start or end can't be empty"));
         }
       case SubComponentCreateItineraryPage.drawItineraryWidget:
+        markerStepsInit = true;
         selectedWidget = 2;
       case SubComponentCreateItineraryPage.pickItineraryWidget:
+        markerStepsInit = false;
         selectedWidget = 3;
       default:
         break;
@@ -133,9 +136,13 @@ class MapCubit extends Cubit<MapState> {
     emit(MapWithWidget(widgets[selectedWidget]));
   }
 
-  Set<Polyline> buildPolyline(List<PolylineResult> results) {
+  buildPolyline() {
     polylines = {};
-    for (int i = 0; i < results.length; i++) {
+    for (int i = 0; i < polylinesResult.length; i++) {
+      if (firstRoute) {
+        routeSelected = polylinesResult[0];
+        firstRoute = false;
+      }
       polylines.add(Polyline(
           polylineId: PolylineId(i.toString()),
           color: selectedIdRoute == i || firstRoute
@@ -145,22 +152,23 @@ class MapCubit extends Cubit<MapState> {
           width: 5,
           consumeTapEvents: true,
           onTap: () => {
-                routeSelected = results[i],
+                routeSelected = polylinesResult[i],
                 selectedIdRoute = i,
+                emit(PolylineSelected())
               },
-          points: results[i]
+          points: polylinesResult[i]
               .points
               .map((e) => LatLng(e.latitude, e.longitude))
               .toList()));
-      if (firstRoute) {
-        routeSelected = results[0];
-        firstRoute = false;
-      }
     }
-    return polylines;
   }
 
   addPositionUser(LatLng positionUser) {
     emit(PositionUserLoaded(positionUser));
+  }
+
+  clearPolyline() {
+    selectedIdRoute = 0;
+    polylines = {};
   }
 }

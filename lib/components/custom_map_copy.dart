@@ -8,10 +8,11 @@ class CustomMap extends StatefulWidget {
   const CustomMap({Key? key}) : super(key: key);
 
   @override
-  CustomMapState createState() => CustomMapState();
+  CustomMapCreateItineraryState createState() =>
+      CustomMapCreateItineraryState();
 }
 
-class CustomMapState extends State<CustomMap> {
+class CustomMapCreateItineraryState extends State<CustomMap> {
   late GoogleMapController mapController;
   Marker _start = const Marker(markerId: MarkerId("1"));
   Marker _end = const Marker(markerId: MarkerId("2"));

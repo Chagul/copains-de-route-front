@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:copains_de_route/components/custom_category_title.dart';
+import 'package:copains_de_route/components/create_event/form/custom_category_title.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

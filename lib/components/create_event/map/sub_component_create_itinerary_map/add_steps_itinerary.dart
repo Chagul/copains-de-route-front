@@ -1,12 +1,12 @@
-import 'package:copains_de_route/components/map/map_cubit.dart';
+import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_cubit.dart';
 import 'package:copains_de_route/utils/enum_subcomponent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
-class DrawItineraryWidget extends StatelessWidget {
+class AddStepsItinerary extends StatelessWidget {
   @override
-  const DrawItineraryWidget({
+  const AddStepsItinerary({
     super.key,
   });
   @override
@@ -28,8 +28,10 @@ class DrawItineraryWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                         ElevatedButton(
-                            onPressed: () => BlocProvider.of<MapCubit>(context)
-                                .getDirectionsForPoints(),
+                            onPressed: () =>
+                                BlocProvider.of<MapCreateItineraryCubit>(
+                                        context)
+                                    .getDirectionsForPoints(),
                             child: const Text(
                               "Calculer un itinéraire",
                               style: TextStyle(color: Colors.black),
@@ -41,9 +43,11 @@ class DrawItineraryWidget extends StatelessWidget {
                           children: [
                         ElevatedButton(
                             onPressed: () => {
-                                  BlocProvider.of<MapCubit>(context)
+                                  BlocProvider.of<MapCreateItineraryCubit>(
+                                          context)
                                       .clearSteps(),
-                                  BlocProvider.of<MapCubit>(context)
+                                  BlocProvider.of<MapCreateItineraryCubit>(
+                                          context)
                                       .changeWidget(
                                           SubComponentCreateItineraryPage
                                               .choseItineraryWidget)
@@ -54,9 +58,11 @@ class DrawItineraryWidget extends StatelessWidget {
                             )),
                         ElevatedButton(
                             onPressed: () => {
-                                  BlocProvider.of<MapCubit>(context)
+                                  BlocProvider.of<MapCreateItineraryCubit>(
+                                          context)
                                       .getDirectionsForPoints(),
-                                  BlocProvider.of<MapCubit>(context)
+                                  BlocProvider.of<MapCreateItineraryCubit>(
+                                          context)
                                       .changeWidget(
                                           SubComponentCreateItineraryPage
                                               .pickItineraryWidget)
