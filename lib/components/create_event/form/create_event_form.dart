@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:copains_de_route/components/create_event/create_event/create_itinerary_cubit.dart';
 import 'package:copains_de_route/components/create_event/form/custom_category_title.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class CreateEventFormFieldsBloc extends FormBloc<String, String> {
 
   @override
   FutureOr<void> onSubmitting() {
-    throw UnimplementedError();
+    emitSuccess();
   }
 }
 
@@ -88,7 +89,8 @@ class CreateEventForm extends StatelessWidget {
                     child: FormBlocListener<CreateEventFormFieldsBloc, String,
                         String>(
                       onSubmitting: (context, state) {
-                        throw UnimplementedError();
+                        /*BlocProvider.of<CreateItineraryCubit>(context)
+                            .addFormData(formBloc.getFormData());*/
                       },
                       onSuccess: (context, state) {
                         throw UnimplementedError();
@@ -369,91 +371,3 @@ class CreateEventForm extends StatelessWidget {
         ));
   }
 }
-
-
-/*
-
-  void _submitForm() async {
-    // TODO add API call and put validators on text fields
-    Dio dio = Dio();
-
-    DateTime eventDate = DateFormat("yyy-MM-dd hh:mm").parse(
-        "${eventDateInput.text} ${FormatUtils.formatTimeOfDay(eventTime)}");
-    String eventDateString =
-        DateFormat("yyyy-MM-dd hh:mm:ss").format(eventDate);
-    List<String> roadTypes = _getRoadTypesList();
-    List<String> bikeTypes = _getBikeTypesList();
-    String visibility = _getVisibilityValue();
-
-    EventFormData data = EventFormData(
-        promoter: 0,
-        maxParticipants: int.parse(eventNbParticipantsInput.text),
-        startTime: eventDateString,
-        roadType1: roadTypes[0],
-        roadType2: roadTypes[1],
-        roadType3: roadTypes[2],
-        startPoint: "Lat:0;Lon:0",
-        endPoint: "Lat:1;Lon:1",
-        name: eventNameInput.text,
-        description: eventDescriptionInput.text,
-        bikeType1: bikeTypes[0],
-        bikeType2: bikeTypes[1],
-        visibility: visibility);
-
-    var response = await dio.post("http://localhost:8080/events",
-        data: data, options: Options(contentType: Headers.jsonContentType));
-    if (response.statusCode == 200) {
-      print("done successfully");
-    } else {
-      print("error ${response.statusCode}");
-    }
-  }
-
-  void _cancel() {}
-
-  List<String> _getRoadTypesList() {
-    List<String> roadTypesList = [];
-    if (isDirtChecked) {
-      roadTypesList.add('DIRT');
-    }
-    if (isRoadChecked) {
-      roadTypesList.add('ROAD');
-    }
-    if (isGravelChecked) {
-      roadTypesList.add('GRAVEL');
-    }
-    if (isCyclePathChecked) {
-      roadTypesList.add('CYCLE_PATH');
-    }
-    if (isPavingStonesChecked) {
-      roadTypesList.add('PAVING_STONES');
-    }
-    if (isOthersChecked) {
-      roadTypesList.add('OTHERS');
-    }
-    return roadTypesList;
-  }
-
-  List<String> _getBikeTypesList() {
-    List<String> bikeTypes = [];
-    if (isBikeCity) {
-      bikeTypes.add('CITY');
-    }
-    if (isBikeAllTerrain) {
-      bikeTypes.add('ALL_TERRAIN');
-    }
-    if (isBikeGravel) {
-      bikeTypes.add('GRAVEL');
-    }
-    if (isBikeBMX) {
-      bikeTypes.add('BMX');
-    }
-    return bikeTypes;
-  }
-
-  String _getVisibilityValue() {
-    return isPublic ? "PUBLIC" : "PRIVATE";
-  }
-
-}
-*/

@@ -1,7 +1,7 @@
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_state.dart';
 import 'package:copains_de_route/components/create_event/map/sub_component_create_itinerary_map/pick_itinerary_type_widget.dart';
 import 'package:copains_de_route/components/create_event/map/sub_component_create_itinerary_map/add_steps_itinerary.dart';
-import 'package:copains_de_route/components/create_event/map/sub_component_create_itinerary_map/pick_recommanded_recommanded.dart';
+import 'package:copains_de_route/components/create_event/map/sub_component_create_itinerary_map/pick_recommanded_itinerary.dart';
 import 'package:copains_de_route/components/create_event/map/sub_component_create_itinerary_map/pick_start_end_itinerary.dart';
 import 'package:copains_de_route/utils/enum_subcomponent.dart';
 import 'package:flutter/material.dart';

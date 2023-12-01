@@ -9,10 +9,10 @@ class PositionCubit extends Cubit<PositionState> {
   LatLng position = LatLng(48.864716, 2.349014);
 
   Future<void> initPosition() async {
+    emit(PositionLoading());
     bool isServiceEnabled;
     LocationPermission permission;
     Position positionResult;
-    emit(PositionLoading());
     isServiceEnabled = await Geolocator.isLocationServiceEnabled();
     permission = await Geolocator.checkPermission();
 

@@ -1,4 +1,5 @@
 import 'package:copains_de_route/components/commons/loading_widget.dart';
+import 'package:copains_de_route/components/create_event/create_event/create_itinerary_cubit.dart';
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_cubit.dart';
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_state.dart';
 import 'package:copains_de_route/utils/enum_subcomponent.dart';
@@ -76,12 +77,11 @@ class PickRecommandedItinerary extends StatelessWidget {
                                     style: TextStyle(color: Colors.black),
                                   )),
                               ElevatedButton(
-                                  onPressed: () =>
-                                      BlocProvider.of<MapCreateItineraryCubit>(
-                                              context)
-                                          .changeWidget(
-                                              SubComponentCreateItineraryPage
-                                                  .pickItineraryWidget),
+                                  onPressed: () => BlocProvider.of<
+                                          CreateItineraryCubit>(context)
+                                      .addItinerarySelected(BlocProvider.of<
+                                              MapCreateItineraryCubit>(context)
+                                          .routeSelected),
                                   child: const Text(
                                     "Confirmer",
                                     style: TextStyle(color: Colors.black),

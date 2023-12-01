@@ -1,3 +1,7 @@
+import 'package:copains_de_route/components/commons/loading_widget.dart';
+import 'package:copains_de_route/components/create_event/create_event/create_itinerary_cubit.dart';
+import 'package:copains_de_route/components/create_event/create_event/create_itinerary_state.dart';
+import 'package:copains_de_route/components/create_event/form/create_event_form.dart';
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_cubit.dart';
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_state.dart';
 import 'package:copains_de_route/position/position_cubit.dart';
@@ -23,60 +27,55 @@ class CustomMapCreateItineraryState extends State<CustomMap> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<MapCreateItineraryCubit>(
-        create: (_) => MapCreateItineraryCubit(),
-        child: BlocConsumer<PositionCubit, PositionState>(
-            listener: (context, statePosition) {
-          if (statePosition is PositionSuccess) {
-            mapController.animateCamera(CameraUpdate.newLatLng(
-              statePosition.latlng,
-            ));
-          }
-        }, builder: (context, statePosition) {
-          return BlocBuilder<MapCreateItineraryCubit, MapCreateItineraryState>(
-              builder: (context, stateMap) {
-            if (stateMap is PolylineSelected) {
-              BlocProvider.of<MapCreateItineraryCubit>(context).buildPolyline();
-            }
-            return Stack(children: [
-              GoogleMap(
-                onMapCreated: _onMapCreated,
-                initialCameraPosition: CameraPosition(
-                  target: BlocProvider.of<PositionCubit>(context).position,
-                  zoom: 11,
-                ),
-                markers: {
-                  if (BlocProvider.of<MapCreateItineraryCubit>(context)
-                          .markerStart !=
-                      null)
-                    BlocProvider.of<MapCreateItineraryCubit>(context)
-                        .markerStart!,
-                  if (BlocProvider.of<MapCreateItineraryCubit>(context)
-                          .markerEnd !=
-                      null)
-                    BlocProvider.of<MapCreateItineraryCubit>(context)
-                        .markerEnd!,
-                  if (BlocProvider.of<MapCreateItineraryCubit>(context)
-                      .steps
-                      .isNotEmpty)
-                    ...BlocProvider.of<MapCreateItineraryCubit>(context).steps,
-                },
-                polylines:
-                    BlocProvider.of<MapCreateItineraryCubit>(context).polylines,
-                onTap: (evt) =>
-                    BlocProvider.of<MapCreateItineraryCubit>(context)
-                        .addMarker(LatLng(evt.latitude, evt.longitude)),
-              ),
-              Container(
-                  alignment: Alignment.bottomCenter,
-                  child: PointerInterceptor(
-                    child: BlocProvider.of<MapCreateItineraryCubit>(context)
-                            .widgets[
+    return Builder(builder: (context) {
+      final statePosition = context.watch<PositionCubit>().state;
+      final stateMap = context.watch<MapCreateItineraryCubit>().state;
+      final stateCreateItinerary = context.watch<CreateItineraryCubit>().state;
+
+      if (stateCreateItinerary is CreateItineraryRouteValidated) {
+        return const CreateEventForm();
+      }
+      if (statePosition is PositionLoading) {
+        return const Center(child: LoadingWidget());
+      } else {
+        if (stateMap is PolylineSelected) {
+          BlocProvider.of<MapCreateItineraryCubit>(context).buildPolyline();
+        }
+        return Stack(children: [
+          GoogleMap(
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: BlocProvider.of<PositionCubit>(context).position,
+              zoom: 11,
+            ),
+            markers: {
+              if (BlocProvider.of<MapCreateItineraryCubit>(context)
+                      .markerStart !=
+                  null)
+                BlocProvider.of<MapCreateItineraryCubit>(context).markerStart!,
+              if (BlocProvider.of<MapCreateItineraryCubit>(context).markerEnd !=
+                  null)
+                BlocProvider.of<MapCreateItineraryCubit>(context).markerEnd!,
+              if (BlocProvider.of<MapCreateItineraryCubit>(context)
+                  .steps
+                  .isNotEmpty)
+                ...BlocProvider.of<MapCreateItineraryCubit>(context).steps,
+            },
+            polylines:
+                BlocProvider.of<MapCreateItineraryCubit>(context).polylines,
+            onTap: (evt) => BlocProvider.of<MapCreateItineraryCubit>(context)
+                .addMarker(LatLng(evt.latitude, evt.longitude)),
+          ),
+          Container(
+              alignment: Alignment.bottomCenter,
+              child: PointerInterceptor(
+                child:
+                    BlocProvider.of<MapCreateItineraryCubit>(context).widgets[
                         BlocProvider.of<MapCreateItineraryCubit>(context)
                             .selectedWidget],
-                  ))
-            ]);
-          });
-        }));
+              ))
+        ]);
+      }
+    });
   }
 }
