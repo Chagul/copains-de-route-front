@@ -1,62 +1,11 @@
-import 'dart:async';
-
-import 'package:copains_de_route/components/create_event/create_event/create_itinerary_cubit.dart';
+import 'package:copains_de_route/cubit/create_event_global/create_itinerary_cubit.dart';
+import 'package:copains_de_route/cubit/create_event/event_form_cubit.dart';
 import 'package:copains_de_route/components/create_event/form/custom_category_title.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
+import 'package:copains_de_route/views/profil_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-
-class CreateEventFormFieldsBloc extends FormBloc<String, String> {
-  final eventName = TextFieldBloc();
-  final eventDate =
-      InputFieldBloc<DateTime?, Object>(initialValue: DateTime.now());
-  final eventTime =
-      InputFieldBloc<TimeOfDay?, Object>(initialValue: TimeOfDay.now());
-  final eventDescription = TextFieldBloc();
-  final eventMaxParticipants = TextFieldBloc();
-  final eventIsPublic = BooleanFieldBloc();
-
-  // Road Types
-  final eventIsPathCyclePath = BooleanFieldBloc();
-  final eventIsPathGravel = BooleanFieldBloc();
-  final eventIsPathPavingStones = BooleanFieldBloc();
-  final eventIsPathDirt = BooleanFieldBloc();
-  final eventIsPathRoad = BooleanFieldBloc();
-  final eventIsPathOthers = BooleanFieldBloc();
-
-  // Bike Types
-  final eventIsBikeAllTerrain = BooleanFieldBloc();
-  final eventIsBikeGravel = BooleanFieldBloc();
-  final eventIsBikeCity = BooleanFieldBloc();
-  final eventIsBikeBMX = BooleanFieldBloc();
-
-  CreateEventFormFieldsBloc() : super(autoValidate: false) {
-    addFieldBlocs(fieldBlocs: [
-      eventName,
-      eventDate,
-      eventTime,
-      eventDescription,
-      eventMaxParticipants,
-      eventIsPublic,
-      eventIsPathCyclePath,
-      eventIsPathGravel,
-      eventIsPathPavingStones,
-      eventIsPathDirt,
-      eventIsPathRoad,
-      eventIsPathOthers,
-      eventIsBikeAllTerrain,
-      eventIsBikeGravel,
-      eventIsBikeCity,
-      eventIsBikeBMX,
-    ]);
-  }
-
-  @override
-  FutureOr<void> onSubmitting() {
-    emitSuccess();
-  }
-}
 
 class CreateEventForm extends StatelessWidget {
   const CreateEventForm({Key? key}) : super(key: key);
@@ -65,10 +14,11 @@ class CreateEventForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final DateTime today = DateTime.now();
     return BlocProvider(
-        create: (context) => CreateEventFormFieldsBloc(),
+        create: (context) => EventFormBloc(),
         child: Builder(
           builder: (context) {
-            final formBloc = context.read<CreateEventFormFieldsBloc>();
+            final formBloc = context.read<EventFormBloc>();
+            final createItineraryCubit = context.read<CreateItineraryCubit>();
 
             return Theme(
                 data: ThemeData(
@@ -86,17 +36,21 @@ class CreateEventForm extends StatelessWidget {
                         onSurface: CustomColorScheme.customOnSecondary)),
                 child: Scaffold(
                   body: SafeArea(
-                    child: FormBlocListener<CreateEventFormFieldsBloc, String,
-                        String>(
+                    child: FormBlocListener<EventFormBloc, String, String>(
                       onSubmitting: (context, state) {
-                        /*BlocProvider.of<CreateItineraryCubit>(context)
-                            .addFormData(formBloc.getFormData());*/
+                        BlocProvider.of<EventFormBloc>(context).addItinerary(
+                            createItineraryCubit.selectedItinerary);
+                        BlocProvider.of<EventFormBloc>(context).onSubmitting();
                       },
                       onSuccess: (context, state) {
-                        throw UnimplementedError();
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ProfilPage()));
                       },
                       onFailure: (context, state) {
-                        throw UnimplementedError();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(state.failureResponse!)));
                       },
                       child: SingleChildScrollView(
                         child: Padding(

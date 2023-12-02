@@ -2,6 +2,7 @@ import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/utils/format_utils.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomTimePicker extends StatefulWidget {
   final String name;
   TimeOfDay? time;

@@ -1,11 +1,11 @@
 import 'package:copains_de_route/components/commons/loading_widget.dart';
-import 'package:copains_de_route/components/create_event/create_event/create_itinerary_cubit.dart';
-import 'package:copains_de_route/components/create_event/create_event/create_itinerary_state.dart';
+import 'package:copains_de_route/cubit/create_event_global/create_itinerary_cubit.dart';
+import 'package:copains_de_route/cubit/create_event_global/create_itinerary_state.dart';
 import 'package:copains_de_route/components/create_event/form/create_event_form.dart';
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_cubit.dart';
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_state.dart';
-import 'package:copains_de_route/position/position_cubit.dart';
-import 'package:copains_de_route/position/position_state.dart';
+import 'package:copains_de_route/cubit/position/position_cubit.dart';
+import 'package:copains_de_route/cubit/position/position_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

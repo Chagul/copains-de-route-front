@@ -2,6 +2,7 @@ import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+// ignore: must_be_immutable
 class CustomDatePicker extends StatefulWidget {
   final String name;
   TextEditingController input;
@@ -15,11 +16,10 @@ class CustomDatePicker extends StatefulWidget {
 class _CustomDatePickerState extends State<CustomDatePicker> {
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(widget.name, style: const TextStyle(color: Colors.black)),
-        const SizedBox(width: 20.0),
         SizedBox(
           width: 140,
           child: TextField(

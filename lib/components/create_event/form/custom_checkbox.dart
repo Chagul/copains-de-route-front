@@ -1,6 +1,7 @@
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomCheckbox extends StatefulWidget {
   String name;
   bool value;

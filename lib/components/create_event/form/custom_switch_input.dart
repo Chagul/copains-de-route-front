@@ -1,6 +1,7 @@
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomSwitchInput extends StatefulWidget {
   final String name1;
   final String name2;

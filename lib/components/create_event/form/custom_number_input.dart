@@ -2,6 +2,7 @@ import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// ignore: must_be_immutable
 class CustomNumberInput extends StatefulWidget {
   final String name;
   TextEditingController value;

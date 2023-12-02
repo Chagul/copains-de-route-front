@@ -1,5 +1,5 @@
 import 'package:copains_de_route/components/commons/loading_widget.dart';
-import 'package:copains_de_route/components/create_event/create_event/create_itinerary_cubit.dart';
+import 'package:copains_de_route/cubit/create_event_global/create_itinerary_cubit.dart';
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_cubit.dart';
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_state.dart';
 import 'package:copains_de_route/utils/enum_subcomponent.dart';

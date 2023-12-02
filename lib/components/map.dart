@@ -7,10 +7,10 @@ class Map extends StatefulWidget {
   const Map({Key? key}) : super(key: key);
 
   @override
-  _MapCreateItineraryState createState() => _MapCreateItineraryState();
+  MapCreateItineraryState createState() => MapCreateItineraryState();
 }
 
-class _MapCreateItineraryState extends State<Map> {
+class MapCreateItineraryState extends State<Map> {
   late GoogleMapController mapController;
 
   late Future<Position> position;
