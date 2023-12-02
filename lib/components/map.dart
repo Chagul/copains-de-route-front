@@ -1,3 +1,4 @@
+import 'package:copains_de_route/components/commons/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -6,10 +7,10 @@ class Map extends StatefulWidget {
   const Map({Key? key}) : super(key: key);
 
   @override
-  _MapState createState() => _MapState();
+  MapCreateItineraryState createState() => MapCreateItineraryState();
 }
 
-class _MapState extends State<Map> {
+class MapCreateItineraryState extends State<Map> {
   late GoogleMapController mapController;
 
   late Future<Position> position;
@@ -43,7 +44,7 @@ class _MapState extends State<Map> {
         builder: (context, obj) {
           if (!obj.hasData) {
             return const MaterialApp(
-              home: Text("loading"),
+              home: LoadingWidget(),
             );
           }
           return MaterialApp(
