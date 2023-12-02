@@ -61,23 +61,21 @@ class EventFormBloc extends FormBloc<String, String> {
   createCreateEvenement() {
     var roadTypes = _getRoadTypesList();
     var bikeTypes = _getBikeTypesList();
-    DateTime eventDateFormated = DateFormat("yyyy-MM-dd hh:mm").parse(
-        "${eventDate.value} ${FormatUtils.formatTimeOfDay(eventTime.value)}");
-    String eventDateString =
-        DateFormat("yyyy-MM-ddThh:mm:ss").format(eventDateFormated);
+
     evenement = CreateEvenement(
         promoter: 1,
         maxParticipants: eventMaxParticipants.valueToInt!,
-        startTime: eventDateString,
-        roadType1: roadTypes[0],
-        roadType2: roadTypes[1],
-        roadType3: roadTypes[2],
+        startTime:
+            FormatUtils.formatDateAndTime(eventDate.value!, eventTime.value!),
+        roadType1: roadTypes.isNotEmpty ? roadTypes[0] : "",
+        roadType2: roadTypes.length >= 2 ? roadTypes[1] : "",
+        roadType3: roadTypes.length >= 3 ? roadTypes[2] : "",
         startPoint: selectedItinerary.startAddress!,
         endPoint: selectedItinerary.endAddress!,
         name: eventName.value,
         description: eventDescription.value,
-        bikeType1: bikeTypes[0],
-        bikeType2: bikeTypes[1],
+        bikeType1: bikeTypes[0].isNotEmpty ? bikeTypes[0] : "",
+        bikeType2: bikeTypes[1].length >= 2 ? bikeTypes[1] : "",
         visibility: eventIsPublic.value ? "PUBLIC" : "PRIVATE");
   }
 

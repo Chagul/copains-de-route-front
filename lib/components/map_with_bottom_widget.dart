@@ -11,15 +11,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
-class CustomMap extends StatefulWidget {
-  const CustomMap({Key? key}) : super(key: key);
+class MapWithBottomWidget extends StatefulWidget {
+  const MapWithBottomWidget({Key? key}) : super(key: key);
 
   @override
   CustomMapCreateItineraryState createState() =>
       CustomMapCreateItineraryState();
 }
 
-class CustomMapCreateItineraryState extends State<CustomMap> {
+class CustomMapCreateItineraryState extends State<MapWithBottomWidget> {
   late GoogleMapController mapController;
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
