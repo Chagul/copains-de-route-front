@@ -11,6 +11,8 @@ class AddStepsItinerary extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    final mapCreateItineraryCubit =
+        BlocProvider.of<MapCreateItineraryCubit>(context);
     return Container(
         alignment: Alignment.bottomCenter,
         child: PointerInterceptor(
@@ -28,10 +30,8 @@ class AddStepsItinerary extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                         ElevatedButton(
-                            onPressed: () =>
-                                BlocProvider.of<MapCreateItineraryCubit>(
-                                        context)
-                                    .getDirectionsForPoints(),
+                            onPressed: () => mapCreateItineraryCubit
+                                .getDirectionsForPoints(),
                             child: const Text(
                               "Calculer un itinéraire",
                               style: TextStyle(color: Colors.black),
@@ -43,14 +43,10 @@ class AddStepsItinerary extends StatelessWidget {
                           children: [
                         ElevatedButton(
                             onPressed: () => {
-                                  BlocProvider.of<MapCreateItineraryCubit>(
-                                          context)
-                                      .clearSteps(),
-                                  BlocProvider.of<MapCreateItineraryCubit>(
-                                          context)
-                                      .changeWidget(
-                                          SubComponentCreateItineraryPage
-                                              .choseItineraryWidget)
+                                  mapCreateItineraryCubit.clearSteps(),
+                                  mapCreateItineraryCubit.changeWidget(
+                                      SubComponentCreateItineraryPage
+                                          .choseItineraryWidget)
                                 },
                             child: const Text(
                               "Retour",
@@ -58,14 +54,11 @@ class AddStepsItinerary extends StatelessWidget {
                             )),
                         ElevatedButton(
                             onPressed: () => {
-                                  BlocProvider.of<MapCreateItineraryCubit>(
-                                          context)
+                                  mapCreateItineraryCubit
                                       .getDirectionsForPoints(),
-                                  BlocProvider.of<MapCreateItineraryCubit>(
-                                          context)
-                                      .changeWidget(
-                                          SubComponentCreateItineraryPage
-                                              .pickItineraryWidget)
+                                  mapCreateItineraryCubit.changeWidget(
+                                      SubComponentCreateItineraryPage
+                                          .pickItineraryWidget)
                                 },
                             child: const Text(
                               "Confirmer",
