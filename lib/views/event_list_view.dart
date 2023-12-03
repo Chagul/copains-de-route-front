@@ -10,7 +10,6 @@ class EventListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var listEventsCubit = context.read<ListEventCubit>();
     return BlocConsumer<ListEventCubit, ListEventState>(
       listener: (context, state) {
         // si on a un state ListEventDetailsState -> Navigatore.push pour aller sur la page de détails
@@ -37,7 +36,7 @@ class EventListView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.map),
+                    icon: const Icon(Icons.map),
                     color: CustomColorScheme.customOnSecondary,
                     onPressed: () => print("map"),
                   ),
@@ -48,7 +47,11 @@ class EventListView extends StatelessWidget {
                       },
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: "Rechercher ..."),
+                          hintText: "Rechercher ...",
+                          suffixIcon: Icon(
+                            Icons.search,
+                            color: CustomColorScheme.customOnSecondary,
+                          )),
                     ),
                   )
                 ],
@@ -63,22 +66,26 @@ class EventListView extends StatelessWidget {
                       onPressed: () {
                         print("Date");
                       },
-                      child: Text("Date")),
+                      child: Text("Date", style: _getButtonTextStyle())),
                   ElevatedButton(
                       onPressed: () {
                         print("Distance");
                       },
-                      child: Text("Distance")),
+                      child: Text("Distance", style: _getButtonTextStyle())),
                   ElevatedButton(
                       onPressed: () {
                         print("Participants");
                       },
-                      child: Text("Participants")),
+                      child: Text(
+                        "Participants",
+                        style: _getButtonTextStyle(),
+                      )),
                   ElevatedButton(
                     onPressed: () {
                       print("Filtres");
                     },
-                    child: const Icon(Icons.table_rows_sharp),
+                    child: const Icon(Icons.table_rows_sharp,
+                        color: CustomColorScheme.customOnSecondary),
                   )
                 ],
               ),
@@ -100,50 +107,7 @@ class EventListView extends StatelessWidget {
     return const Center(child: Text("Pas d'événements :psad:"));
   }
 
-  Widget _buildHeader(BuildContext context, ListEventState state) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Icon(Icons.map),
-            TextField(
-              onChanged: (text) {
-                print(text);
-              },
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(), hintText: "Rechercher ..."),
-            )
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            ElevatedButton(
-                onPressed: () {
-                  print("Date");
-                },
-                child: Text("Date")),
-            ElevatedButton(
-                onPressed: () {
-                  print("Distance");
-                },
-                child: Text("Distance")),
-            ElevatedButton(
-                onPressed: () {
-                  print("Participants");
-                },
-                child: Text("Participants")),
-            ElevatedButton(
-              onPressed: () {
-                print("Filtres");
-              },
-              child: const Icon(Icons.table_rows_sharp),
-            )
-          ],
-        )
-      ],
-    );
+  TextStyle _getButtonTextStyle() {
+    return const TextStyle(color: CustomColorScheme.customOnSecondary);
   }
 }
