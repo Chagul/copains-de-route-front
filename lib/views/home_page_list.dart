@@ -1,23 +1,18 @@
+import 'package:copains_de_route/components/list_events/list_events_cubit.dart';
+import 'package:copains_de_route/components/list_events/list_events_state.dart';
+import 'package:copains_de_route/views/event_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePageList extends StatelessWidget {
-  final Function changeView;
-  const HomePageList({super.key, required this.changeView});
+  const HomePageList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('List'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            changeView();
-          },
-          child: const Text('LIst home'),
-        ),
-      ),
+    return BlocProvider(
+      create: (context) =>
+          ListEventCubit(ListAllEventsLoadingState())..getEvents(),
+      child: const EventListView(),
     );
   }
 }

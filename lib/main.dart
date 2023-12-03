@@ -1,13 +1,9 @@
-import 'package:copains_de_route/components/list_events/list_events_cubit.dart';
-import 'package:copains_de_route/components/list_events/list_events_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/views/create_itinerary_page.dart';
-import 'package:copains_de_route/views/event_list_view.dart';
 import 'package:copains_de_route/views/home_page.dart';
 import 'package:copains_de_route/views/my_itinerary_page.dart';
 import 'package:copains_de_route/views/profil_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
@@ -28,13 +24,48 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BlocProvider(
-        create: (context) =>
-            ListEventCubit(ListAllEventsLoadingState())..getEvents(),
-        child: const EventListView(),
+      home: Scaffold(
+        body: const [
+          HomePage(),
+          MyIntineraryPage(),
+          CreateItineraryPage(),
+          ProfilPage()
+        ][selectedPageIndex],
+        bottomNavigationBar: NavigationBar(
+          indicatorColor: CustomColorScheme.customSecondaryColor,
+          backgroundColor: CustomColorScheme.customBackground,
+          selectedIndex: selectedPageIndex,
+          onDestinationSelected: (int index) {
+            setState(() {
+              selectedPageIndex = index;
+            });
+          },
+          destinations: const <NavigationDestination>[
+            NavigationDestination(
+              icon:
+                  Icon(Icons.home, color: CustomColorScheme.customPrimaryColor),
+              label: 'Accueil',
+            ),
+            NavigationDestination(
+              icon: ImageIcon(AssetImage('assets/icon_my_itinerary.png'),
+                  color: CustomColorScheme.customPrimaryColor),
+              label: 'Mes itinéraires',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.pin_drop,
+                  color: CustomColorScheme.customPrimaryColor),
+              label: 'Créer',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.person,
+                  color: CustomColorScheme.customPrimaryColor),
+              icon: Icon(Icons.person,
+                  color: CustomColorScheme.customPrimaryColor),
+              label: 'Profil',
+            ),
+          ],
+        ),
       ),
-      theme:
-          ThemeData(colorScheme: const CustomColorScheme(), useMaterial3: true),
     );
   }
 }
