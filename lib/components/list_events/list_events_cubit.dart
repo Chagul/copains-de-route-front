@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:copains_de_route/components/list_events/list_events_state.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/model/event_list.dart';
@@ -15,7 +13,7 @@ class ListEventCubit extends Cubit<ListEventState> {
     Dio dio = Dio();
 
     var response = await dio.get(
-      "http://localhost:8080/events",
+      "https://app-o5ei237sga-ew.a.run.app/events",
     );
 
     List<Event> eventList =
