@@ -33,60 +33,64 @@ class EventCard extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     return Card(
+        color: CustomColorScheme.customOnPrimary,
+        shape: RoundedRectangleBorder(
+            side: const BorderSide(color: CustomColorScheme.customOnSecondary),
+            borderRadius: BorderRadius.circular(10.0)),
         child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [Icon(Icons.event)],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(
-              "${event.name} - placeholder km",
-              style: _getTitleTextStyle(),
+            const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Icon(Icons.event)],
             ),
-            const SizedBox(
-              height: 10,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "${event.name} - placeholder km",
+                  style: _getTitleTextStyle(),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Organisé par placeholder",
+                  style: _getNormalTextStyle(),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  //"Le ${DateFormat('dMMMMy')} à ${DateFormat.Hm()}",
+                  "Le 17 octobre 2023 à 14h30",
+                  style: _getNormalTextStyle(),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "placeholder / ${event.maxParticipants} participants",
+                  style: _getNormalTextStyle(),
+                ),
+              ],
             ),
-            Text(
-              "Organisé par placeholder",
-              style: _getNormalTextStyle(),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              //"Le ${DateFormat('dMMMMy')} à ${DateFormat.Hm()}",
-              "Le 17 octobre 2023 à 14h30",
-              style: _getNormalTextStyle(),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              "placeholder / ${event.maxParticipants} participants",
-              style: _getNormalTextStyle(),
-            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      // emit or navigator to open details
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => EventDetails(event: event)));
+                    },
+                    icon: const Icon(
+                      Icons.arrow_forward_outlined,
+                      color: CustomColorScheme.customOnSecondary,
+                    ))
+              ],
+            )
           ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-                onPressed: () {
-                  // emit or navigator to open details
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => EventDetails(event: event)));
-                },
-                icon: const Icon(
-                  Icons.arrow_forward_outlined,
-                  color: CustomColorScheme.customOnSecondary,
-                ))
-          ],
-        )
-      ],
-    ));
+        ));
   }
 }

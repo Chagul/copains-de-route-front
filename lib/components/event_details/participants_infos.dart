@@ -14,36 +14,45 @@ class ParticipantsInfos extends StatelessWidget {
       children: [
         Card(
             child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.90,
                 child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("Participants",
-                style: TextStyle(
-                    color: CustomColorScheme.customOnSecondary,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold)),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.person /*event.participants.firstUser.profilePic*/),
-                Icon(Icons.person /*event.participants.secondUser.profilePic*/),
-                Icon(Icons.person /*event.participants.thirdUser.profilePic*/),
-                Text(
-                  "+ event.name.participants-3 autres",
-                  style: TextStyle(color: CustomColorScheme.customOnSecondary),
-                )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                    onPressed: () => print("Liste participants"),
-                    icon: const Icon(Icons.arrow_circle_right_outlined))
-              ],
-            )
-          ],
-        )))
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Participants",
+                        style: TextStyle(
+                            color: CustomColorScheme.customOnSecondary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(Icons
+                            .person /*event.participants.firstUser.profilePic*/),
+                        Icon(Icons
+                            .person /*event.participants.secondUser.profilePic*/),
+                        Icon(Icons
+                            .person /*event.participants.thirdUser.profilePic*/),
+                        const SizedBox(width: 5),
+                        Text(
+                          "+ event.name.participants-3 autres",
+                          style: TextStyle(
+                              color: CustomColorScheme.customOnSecondary),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                            onPressed: () => print("Liste participants"),
+                            icon: const Icon(
+                              Icons.arrow_circle_right_outlined,
+                              color: CustomColorScheme.customOnSecondary,
+                            ))
+                      ],
+                    )
+                  ],
+                )))
       ],
     );
   }

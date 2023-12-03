@@ -66,6 +66,7 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
       ),
+      theme: ThemeData(colorScheme: const CustomColorScheme()),
     );
   }
 }

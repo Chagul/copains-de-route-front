@@ -1,4 +1,5 @@
 import 'package:copains_de_route/components/event_details/comment_section.dart';
+import 'package:copains_de_route/components/event_details/map_card.dart';
 import 'package:copains_de_route/components/event_details/participants_infos.dart';
 import 'package:copains_de_route/components/event_details/route_infos.dart';
 import 'package:copains_de_route/model/event.dart';
@@ -14,7 +15,7 @@ class EventDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -22,7 +23,7 @@ class EventDetails extends StatelessWidget {
               IconButton(
                   onPressed: () => Navigator.pop(context),
                   icon: const Icon(
-                    Icons.arrow_back,
+                    Icons.arrow_circle_left_outlined,
                     color: CustomColorScheme.customOnSecondary,
                   )),
               Text(
@@ -45,17 +46,29 @@ class EventDetails extends StatelessWidget {
                       child: const Text("Rejoindre",
                           style: TextStyle(
                               color: CustomColorScheme.customOnSecondary))),
-                  const Text("placeholder",
-                      style:
-                          TextStyle(color: CustomColorScheme.customOnSecondary))
+                  const Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text("placeholder",
+                              style: TextStyle(
+                                  color: CustomColorScheme.customOnSecondary)),
+                          Icon(Icons.person)
+                        ],
+                      ),
+                    ],
+                  ),
                 ],
               ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Card(child: Text("MAP HERE"))],
-              ),
+              const SizedBox(height: 10),
+              MapCard(event: event),
+              const SizedBox(height: 10),
               RouteInfos(event: event),
+              const SizedBox(height: 10),
               ParticipantsInfos(event: event),
+              const SizedBox(height: 10),
               CommentSection(event: event)
             ],
           ))),
