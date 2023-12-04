@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/model/create_evenement.dart';
+import 'package:copains_de_route/model/point_custom.dart';
 import 'package:copains_de_route/utils/format_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 class EventFormBloc extends FormBloc<String, String> {
   late CreateEvenement evenement;
   late PolylineResult selectedItinerary;
+  late List<PointCustom> steps;
   final eventName = TextFieldBloc();
   final eventDate =
       InputFieldBloc<DateTime?, Object>(initialValue: DateTime.now());
@@ -58,6 +60,15 @@ class EventFormBloc extends FormBloc<String, String> {
     selectedItinerary = itinerary;
   }
 
+  addSteps(List<PointCustom> points) {
+    
+    for(int i = 0; i < points.length; i++){
+
+    steps.add(PointCustom(
+        longitude: points[i].longitude, latitude: points[i].latitude, rank: steps.length));
+    }
+  }
+
   createCreateEvenement() {
     var roadTypes = _getRoadTypesList();
     var bikeTypes = _getBikeTypesList();
@@ -70,12 +81,12 @@ class EventFormBloc extends FormBloc<String, String> {
         roadType1: roadTypes.isNotEmpty ? roadTypes[0] : "",
         roadType2: roadTypes.length >= 2 ? roadTypes[1] : "",
         roadType3: roadTypes.length >= 3 ? roadTypes[2] : "",
-        startPoint: selectedItinerary.startAddress!,
-        endPoint: selectedItinerary.endAddress!,
+        steps: steps,
+        route: selectedItinerary.overviewPolyline!,
         name: eventName.value,
         description: eventDescription.value,
-        bikeType1: bikeTypes[0].isNotEmpty ? bikeTypes[0] : "",
-        bikeType2: bikeTypes[1].length >= 2 ? bikeTypes[1] : "",
+        bikeType1: bikeTypes.isNotEmpty ? bikeTypes[0] : "",
+        bikeType2: bikeTypes.length >= 2 ? bikeTypes[1] : "",
         visibility: eventIsPublic.value ? "PUBLIC" : "PRIVATE");
   }
 
@@ -131,4 +142,5 @@ class EventFormBloc extends FormBloc<String, String> {
     }
     return bikeTypes;
   }
+
 }

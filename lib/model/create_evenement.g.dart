@@ -14,13 +14,15 @@ CreateEvenement _$CreateEvenementFromJson(Map<String, dynamic> json) =>
       roadType1: json['roadType1'] as String,
       roadType2: json['roadType2'] as String,
       roadType3: json['roadType3'] as String,
-      startPoint: json['startPoint'] as String,
-      endPoint: json['endPoint'] as String,
+      steps: (json['steps'] as List<dynamic>)
+          .map((e) => PointCustom.fromJson(e as Map<String, dynamic>))
+          .toList(),
       name: json['name'] as String,
       description: json['description'] as String,
       bikeType1: json['bikeType1'] as String,
       bikeType2: json['bikeType2'] as String,
       visibility: json['visibility'] as String,
+      route: json['route'] as String,
     );
 
 Map<String, dynamic> _$CreateEvenementToJson(CreateEvenement instance) =>
@@ -31,11 +33,11 @@ Map<String, dynamic> _$CreateEvenementToJson(CreateEvenement instance) =>
       'roadType1': instance.roadType1,
       'roadType2': instance.roadType2,
       'roadType3': instance.roadType3,
-      'startPoint': instance.startPoint,
-      'endPoint': instance.endPoint,
+      'steps': instance.steps.map((e) => e.toJson()).toList(),
       'name': instance.name,
       'description': instance.description,
       'bikeType1': instance.bikeType1,
       'bikeType2': instance.bikeType2,
       'visibility': instance.visibility,
+      'route': instance.route,
     };
