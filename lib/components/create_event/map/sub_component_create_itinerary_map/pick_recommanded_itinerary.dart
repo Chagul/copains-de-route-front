@@ -77,11 +77,19 @@ class PickRecommandedItinerary extends StatelessWidget {
                                     style: TextStyle(color: Colors.black),
                                   )),
                               ElevatedButton(
-                                  onPressed: () => BlocProvider.of<
+                                  onPressed: () => {
+                                    BlocProvider.of<
                                           CreateItineraryCubit>(context)
                                       .addItinerarySelected(BlocProvider.of<
                                               MapCreateItineraryCubit>(context)
-                                          .routeSelected),
+                                          .routeSelected), BlocProvider.of<CreateItineraryCubit>(context).addSteps(
+                                              BlocProvider.of<MapCreateItineraryCubit>(context).steps,
+                                        BlocProvider.of<
+                                                    MapCreateItineraryCubit>(
+                                                context).markerStart!,
+                                        BlocProvider.of<
+                                                    MapCreateItineraryCubit>(context).markerEnd!,
+                                          )},
                                   child: const Text(
                                     "Confirmer",
                                     style: TextStyle(color: Colors.black),

@@ -1,7 +1,10 @@
+
+import 'package:copains_de_route/model/point_custom.dart';
 import 'package:json_annotation/json_annotation.dart';
+
 part 'create_evenement.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class CreateEvenement {
   int promoter;
   int maxParticipants;
@@ -9,13 +12,13 @@ class CreateEvenement {
   String roadType1;
   String roadType2;
   String roadType3;
-  String startPoint;
-  String endPoint;
+  List<PointCustom> steps;
   String name;
   String description;
   String bikeType1;
   String bikeType2;
   String visibility;
+  String route;
 
   CreateEvenement({
     required this.promoter,
@@ -24,13 +27,13 @@ class CreateEvenement {
     required this.roadType1,
     required this.roadType2,
     required this.roadType3,
-    required this.startPoint,
-    required this.endPoint,
+    required this.steps,
     required this.name,
     required this.description,
     required this.bikeType1,
     required this.bikeType2,
     required this.visibility,
+    required this.route
   });
 
   factory CreateEvenement.fromJson(Map<String, dynamic> json) =>
