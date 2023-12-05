@@ -8,8 +8,9 @@ part of 'create_evenement.dart';
 
 CreateEvenement _$CreateEvenementFromJson(Map<String, dynamic> json) =>
     CreateEvenement(
-      promoter: json['promoter'] as int,
+      promoter: json['promoter'] as String,
       maxParticipants: json['maxParticipants'] as int,
+      startDate: json['startDate'] as String,
       startTime: json['startTime'] as String,
       roadType1: json['roadType1'] as String,
       roadType2: json['roadType2'] as String,
@@ -25,12 +26,14 @@ CreateEvenement _$CreateEvenementFromJson(Map<String, dynamic> json) =>
       bikeType2: json['bikeType2'] as String,
       visibility: json['visibility'] as String,
       route: json['route'] as String,
+      distance: json['distance'] as int,
     );
 
 Map<String, dynamic> _$CreateEvenementToJson(CreateEvenement instance) =>
     <String, dynamic>{
       'promoter': instance.promoter,
       'maxParticipants': instance.maxParticipants,
+      'startDate': instance.startDate,
       'startTime': instance.startTime,
       'roadType1': instance.roadType1,
       'roadType2': instance.roadType2,
@@ -44,4 +47,5 @@ Map<String, dynamic> _$CreateEvenementToJson(CreateEvenement instance) =>
       'bikeType2': instance.bikeType2,
       'visibility': instance.visibility,
       'route': instance.route,
+      'distance': instance.distance,
     };
