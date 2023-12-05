@@ -11,7 +11,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 class EventFormBloc extends FormBloc<String, String> {
   late CreateEvenement evenement;
   late PolylineResult selectedItinerary;
-  late List<PointCustom> steps;
+  late List<PointCustom> steps = [];
   final eventName = TextFieldBloc();
   final eventDate =
       InputFieldBloc<DateTime?, Object>(initialValue: DateTime.now());
@@ -61,11 +61,11 @@ class EventFormBloc extends FormBloc<String, String> {
   }
 
   addSteps(List<PointCustom> points) {
-    
-    for(int i = 0; i < points.length; i++){
-
-    steps.add(PointCustom(
-        longitude: points[i].longitude, latitude: points[i].latitude, rank: steps.length));
+    for (int i = 0; i < points.length; i++) {
+      steps.add(PointCustom(
+          longitude: points[i].longitude,
+          latitude: points[i].latitude,
+          rank: steps.length));
     }
   }
 
@@ -74,19 +74,20 @@ class EventFormBloc extends FormBloc<String, String> {
     var bikeTypes = _getBikeTypesList();
 
     evenement = CreateEvenement(
-        promoter: 1,
+        promoter: "test",
         maxParticipants: eventMaxParticipants.valueToInt!,
-        startTime:
-            FormatUtils.formatDateAndTime(eventDate.value!, eventTime.value!),
+        startDate: DateFormat("yyyy-MM-dd").format(eventDate.value!).toString(),
+        startTime: FormatUtils.formatTimeOfDay(eventTime.value!),
         roadType1: roadTypes.isNotEmpty ? roadTypes[0] : "",
         roadType2: roadTypes.length >= 2 ? roadTypes[1] : "",
         roadType3: roadTypes.length >= 3 ? roadTypes[2] : "",
         startAddress: selectedItinerary.startAddress!,
-        endAdress: selectedItinerary.endAddress!,
+        endAddress: selectedItinerary.endAddress!,
         steps: steps,
         route: selectedItinerary.overviewPolyline!,
         name: eventName.value,
         description: eventDescription.value,
+        distance: int.parse(selectedItinerary.distance!),
         bikeType1: bikeTypes.isNotEmpty ? bikeTypes[0] : "",
         bikeType2: bikeTypes.length >= 2 ? bikeTypes[1] : "",
         visibility: eventIsPublic.value ? "PUBLIC" : "PRIVATE");
@@ -144,5 +145,4 @@ class EventFormBloc extends FormBloc<String, String> {
     }
     return bikeTypes;
   }
-
 }
