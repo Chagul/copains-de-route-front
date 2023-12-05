@@ -11,10 +11,11 @@ class CommentSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var comments = <Widget>[];
-    comments.add(CommentCard());
-    /*for (var comment in event.comments) {
-      comments.add(CommentCard(comment));
-    }*/
+    for (var comment in event.comments) {
+      comments.add(CommentCard(
+        comment: comment,
+      ));
+    }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -22,9 +23,9 @@ class CommentSection extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "Commentaires (event.comments.length)",
-              style: TextStyle(
+            Text(
+              "Commentaires (${event.comments.length})",
+              style: const TextStyle(
                   color: CustomColorScheme.customOnSecondary,
                   fontWeight: FontWeight.bold,
                   fontSize: 16),

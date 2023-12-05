@@ -23,19 +23,19 @@ class ParticipantsInfos extends StatelessWidget {
                             color: CustomColorScheme.customOnSecondary,
                             fontSize: 16,
                             fontWeight: FontWeight.bold)),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Icon(Icons
+                        const Icon(Icons
                             .person /*event.participants.firstUser.profilePic*/),
-                        Icon(Icons
+                        const Icon(Icons
                             .person /*event.participants.secondUser.profilePic*/),
-                        Icon(Icons
+                        const Icon(Icons
                             .person /*event.participants.thirdUser.profilePic*/),
                         const SizedBox(width: 5),
                         Text(
-                          "+ event.name.participants-3 autres",
-                          style: TextStyle(
+                          "+ ${event.participants.length - 3} autres",
+                          style: const TextStyle(
                               color: CustomColorScheme.customOnSecondary),
                         )
                       ],

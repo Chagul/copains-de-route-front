@@ -11,9 +11,7 @@ class EventListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ListEventCubit, ListEventState>(
-      listener: (context, state) {
-        // si on a un state ListEventDetailsState -> Navigatore.push pour aller sur la page de détails
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(body: _buildBody(context, state));
       },
@@ -104,7 +102,11 @@ class EventListView extends StatelessWidget {
       );
     }
 
-    return const Center(child: Text("Pas d'événements :psad:"));
+    return const Center(
+        child: Text(
+      "Pas d'événements :psad:",
+      style: TextStyle(color: CustomColorScheme.customOnSecondary),
+    ));
   }
 
   TextStyle _getButtonTextStyle() {

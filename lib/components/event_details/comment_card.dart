@@ -1,8 +1,11 @@
+import 'package:copains_de_route/model/comment_dto.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 
 class CommentCard extends StatelessWidget {
-  // final Comment comment;
+  final CommentDTO comment;
+
+  const CommentCard({super.key, required this.comment});
 
   @override
   Widget build(BuildContext context) {
@@ -19,37 +22,39 @@ class CommentCard extends StatelessWidget {
                 SizedBox(
                   height: 15,
                   child: RichText(
-                      text: const TextSpan(
-                          style: TextStyle(
+                      text: TextSpan(
+                          style: const TextStyle(
                               fontSize: 14,
                               color: CustomColorScheme.customOnSecondary),
                           children: [
                         TextSpan(
-                            text: "comment.user.login, ",
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                        TextSpan(text: "le comment.date à comment.time"),
+                            text: "${comment.login}, ",
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
+                        TextSpan(text: "le ${comment.date}"),
                       ])),
                 ),
               ],
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width: 27),
+                const SizedBox(width: 27),
                 Text(
-                  "comment.text",
-                  style: TextStyle(color: CustomColorScheme.customOnSecondary),
+                  comment.content,
+                  style: const TextStyle(
+                      color: CustomColorScheme.customOnSecondary),
                 )
               ],
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text("comment.likes",
-                    style: TextStyle(
+                Text("${comment.likes}",
+                    style: const TextStyle(
                         color: CustomColorScheme.customError,
                         fontWeight: FontWeight.bold)),
-                Icon(
+                const Icon(
                   Icons.favorite,
                   color: CustomColorScheme.customError,
                 )

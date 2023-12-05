@@ -16,10 +16,16 @@ class ListEventCubit extends Cubit<ListEventState> {
       "https://app-o5ei237sga-ew.a.run.app/events",
     );
 
-    List<Event> eventList =
-        (response.data as List).map((item) => Event.fromJson(item)).toList();
-    EventList data = EventList(eventList: eventList);
+    if (response.statusCode == 200) {
+      List<Event> eventList =
+          (response.data as List).map((item) => Event.fromJson(item)).toList();
+      EventList data = EventList(eventList: eventList);
 
-    emit(ListAllEventsLoadedState(data: data));
+      emit(ListAllEventsLoadedState(data: data));
+    }
+
+    if (response.statusCode == 204) {
+      emit(ListAllEventsNoContentState());
+    }
   }
 }

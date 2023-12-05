@@ -11,4 +11,6 @@ class ListAllEventsLoadedState extends ListAllEventsState {
   ListAllEventsLoadedState({required this.data});
 }
 
+class ListAllEventsNoContentState extends ListAllEventsState {}
+
 abstract class ListMyEventsState extends ListEventState {}

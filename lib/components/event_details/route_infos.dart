@@ -26,62 +26,62 @@ class RouteInfos extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 5),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.access_time,
+                    const Icon(Icons.access_time,
                         color: CustomColorScheme.customOnSecondary),
                     const SizedBox(width: 5),
-                    Text(/*event.time*/ "Le 17 octobre 2023 à 14h30",
-                        style: TextStyle(
+                    Text("Le ${event.startDate} à ${event.startTime}",
+                        style: const TextStyle(
                             color: CustomColorScheme.customOnSecondary)),
                   ],
                 ),
                 const SizedBox(height: 5),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.add_road,
+                    const Icon(Icons.add_road,
                         color: CustomColorScheme.customOnSecondary),
                     const SizedBox(width: 5),
-                    Text(/*event._getRoadTypes()*/ "Placeholder road types",
-                        style: TextStyle(
+                    Text("${event.getRoadTypes()}",
+                        style: const TextStyle(
                             color: CustomColorScheme.customOnSecondary)),
                   ],
                 ),
                 const SizedBox(height: 5),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.location_on,
+                    const Icon(Icons.location_on,
                         color: CustomColorScheme.customError),
                     const SizedBox(width: 5),
-                    Text(/*event.startPoint*/ "Départ : Placeholder",
-                        style: TextStyle(
+                    Text("Départ : ${event.startAddress}",
+                        style: const TextStyle(
                             color: CustomColorScheme.customOnSecondary)),
                   ],
                 ),
                 const SizedBox(height: 5),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.location_on,
+                    const Icon(Icons.location_on,
                         color: CustomColorScheme.customError),
                     const SizedBox(width: 5),
-                    Text(/*event.endPoint*/ "Arrivée : Placeholder",
-                        style: TextStyle(
+                    Text("Arrivée : ${event.endAddress}",
+                        style: const TextStyle(
                             color: CustomColorScheme.customOnSecondary)),
                   ],
                 ),
                 const SizedBox(height: 5),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.compare_arrows,
+                    const Icon(Icons.compare_arrows,
                         color: CustomColorScheme.customError),
                     const SizedBox(width: 5),
-                    Text(/*event.startPoint*/ "Distance : Placeholder km",
-                        style: TextStyle(
+                    Text("Distance : ${event.distance} km",
+                        style: const TextStyle(
                             color: CustomColorScheme.customOnSecondary)),
                   ],
                 ),

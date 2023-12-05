@@ -55,22 +55,21 @@ class EventCard extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  "Organisé par placeholder",
+                  "Organisé par ${event.promoter}",
                   style: _getNormalTextStyle(),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Text(
-                  //"Le ${DateFormat('dMMMMy')} à ${DateFormat.Hm()}",
-                  "Le 17 octobre 2023 à 14h30",
+                  "Le ${event.startDate} à ${event.startTime}",
                   style: _getNormalTextStyle(),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Text(
-                  "placeholder / ${event.maxParticipants} participants",
+                  "${event.participants.length} / ${event.maxParticipants} participants",
                   style: _getNormalTextStyle(),
                 ),
               ],

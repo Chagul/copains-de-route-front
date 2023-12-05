@@ -46,16 +46,16 @@ class EventDetails extends StatelessWidget {
                       child: const Text("Rejoindre",
                           style: TextStyle(
                               color: CustomColorScheme.customOnSecondary))),
-                  const Column(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text("placeholder",
-                              style: TextStyle(
+                          Text(event.promoter,
+                              style: const TextStyle(
                                   color: CustomColorScheme.customOnSecondary)),
-                          Icon(Icons.person)
+                          const Icon(Icons.person)
                         ],
                       ),
                     ],
