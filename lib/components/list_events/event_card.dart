@@ -48,7 +48,7 @@ class EventCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  "${event.name} - placeholder km",
+                  "${event.name} - ${event.distance} km",
                   style: _getTitleTextStyle(),
                 ),
                 const SizedBox(
