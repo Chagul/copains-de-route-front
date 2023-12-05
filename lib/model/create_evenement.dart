@@ -12,6 +12,8 @@ class CreateEvenement {
   String roadType1;
   String roadType2;
   String roadType3;
+  String startAddress;
+  String endAddress;
   List<PointCustom> steps;
   String name;
   String description;
@@ -27,6 +29,8 @@ class CreateEvenement {
     required this.roadType1,
     required this.roadType2,
     required this.roadType3,
+    required this.startAddress,
+    required this.endAddress,
     required this.steps,
     required this.name,
     required this.description,
