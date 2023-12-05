@@ -40,6 +40,8 @@ class CreateEventForm extends StatelessWidget {
                       onSubmitting: (context, state) {
                         BlocProvider.of<EventFormBloc>(context).addItinerary(
                             createItineraryCubit.selectedItinerary);
+                        BlocProvider.of<EventFormBloc>(context)
+                            .addSteps(createItineraryCubit.steps);
                         BlocProvider.of<EventFormBloc>(context).onSubmitting();
                       },
                       onSuccess: (context, state) {
