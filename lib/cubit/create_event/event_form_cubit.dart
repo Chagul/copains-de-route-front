@@ -87,7 +87,7 @@ class EventFormBloc extends FormBloc<String, String> {
         route: selectedItinerary.overviewPolyline!,
         name: eventName.value,
         description: eventDescription.value,
-        distance: int.parse(selectedItinerary.distance!),
+        distance: int.parse(selectedItinerary.distance!.split(' ')[0]),
         bikeType1: bikeTypes.isNotEmpty ? bikeTypes[0] : "",
         bikeType2: bikeTypes.length >= 2 ? bikeTypes[1] : "",
         visibility: eventIsPublic.value ? "PUBLIC" : "PRIVATE");
