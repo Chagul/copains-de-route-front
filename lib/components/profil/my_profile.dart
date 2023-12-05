@@ -111,12 +111,13 @@ class MyProfilePage extends StatelessWidget {
                           Align(
                               alignment: Alignment.bottomRight,
                               child: TextButton(
-                                  onPressed: () => Navigator.of(context).push(
+                                  onPressed: () => {
+                                    Navigator.of(context).push(
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               BlocProvider.value(
                                                   value: cubit,
-                                                  child: const FriendList()))),
+                                                  child: const FriendList())))},
                                   child: const Text("Voir plus",
                                       style: TextStyle(
                                           color: CustomColorScheme

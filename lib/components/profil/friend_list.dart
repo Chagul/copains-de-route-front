@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:copains_de_route/components/commons/loading_widget.dart';
 import 'package:copains_de_route/cubit/profil/profil_view_cubit.dart';
+import 'package:copains_de_route/cubit/profil/profil_view_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
@@ -10,7 +14,8 @@ class FriendList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
       final cubit = BlocProvider.of<ProfilViewCubit>(context);
-      return SafeArea(
+      if(cubit.state is MyProfileState){
+return SafeArea(
           child: Scaffold(
         body: SingleChildScrollView(
             child: Column(children: [
@@ -39,7 +44,7 @@ class FriendList extends StatelessWidget {
               child: Container(
                   color: CustomColorScheme.customPrimaryColor,
                   child: Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Column(
                       children: [
                         const Padding(
@@ -62,13 +67,14 @@ class FriendList extends StatelessWidget {
                         Container(
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.black),
-                            ),
+                            ), 
                             child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: 20,
                                 itemBuilder: (context, index) {
                                   return ListTile(
-                                    leading: const CircleAvatar(
+                                    leading: CircleAvatar(
                                         radius: 20,
                                         backgroundImage: NetworkImage(
                                             'https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png')),
@@ -85,6 +91,15 @@ class FriendList extends StatelessWidget {
                   ))),
         ])),
       ));
-    });
+      } else if(cubit.state is OtherProfileState) {
+        return Container();
+      } else if(cubit.state is LoadingState){
+        return const LoadingWidget();
+      } else {
+        return Container();
+      }
+  });
+  
   }
+
 }
