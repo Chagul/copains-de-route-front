@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:copains_de_route/components/commons/loading_widget.dart';
 import 'package:copains_de_route/cubit/profil/profil_view_cubit.dart';
 import 'package:copains_de_route/cubit/profil/profil_view_state.dart';
@@ -74,7 +72,7 @@ return SafeArea(
                                 itemCount: 20,
                                 itemBuilder: (context, index) {
                                   return ListTile(
-                                    leading: CircleAvatar(
+                                    leading: const CircleAvatar(
                                         radius: 20,
                                         backgroundImage: NetworkImage(
                                             'https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png')),
@@ -92,7 +90,7 @@ return SafeArea(
         ])),
       ));
       } else if(cubit.state is OtherProfileState) {
-        return Container();
+        return Container(child: Text("OTHER PRFILE"));
       } else if(cubit.state is LoadingState){
         return const LoadingWidget();
       } else {

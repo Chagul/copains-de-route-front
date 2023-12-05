@@ -13,10 +13,22 @@ class ProfilViewCubit extends Cubit<ProfilViewState> {
   }
 
   friendClicked(int i) {
-    emit(FriendViewClicked());
+    emit(OtherProfileState(i));
   }
 
   getInfo() {
     return "get info";
+  }
+
+  moreFriendClicked() {
+    emit(MyProfileState());
+  }
+
+  waitLoading() {
+    emit(LoadingState());
+
+    Future.delayed(const Duration(seconds: 5), () {
+      emit(MyProfileState());
+    });
   }
 }
