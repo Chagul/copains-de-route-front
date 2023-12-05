@@ -81,6 +81,8 @@ class EventFormBloc extends FormBloc<String, String> {
         roadType1: roadTypes.isNotEmpty ? roadTypes[0] : "",
         roadType2: roadTypes.length >= 2 ? roadTypes[1] : "",
         roadType3: roadTypes.length >= 3 ? roadTypes[2] : "",
+        startAddress: selectedItinerary.startAddress!,
+        endAdress: selectedItinerary.endAddress!,
         steps: steps,
         route: selectedItinerary.overviewPolyline!,
         name: eventName.value,
