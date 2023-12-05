@@ -79,7 +79,6 @@ class EventCard extends StatelessWidget {
               children: [
                 IconButton(
                     onPressed: () {
-                      // emit or navigator to open details
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => EventDetails(event: event)));
                     },

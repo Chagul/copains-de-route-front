@@ -1,3 +1,4 @@
+import 'package:copains_de_route/components/event_details/participants_infos_list_participants.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,12 @@ class ParticipantsInfos extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         IconButton(
-                            onPressed: () => print("Liste participants"),
+                            onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ParticipantsInfosListParticipants(
+                                            participants: event.participants))),
                             icon: const Icon(
                               Icons.arrow_circle_right_outlined,
                               color: CustomColorScheme.customOnSecondary,

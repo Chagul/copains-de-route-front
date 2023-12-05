@@ -13,4 +13,10 @@ class ListAllEventsLoadedState extends ListAllEventsState {
 
 class ListAllEventsNoContentState extends ListAllEventsState {}
 
+class ListAllEventsParticipateLoadingState extends ListAllEventsState {}
+
+class ListAllEventsParticipateLoadedState extends ListAllEventsState {}
+
+class ListAllEventsParticipateErrorState extends ListAllEventsState {}
+
 abstract class ListMyEventsState extends ListEventState {}

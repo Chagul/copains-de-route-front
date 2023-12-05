@@ -14,4 +14,22 @@ class CopainsDeRouteApi {
       return Future.error(e);
     }
   }
+
+  Future<Response> getEvents() async {
+    try {
+      var response = await _dio.get("/events");
+      return response;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<Response> participateToEvent(int idEvent) async {
+    try {
+      var resp = await _dio.post("/participate/$idEvent/login");
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
 }

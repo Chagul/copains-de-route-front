@@ -2,9 +2,11 @@ import 'package:copains_de_route/components/event_details/comment_section.dart';
 import 'package:copains_de_route/components/event_details/map_card.dart';
 import 'package:copains_de_route/components/event_details/participants_infos.dart';
 import 'package:copains_de_route/components/event_details/route_infos.dart';
+import 'package:copains_de_route/components/list_events/list_events_cubit.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EventDetails extends StatelessWidget {
   final Event event;
@@ -42,7 +44,8 @@ class EventDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                      onPressed: () => print("Rejoindre"),
+                      onPressed: () =>
+                          context.read<ListEventCubit>().participate(event.id),
                       child: const Text("Rejoindre",
                           style: TextStyle(
                               color: CustomColorScheme.customOnSecondary))),

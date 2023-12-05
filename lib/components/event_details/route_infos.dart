@@ -1,3 +1,4 @@
+import 'package:copains_de_route/components/event_details/route_infos_more_infos.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class RouteInfos extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Icon(Icons.add_road,
+                    const Icon(Icons.edit_road,
                         color: CustomColorScheme.customOnSecondary),
                     const SizedBox(width: 5),
                     Text("${event.getRoadTypes()}",
@@ -89,7 +90,11 @@ class RouteInfos extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                        onPressed: () => print("Plus d'infos"),
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    RouteInfosMoreInfos(event: event))),
                         icon: const Icon(
                           Icons.arrow_circle_right_outlined,
                           color: CustomColorScheme.customOnSecondary,

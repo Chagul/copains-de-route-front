@@ -7,6 +7,7 @@ part 'event.g.dart';
 
 @JsonSerializable()
 class Event {
+  final int id;
   final String name;
   final String description;
   final String promoter;
@@ -27,6 +28,7 @@ class Event {
   final List<PointCustom> steps;
 
   Event(
+      this.id,
       this.name,
       this.description,
       this.promoter,
