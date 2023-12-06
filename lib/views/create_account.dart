@@ -1,4 +1,8 @@
+import 'dart:typed_data';
+
+import 'package:copains_de_route/utils/pickimage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({Key? key}) : super(key: key);
@@ -12,7 +16,13 @@ class _CreateAccountState extends State<CreateAccount> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _loginController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+  Uint8List? _image;
+  void selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() => _image = img);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +44,29 @@ class _CreateAccountState extends State<CreateAccount> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    Stack(
+                      children: [
+                        _image != null
+                            ? CircleAvatar(
+                                radius: 60,
+                                backgroundImage: MemoryImage(_image!),
+                              )
+                            : const CircleAvatar(
+                                radius: 60,
+                                backgroundImage:
+                                    NetworkImage('assets/iconn.png'),
+                              ),
+                        Positioned(
+                          child: IconButton(
+                            onPressed: selectImage,
+                            icon: const Icon(Icons.add_a_photo),
+                          ),
+                          bottom: -10,
+                          left: 80,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
                     _emailField(),
                     const SizedBox(height: 20),
                     _loginField(),
@@ -54,32 +87,32 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
-Widget _emailField() {
-  return TextFormField(
-    controller: _emailController,
-    keyboardType: TextInputType.emailAddress,
-    decoration: InputDecoration(
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5.0),
+  Widget _emailField() {
+    return TextFormField(
+      controller: _emailController,
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        filled: true,
+        fillColor: Colors.white,
+        hintText: 'you@copainderoute.com',
+        labelText: 'Email',
       ),
-      filled: true,
-      fillColor: Colors.white,
-      hintText: 'you@copainderoute.com',
-      labelText: 'Email',
-    ),
-    style: const TextStyle(color: Colors.black),
-    validator: (value) {
-      if (value!.isEmpty) {
-        return 'Veuillez entrer votre adresse email';
-      }
-      if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(value)) {
-        return 'Veuillez entrer un email valide';
-      }
-      return null;
-    },
-  );
-}
-
+      style: const TextStyle(color: Colors.black),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Veuillez entrer votre adresse email';
+        }
+        // Utilisez une expression régulière pour vérifier le format de l'email
+        if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(value)) {
+          return 'Veuillez entrer un email valide';
+        }
+        return null;
+      },
+    );
+  }
 
   Widget _loginField() {
     return TextFormField(
@@ -160,9 +193,7 @@ Widget _emailField() {
             String password = _passwordController.text;
             String confirmPassword = _confirmPasswordController.text;
 
-            if (kDebugMode) {
-              print('Email: $email');
-            }
+            print('Email: $email');
             print('Login: $login');
             print('Password: $password');
             print('Confirm Password: $confirmPassword');
@@ -174,7 +205,7 @@ Widget _emailField() {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),
-          minimumSize: const Size(400, 50),
+         minimumSize: const Size(400, 50),
         ),
         child: const Text('Créer un compte'),
       ),
