@@ -24,9 +24,18 @@ class CopainsDeRouteApi {
     }
   }
 
-  Future<Response> participateToEvent(int idEvent) async {
+  Future<Response> participateToEvent(int idEvent, String login) async {
     try {
-      var resp = await _dio.post("/participate/$idEvent/login");
+      var resp = await _dio.post("/events/participate/$idEvent/$login");
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<Response> unsubscribeToEvent(int idEvent, String login) async {
+    try {
+      var resp = await _dio.post("/events/participate/$idEvent/$login");
       return resp;
     } catch (e) {
       return Future.error(e);

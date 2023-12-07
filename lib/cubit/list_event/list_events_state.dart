@@ -19,4 +19,11 @@ class ListAllEventsParticipateLoadedState extends ListAllEventsState {}
 
 class ListAllEventsParticipateErrorState extends ListAllEventsState {}
 
+class ListFilterLoadingState extends ListAllEventsState {}
+
+class ListFilteredState extends ListAllEventsState {
+  final EventList data;
+  ListFilteredState({required this.data});
+}
+
 abstract class ListMyEventsState extends ListEventState {}

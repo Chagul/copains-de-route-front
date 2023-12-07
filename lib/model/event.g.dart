@@ -30,6 +30,7 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
       (json['steps'] as List<dynamic>)
           .map((e) => PointCustom.fromJson(e as Map<String, dynamic>))
           .toList(),
+      json['route'] as String,
       json['startAddress'] as String,
       json['endAddress'] as String,
     );
@@ -51,6 +52,7 @@ Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
       'roadType3': instance.roadType3,
       'bikeType1': instance.bikeType1,
       'bikeType2': instance.bikeType2,
+      'route': instance.route,
       'comments': instance.comments,
       'participants': instance.participants,
       'steps': instance.steps,

@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class Map extends StatefulWidget {
-  const Map({Key? key}) : super(key: key);
+class MapEvent extends StatefulWidget {
+  const MapEvent({Key? key}) : super(key: key);
 
   @override
   MapCreateItineraryState createState() => MapCreateItineraryState();
 }
 
-class MapCreateItineraryState extends State<Map> {
+class MapCreateItineraryState extends State<MapEvent> {
   late GoogleMapController mapController;
 
   late Future<Position> position;

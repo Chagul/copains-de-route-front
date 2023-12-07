@@ -23,6 +23,7 @@ class Event {
   final String roadType3;
   final String bikeType1;
   final String bikeType2;
+  final String route;
   final List<CommentDTO> comments;
   final List<UserDTO> participants;
   final List<PointCustom> steps;
@@ -45,6 +46,7 @@ class Event {
       this.comments,
       this.participants,
       this.steps,
+      this.route,
       this.startAddress,
       this.endAddress);
 
