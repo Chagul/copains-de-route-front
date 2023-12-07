@@ -16,23 +16,20 @@ class RouteInfosMoreInfos extends StatelessWidget {
               child:
                   Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     IconButton(
                         onPressed: () => Navigator.pop(context),
-                        icon: const Icon(
-                          Icons.arrow_circle_left_outlined,
-                          color: CustomColorScheme.customOnSecondary,
-                        )),
-                    Text(
-                      event.name,
-                      style: const TextStyle(
-                          color: CustomColorScheme.customOnSecondary,
-                          fontWeight: FontWeight.bold),
-                    ),
+                        icon:
+                            const Icon(Icons.arrow_back, color: Colors.black)),
+                    Text(event.name,
+                        style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black))
                   ],
                 ),
-                Card(
+                Expanded(
+                    child: Card(
                   child: SingleChildScrollView(
                     child: Padding(
                         padding: const EdgeInsets.all(10),
@@ -70,7 +67,7 @@ class RouteInfosMoreInfos extends StatelessWidget {
                           ],
                         )),
                   ),
-                ),
+                )),
               ]))),
     );
   }

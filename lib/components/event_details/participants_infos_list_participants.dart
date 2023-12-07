@@ -10,37 +10,39 @@ class ParticipantsInfosListParticipants extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: const Icon(
-                        Icons.arrow_circle_left_outlined,
-                        color: CustomColorScheme.customOnSecondary,
-                      )),
-                  const Text(
-                    "Participants",
-                    style: TextStyle(
-                        color: CustomColorScheme.customOnSecondary,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Card(
-                  child: ListView.builder(
-                padding: const EdgeInsets.all(8.0),
-                itemCount: participants.length,
-                itemBuilder: (context, index) {
-                  return _buildRow(participants[index]);
-                },
-              ))
-            ])));
+    return SafeArea(
+        child: Scaffold(
+            body: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                              onPressed: () =>
+                                  Navigator.of(context).pop(context),
+                              icon: const Icon(Icons.arrow_back,
+                                  color: Colors.black)),
+                          const Text("Participants",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black))
+                        ],
+                      ),
+                      if (participants.isEmpty)
+                        const Text("Aucun participant pour le moment")
+                      else
+                        Card(
+                            child: ListView.builder(
+                          padding: const EdgeInsets.all(8.0),
+                          itemCount: participants.length,
+                          itemBuilder: (context, index) {
+                            return _buildRow(participants[index]);
+                          },
+                        ))
+                    ]))));
   }
 
   Widget _buildRow(UserDTO participant) {

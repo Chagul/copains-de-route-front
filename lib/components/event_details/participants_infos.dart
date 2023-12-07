@@ -45,8 +45,7 @@ class ParticipantsInfos extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         IconButton(
-                            onPressed: () => Navigator.push(
-                                context,
+                            onPressed: () => Navigator.of(context).push(
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         ParticipantsInfosListParticipants(

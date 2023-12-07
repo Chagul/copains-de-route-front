@@ -107,12 +107,15 @@ class EventDetails extends StatelessWidget {
                       const SizedBox(height: 10),
                       InkWell(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => MapEventDetails(
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (_) {
+                              return BlocProvider.value(
+                                  value: context.read<DetailEventCubit>(),
+                                  child: MapEventDetails(
                                       event: context
                                           .read<DetailEventCubit>()
-                                          .event,
-                                    )));
+                                          .event));
+                            }));
                           },
                           child: MapCard(
                               event: context.read<DetailEventCubit>().event)),

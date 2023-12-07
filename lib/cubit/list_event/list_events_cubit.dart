@@ -34,13 +34,15 @@ class ListEventCubit extends Cubit<ListEventState> {
         });
   }
 
-  void searchEvents(String lowerCase) {
+  void searchEvents(String search) {
     emit(ListFilterLoadingState());
-
+    if (search.isEmpty || dataDisplayed.eventList.isEmpty) {
+      dataDisplayed = data;
+    }
     dataDisplayed = EventList(
         eventList: dataDisplayed.eventList
             .where((event) =>
-                event.name.toLowerCase().contains(lowerCase.toLowerCase()))
+                event.name.toLowerCase().contains(search.toLowerCase()))
             .toList());
     emit(ListFilteredState(data: dataDisplayed));
   }
