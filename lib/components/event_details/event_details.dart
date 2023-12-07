@@ -15,32 +15,33 @@ class EventDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(
-                    Icons.arrow_circle_left_outlined,
-                    color: CustomColorScheme.customOnSecondary,
-                  )),
-              Text(
-                event.name,
-                style: const TextStyle(
-                    color: CustomColorScheme.customOnSecondary,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
+    return SafeArea(
+        child: Scaffold(
+            body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(
+                Icons.arrow_circle_left_outlined,
+                color: CustomColorScheme.customOnSecondary,
+              )),
+          Text(
+            event.name,
+            style: const TextStyle(
+                color: CustomColorScheme.customOnSecondary,
+                fontWeight: FontWeight.bold),
           ),
-          SingleChildScrollView(
-              child: Center(
-                  child: Column(
-            children: [
-              Row(
+        ],
+      ),
+      Expanded(
+          child: SingleChildScrollView(
+              child: Column(
+        children: [
+          Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
@@ -64,19 +65,21 @@ class EventDetails extends StatelessWidget {
                     ],
                   ),
                 ],
-              ),
-              const SizedBox(height: 10),
-              MapCard(event: event),
-              const SizedBox(height: 10),
-              RouteInfos(event: event),
-              const SizedBox(height: 10),
-              ParticipantsInfos(event: event),
-              const SizedBox(height: 10),
-              CommentSection(event: event)
-            ],
-          ))),
-        ]),
-      ),
-    );
+              )),
+          const SizedBox(height: 10),
+          InkWell(
+              onTap: () {
+                print("map");
+              },
+              child: MapCard(event: event)),
+          const SizedBox(height: 10),
+          RouteInfos(event: event),
+          const SizedBox(height: 10),
+          ParticipantsInfos(event: event),
+          const SizedBox(height: 10),
+          CommentSection(event: event)
+        ],
+      ))),
+    ])));
   }
 }

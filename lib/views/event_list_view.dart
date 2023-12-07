@@ -39,18 +39,23 @@ class EventListView extends StatelessWidget {
                     onPressed: () => print("map"),
                   ),
                   Expanded(
-                    child: TextField(
-                      onChanged: (text) {
-                        print(text);
-                      },
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Rechercher ...",
-                          suffixIcon: Icon(
-                            Icons.search,
-                            color: CustomColorScheme.customOnSecondary,
-                          )),
-                    ),
+                    child: Padding(
+                        padding: const EdgeInsets.only(right: 8.0, top: 8.0),
+                        child: TextField(
+                          onChanged: (text) {
+                            print(text);
+                          },
+                          decoration: const InputDecoration(
+                              fillColor: Colors.white,
+                              filled: true,
+                              border: OutlineInputBorder(),
+                              constraints: BoxConstraints(maxHeight: 50),
+                              hintText: "Rechercher ...",
+                              suffixIcon: Icon(
+                                Icons.search,
+                                color: CustomColorScheme.customOnSecondary,
+                              )),
+                        )),
                   )
                 ],
               ),
@@ -58,19 +63,33 @@ class EventListView extends StatelessWidget {
                 height: 10.0,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          padding: const EdgeInsets.all(5.0),
+                          side: const BorderSide(color: Colors.black)),
                       onPressed: () {
                         print("Date");
                       },
                       child: Text("Date", style: _getButtonTextStyle())),
                   ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        padding: const EdgeInsets.all(5.0),
+                        side: const BorderSide(color: Colors.black),
+                      ),
                       onPressed: () {
                         print("Distance");
                       },
                       child: Text("Distance", style: _getButtonTextStyle())),
                   ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        padding: const EdgeInsets.all(5.0),
+                        side: const BorderSide(color: Colors.black),
+                      ),
                       onPressed: () {
                         print("Participants");
                       },
@@ -79,6 +98,11 @@ class EventListView extends StatelessWidget {
                         style: _getButtonTextStyle(),
                       )),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      padding: const EdgeInsets.all(5.0),
+                      side: const BorderSide(color: Colors.black),
+                    ),
                     onPressed: () {
                       print("Filtres");
                     },
