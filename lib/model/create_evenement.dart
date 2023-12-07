@@ -21,7 +21,7 @@ class CreateEvenement {
   String bikeType2;
   String visibility;
   String route;
-  int distance;
+  double distance;
 
   CreateEvenement(
       {required this.promoter,
