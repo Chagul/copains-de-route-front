@@ -11,11 +11,12 @@ class Event {
   final String name;
   final String description;
   final String promoter;
+  final String route;
   final int maxParticipants;
   final String startDate;
   final String startTime;
   final String visibility;
-  final int distance;
+  final double distance;
   final String startAddress;
   final String endAddress;
   final String roadType1;
@@ -32,6 +33,7 @@ class Event {
       this.name,
       this.description,
       this.promoter,
+      this.route,
       this.maxParticipants,
       this.startDate,
       this.startTime,
