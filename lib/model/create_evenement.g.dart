@@ -26,7 +26,7 @@ CreateEvenement _$CreateEvenementFromJson(Map<String, dynamic> json) =>
       bikeType2: json['bikeType2'] as String,
       visibility: json['visibility'] as String,
       route: json['route'] as String,
-      distance: json['distance'] as int,
+      distance: (json['distance'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$CreateEvenementToJson(CreateEvenement instance) =>
