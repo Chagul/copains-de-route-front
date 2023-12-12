@@ -1,3 +1,4 @@
+import 'package:copains_de_route/views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:copains_de_route/views/create_account.dart';
 
@@ -37,7 +38,7 @@ class LoginScreen extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: _forgotPassword(),
                     ),
-                    _button(),
+                    _button(context),
                     SizedBox(height: 20),
                     _creationCompte(context),
 
@@ -105,11 +106,15 @@ Widget _forgotPassword(){
   );
 }
 
-Widget _button() {
+Widget _button(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(top: 20.0),
     child: ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+      Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const HomePage()));
+          
+      },
       child: Text('Connexion'),
       style: ElevatedButton.styleFrom(
         primary: Color(0xFFFDD856),
