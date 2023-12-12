@@ -79,11 +79,17 @@ class MapCreateItineraryCubit extends Cubit<MapCreateItineraryState> {
 
   addMarker(LatLng position) {
     if (markerStartInit) {
-      markerStart =
-          Marker(markerId: const MarkerId("start"), position: position);
+      markerStart = Marker(
+          markerId: const MarkerId("start"),
+          position: position,
+          icon:
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue));
     }
     if (markerEndInit) {
-      markerEnd = Marker(markerId: const MarkerId("end"), position: position);
+      markerEnd = Marker(
+          markerId: const MarkerId("end"),
+          position: position,
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed));
     }
     if (markerStepsInit) {
       steps.add(
