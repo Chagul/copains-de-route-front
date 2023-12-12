@@ -12,12 +12,6 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _loginController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
   Uint8List? _image;
   void selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -40,7 +34,6 @@ class _CreateAccountState extends State<CreateAccount> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: Form(
-                key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -57,12 +50,12 @@ class _CreateAccountState extends State<CreateAccount> {
                                     NetworkImage('assets/iconn.png'),
                               ),
                         Positioned(
+                          bottom: -10,
+                          left: 80,
                           child: IconButton(
                             onPressed: selectImage,
                             icon: const Icon(Icons.add_a_photo),
                           ),
-                          bottom: -10,
-                          left: 80,
                         ),
                       ],
                     ),
@@ -89,7 +82,6 @@ class _CreateAccountState extends State<CreateAccount> {
 
   Widget _emailField() {
     return TextFormField(
-      controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -116,7 +108,6 @@ class _CreateAccountState extends State<CreateAccount> {
 
   Widget _loginField() {
     return TextFormField(
-      controller: _loginController,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5.0),
@@ -138,7 +129,6 @@ class _CreateAccountState extends State<CreateAccount> {
 
   Widget _passwordField() {
     return TextFormField(
-      controller: _passwordController,
       obscureText: true,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -161,7 +151,6 @@ class _CreateAccountState extends State<CreateAccount> {
 
   Widget _confirmPasswordField() {
     return TextFormField(
-      controller: _confirmPasswordController,
       obscureText: true,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -187,17 +176,6 @@ class _CreateAccountState extends State<CreateAccount> {
       padding: const EdgeInsets.only(top: 20.0),
       child: ElevatedButton(
         onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            String email = _emailController.text;
-            String login = _loginController.text;
-            String password = _passwordController.text;
-            String confirmPassword = _confirmPasswordController.text;
-
-            print('Email: $email');
-            print('Login: $login');
-            print('Password: $password');
-            print('Confirm Password: $confirmPassword');
-          }
         },
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
@@ -212,12 +190,4 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _loginController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
-  }
 }
