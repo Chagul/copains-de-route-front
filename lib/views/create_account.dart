@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:copains_de_route/utils/pickimage.dart';
+import 'package:copains_de_route/views/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -12,6 +13,7 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Uint8List? _image;
   void selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -34,6 +36,7 @@ class _CreateAccountState extends State<CreateAccount> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: Form(
+                key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -176,7 +179,13 @@ class _CreateAccountState extends State<CreateAccount> {
       padding: const EdgeInsets.only(top: 20.0),
       child: ElevatedButton(
         onPressed: () {
+           if (_formKey.currentState!.validate()) {
+          // Si le formulaire est valide, vous pouvez naviguer vers la nouvelle page.
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const LoginScreen()));
+        }
         },
+
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
           backgroundColor: Color(0xFFFDD856),
