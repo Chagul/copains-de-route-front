@@ -98,11 +98,8 @@ class _CreateAccountState extends State<CreateAccount> {
       ),
       style: const TextStyle(color: Colors.black),
       validator: (value) {
-        if (value!.isEmpty) {
-          return 'Veuillez entrer votre adresse email';
-        }
-        // Utilisez une expression régulière pour vérifier le format de l'email
-        if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(value)) {
+        if (value!.isEmpty ||
+            !RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(value)) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: const Text(
@@ -238,7 +235,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 margin: const EdgeInsets.all(.0),
               ),
             );
-            return ''; // Retournez un message d'erreur vide
+            return '';
           }
         }
         return null;
@@ -257,7 +254,6 @@ class _CreateAccountState extends State<CreateAccount> {
                 content: const Text(
                   'Un email confirmant la création  du compte a été envoyé à  l’adresse mail spécifiée',
                   style: TextStyle(
-                    // Define the text style
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),

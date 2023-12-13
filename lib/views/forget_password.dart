@@ -9,6 +9,8 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +34,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: Form(
+                key: formkey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -40,45 +43,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
                     const SizedBox(height: 20),
-                    _loginField(),
+                    _emailField(),
                     const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        final snackBar = SnackBar(
-                          content: const Text(
-                            'Un email permettant de réinitialiser le mot de passe a été envoyé à l’email spécifié',
-                            style: TextStyle(
-                              // Define the text style
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          backgroundColor: Colors.white.withOpacity(0.4),
-                          duration: const Duration(seconds: 5),
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          margin: const EdgeInsets.all(.0),
-                        );
-
-                        // Find the ScaffoldMessenger in the widget tree
-                        // and use it to show the SnackBar.
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const LoginScreen()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: const Color(0xFFFDD856),
-                        onPrimary: Colors.white,
-
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                        ),
-                      ),
-                      child: const Text('Réinitialiser le mot de passe'),
-                    ),
+                    _submitButton(context),
                   ],
                 ),
               ),
@@ -89,17 +56,81 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     );
   }
 
-  Widget _loginField() {
+  Widget _emailField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          borderRadius: BorderRadius.circular(5.0),
         ),
         filled: true,
         fillColor: Colors.white,
         hintText: 'you@copainderoute.com',
         labelText: 'Email',
+      ),
+      style: const TextStyle(color: Colors.black),
+      validator: (value) {
+        if (value!.isEmpty || !RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(value)) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text(
+                'Veuillez entrer une adresse email valide',
+                style:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              ),
+              backgroundColor: Colors.white.withOpacity(0.6),
+              duration: const Duration(seconds: 5),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              margin: const EdgeInsets.all(10.0),
+            ),
+          );
+          return '';
+        }
+        return null;
+      },
+    );
+  }
+
+  Widget _submitButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0),
+      child: ElevatedButton(
+        onPressed: () {
+          if (formkey.currentState!.validate()) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text(
+                  'Un email confirmant la création  du compte a été envoyé à  l’adresse mail spécifiée',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                backgroundColor: Colors.white.withOpacity(0.5),
+                duration: const Duration(seconds: 5),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                margin: const EdgeInsets.all(.0),
+              ),
+            );
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const LoginScreen()));
+          }
+        },
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: const Color(0xFFFDD856),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          minimumSize: const Size(400, 50),
+        ),
+        child: const Text('Réinitialiser le mot de passe'),
       ),
     );
   }
