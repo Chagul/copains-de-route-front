@@ -97,12 +97,12 @@ Widget _passwordField(){
 }
 
 Widget _forgotPassword(){
-  return TextButton(
+  return  TextButton(
     onPressed: (){},
-    child: Text('Mot de passe oublié ? '),
     style : TextButton.styleFrom(
-      primary: Colors.white,
+      foregroundColor: Colors.white,
     ),
+    child: Text('Mot de passe oublié ? '),
   );
 }
 
@@ -111,22 +111,29 @@ Widget _button(BuildContext context) {
     padding: const EdgeInsets.only(top: 20.0),
     child: ElevatedButton(
       onPressed: () {
-      Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const HomePage()));
-          
+        // Here, you can check the password
+          // Display the Snackbar in case of incorrect password
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Mot de passe incorrect'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        
       },
-      child: Text('Connexion'),
       style: ElevatedButton.styleFrom(
         primary: Color(0xFFFDD856),
         onPrimary: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0),
         ),
-        minimumSize: Size(400, 50), // Use minimumSize to set the button size
+        minimumSize: Size(400, 50),
       ),
+      child: Text('Connexion'),
     ),
   );
 }
+
 
 
 Widget _creationCompte(BuildContext context){

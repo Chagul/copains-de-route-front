@@ -14,6 +14,8 @@ class CreateAccount extends StatefulWidget {
 
 class _CreateAccountState extends State<CreateAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String? _password;
+ // String? _confirmPassword;
   Uint8List? _image;
   void selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -147,8 +149,12 @@ class _CreateAccountState extends State<CreateAccount> {
         if (value!.isEmpty) {
           return 'Veuillez entrer votre mot de passe';
         }
-        return null;
-      },
+ },
+        onChanged: (value) {
+         _password = value;  },
+
+       
+     
     );
   }
 
@@ -169,7 +175,11 @@ class _CreateAccountState extends State<CreateAccount> {
         if (value!.isEmpty) {
           return 'Veuillez confirmer votre mot de passe';
         }
-        return null;
+        else {
+          if (value != _password) {
+            return 'Les mots de passe ne correspondent pas';
+          }
+        }
       },
     );
   }
@@ -184,7 +194,7 @@ class _CreateAccountState extends State<CreateAccount> {
           ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: const Text(
-                    'Compte créé avec succès!',
+                    'Un email confirmant la création  du compte a été envoyé à  l’adresse mail spécifiée',
                     style: TextStyle(
                       // Define the text style
                       color: Colors.black, // Set the text color to white
@@ -213,7 +223,7 @@ class _CreateAccountState extends State<CreateAccount> {
           ),
          minimumSize: const Size(400, 50),
         ),
-        child: const Text('Un email confirmant la création  du compte a été envoyé à  l’adresse mail spécifiée'),
+        child: const Text('Créez votre compte'),
       ),
     );
   }
