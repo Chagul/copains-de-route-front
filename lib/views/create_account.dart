@@ -15,7 +15,6 @@ class CreateAccount extends StatefulWidget {
 class _CreateAccountState extends State<CreateAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? _password;
- // String? _confirmPassword;
   Uint8List? _image;
   void selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -104,7 +103,23 @@ class _CreateAccountState extends State<CreateAccount> {
         }
         // Utilisez une expression régulière pour vérifier le format de l'email
         if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(value)) {
-          return 'Veuillez entrer un email valide';
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text(
+                'Veuillez entrer une adresse email valide',
+                style:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              ),
+              backgroundColor: Colors.white.withOpacity(0.6),
+              duration: const Duration(seconds: 5),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              margin: const EdgeInsets.all(10.0),
+            ),
+          );
+          return '';
         }
         return null;
       },
@@ -125,7 +140,23 @@ class _CreateAccountState extends State<CreateAccount> {
       style: const TextStyle(color: Colors.black),
       validator: (value) {
         if (value!.isEmpty) {
-          return 'Veuillez entrer votre login';
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text(
+                'Veuillez entrer votre login',
+                style:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              ),
+              backgroundColor: Colors.white.withOpacity(0.6),
+              duration: const Duration(seconds: 10),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              margin: const EdgeInsets.all(10.0),
+            ),
+          );
+          return '';
         }
         return null;
       },
@@ -147,14 +178,28 @@ class _CreateAccountState extends State<CreateAccount> {
       style: const TextStyle(color: Colors.black),
       validator: (value) {
         if (value!.isEmpty) {
-          return 'Veuillez entrer votre mot de passe';
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text(
+                'Les mots de passe ne correspondent pas',
+                style:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              ),
+              backgroundColor: Colors.white.withOpacity(0.6),
+              duration: const Duration(seconds: 5),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              margin: const EdgeInsets.all(.0),
+            ),
+          );
+          return '';
         }
- },
-        onChanged: (value) {
-         _password = value;  },
-
-       
-     
+      },
+      onChanged: (value) {
+        _password = value;
+      },
     );
   }
 
@@ -162,6 +207,7 @@ class _CreateAccountState extends State<CreateAccount> {
     return TextFormField(
       obscureText: true,
       decoration: InputDecoration(
+        errorStyle: const TextStyle(color: Colors.red),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5.0),
         ),
@@ -174,58 +220,71 @@ class _CreateAccountState extends State<CreateAccount> {
       validator: (value) {
         if (value!.isEmpty) {
           return 'Veuillez confirmer votre mot de passe';
-        }
-        else {
+        } else {
           if (value != _password) {
-            return 'Les mots de passe ne correspondent pas';
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text(
+                  'Les mots de passe ne correspondent pas',
+                  style:
+                      TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                ),
+                backgroundColor: Colors.white.withOpacity(0.6),
+                duration: const Duration(seconds: 5),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                margin: const EdgeInsets.all(.0),
+              ),
+            );
+            return ''; // Retournez un message d'erreur vide
           }
         }
+        return null;
       },
     );
   }
 
- Widget _submitButton() {
-  return Padding(
-    padding: const EdgeInsets.only(top: 20.0),
-    child: ElevatedButton(
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          // Affichez un SnackBar avec un message de confirmation.
-          ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text(
-                    'Un email confirmant la création  du compte a été envoyé à  l’adresse mail spécifiée',
-                    style: TextStyle(
-                      // Define the text style
-                      color: Colors.black, // Set the text color to white
-                    ),
+  Widget _submitButton() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0),
+      child: ElevatedButton(
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text(
+                  'Un email confirmant la création  du compte a été envoyé à  l’adresse mail spécifiée',
+                  style: TextStyle(
+                    // Define the text style
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
-                  backgroundColor: Colors.white.withOpacity(0.5), // Set the background color to orange with 90% opacity
-                  duration: const Duration(seconds: 10), // Set the duration to 10 seconds
-                  behavior: SnackBarBehavior.floating, // Set the SnackBar behavior to floating
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0), // Rounded corners
-                  ),
-                  margin: const EdgeInsets.all(10.0), // Margin from the edges
                 ),
-              );
-              Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const LoginScreen()));
-          
-        }
-      },
-
+                backgroundColor: Colors.white.withOpacity(0.5),
+                duration: const Duration(seconds: 5),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                margin: const EdgeInsets.all(.0),
+              ),
+            );
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const LoginScreen()));
+          }
+        },
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
           backgroundColor: const Color(0xFFFDD856),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),
-         minimumSize: const Size(400, 50),
+          minimumSize: const Size(400, 50),
         ),
         child: const Text('Créez votre compte'),
       ),
     );
   }
-
 }

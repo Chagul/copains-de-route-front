@@ -1,4 +1,4 @@
-import 'package:copains_de_route/views/home_page.dart';
+import 'package:copains_de_route/views/forget_password.dart';
 import 'package:flutter/material.dart';
 import 'package:copains_de_route/views/create_account.dart';
 
@@ -36,7 +36,7 @@ class LoginScreen extends StatelessWidget {
                     _passwordField(),
                     Align(
                       alignment: Alignment.centerRight,
-                      child: _forgotPassword(),
+                      child: _forgotPassword(context),
                     ),
                     _button(context),
                     SizedBox(height: 20),
@@ -96,13 +96,18 @@ Widget _passwordField(){
     
 }
 
-Widget _forgotPassword(){
+Widget _forgotPassword(BuildContext context){
   return  TextButton(
-    onPressed: (){},
+    onPressed: (){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ForgotPassword()),
+      );
+    },
     style : TextButton.styleFrom(
       foregroundColor: Colors.white,
     ),
-    child: Text('Mot de passe oublié ? '),
+    child: const Text('Mot de passe oublié ? '),
   );
 }
 
@@ -110,19 +115,10 @@ Widget _button(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(top: 20.0),
     child: ElevatedButton(
-      onPressed: () {
-        // Here, you can check the password
-          // Display the Snackbar in case of incorrect password
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Mot de passe incorrect'),
-              duration: Duration(seconds: 2),
-            ),
-          );
-        
+      onPressed: () {        
       },
       style: ElevatedButton.styleFrom(
-        primary: Color(0xFFFDD856),
+        primary: const Color(0xFFFDD856),
         onPrimary: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0),
@@ -141,10 +137,10 @@ Widget _creationCompte(BuildContext context){
     onPressed: (){
      Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccount()));
           },
-    child: Text('Pas encore de compte ? Créez en un !'),
     style : TextButton.styleFrom(
-      primary: Colors.white,
+      foregroundColor: Colors.white,
     ),
+    child: const Text('Pas encore de compte ? Créez en un !'),
   );
 }
 
