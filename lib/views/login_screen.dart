@@ -1,3 +1,4 @@
+import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/views/forget_password.dart';
 import 'package:flutter/material.dart';
 import 'package:copains_de_route/views/create_account.dart';
@@ -8,7 +9,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFC45C23),
+      backgroundColor: CustomColorScheme.customPrimaryColor,
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -39,7 +40,7 @@ class LoginScreen extends StatelessWidget {
                       child: _forgotPassword(context),
                     ),
                     _button(context),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     _creationCompte(context),
 
                   ],
@@ -64,12 +65,12 @@ Widget _loginField(){
       border: UnderlineInputBorder(
       borderRadius:BorderRadius.circular(5.0)),
       filled : true,
-      fillColor: Colors.white,
+      fillColor: CustomColorScheme.customOnPrimary,
       hintText: '@login',
       labelText: 'Login'
       ),
 
-      style: const TextStyle(color: Colors.black), // Set the text color to black
+      style: const TextStyle(color: CustomColorScheme.customOnSecondary), // Set the text color to black
       onChanged: (String value){},
   );
     
@@ -84,13 +85,13 @@ Widget _passwordField(){
       border: UnderlineInputBorder(
       borderRadius:BorderRadius.circular(5.0)),
       filled : true,
-      fillColor: Colors.white,
+      fillColor: CustomColorScheme.customOnPrimary,
 
       hintText: 'password',
       labelText: 'Password'
       ),
       
-      style: const TextStyle(color: Colors.black), // Set the text color to black
+      style: const TextStyle(color: CustomColorScheme.customOnSecondary), // Set the text color to black
       onChanged: (String value){},
   );
     
@@ -105,7 +106,7 @@ Widget _forgotPassword(BuildContext context){
       );
     },
     style : TextButton.styleFrom(
-      foregroundColor: Colors.white,
+      foregroundColor: CustomColorScheme.customOnPrimary,
     ),
     child: const Text('Mot de passe oublié ? '),
   );
@@ -118,14 +119,14 @@ Widget _button(BuildContext context) {
       onPressed: () {        
       },
       style: ElevatedButton.styleFrom(
-        primary: const Color(0xFFFDD856),
-        onPrimary: Colors.white,
+        primary: CustomColorScheme.customSecondaryColor,
+        onPrimary: CustomColorScheme.customOnPrimary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0),
         ),
-        minimumSize: Size(400, 50),
+        minimumSize: const Size(400, 50),
       ),
-      child: Text('Connexion'),
+      child: const Text('Connexion'),
     ),
   );
 }
@@ -135,10 +136,10 @@ Widget _button(BuildContext context) {
 Widget _creationCompte(BuildContext context){
   return TextButton(
     onPressed: (){
-     Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccount()));
+     Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateAccount()));
           },
     style : TextButton.styleFrom(
-      foregroundColor: Colors.white,
+      foregroundColor: CustomColorScheme.customOnPrimary,
     ),
     child: const Text('Pas encore de compte ? Créez en un !'),
   );

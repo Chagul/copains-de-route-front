@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_maps_flutter: ^2.5.0
-  permission_handler: ^11.0.1 
+  permission_handler: ^11.1.0 
   geolocator: ^10.1.0 
   pointer_interceptor: ^0.9.3+7
   dio: ^5.3.4 

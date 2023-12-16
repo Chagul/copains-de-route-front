@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/utils/pickimage.dart';
 import 'package:copains_de_route/views/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _CreateAccountState extends State<CreateAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFC45C23),
+      backgroundColor: CustomColorScheme.customPrimaryColor,
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -92,7 +93,7 @@ class _CreateAccountState extends State<CreateAccount> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         filled: true,
-        fillColor: Colors.white,
+        fillColor: CustomColorScheme.customOnPrimary,
         hintText: 'you@copainderoute.com',
         labelText: 'Email',
       ),
@@ -105,9 +106,9 @@ class _CreateAccountState extends State<CreateAccount> {
               content: const Text(
                 'Veuillez entrer une adresse email valide',
                 style:
-                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                    TextStyle(color: CustomColorScheme.customError, fontWeight: FontWeight.bold),
               ),
-              backgroundColor: Colors.white.withOpacity(0.6),
+              backgroundColor: CustomColorScheme.customOnPrimary.withOpacity(0.6),
               duration: const Duration(seconds: 5),
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
@@ -130,7 +131,7 @@ class _CreateAccountState extends State<CreateAccount> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         filled: true,
-        fillColor: Colors.white,
+        fillColor: CustomColorScheme.customOnPrimary,
         hintText: '@login',
         labelText: 'Login',
       ),
@@ -142,9 +143,9 @@ class _CreateAccountState extends State<CreateAccount> {
               content: const Text(
                 'Veuillez entrer votre login',
                 style:
-                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                    TextStyle(color: CustomColorScheme.customError, fontWeight: FontWeight.bold),
               ),
-              backgroundColor: Colors.white.withOpacity(0.6),
+              backgroundColor: CustomColorScheme.customOnPrimary.withOpacity(0.6),
               duration: const Duration(seconds: 10),
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
@@ -168,7 +169,7 @@ class _CreateAccountState extends State<CreateAccount> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         filled: true,
-        fillColor: Colors.white,
+        fillColor: CustomColorScheme.customOnPrimary,
         hintText: 'password',
         labelText: 'Password',
       ),
@@ -180,9 +181,9 @@ class _CreateAccountState extends State<CreateAccount> {
               content: const Text(
                 'Les mots de passe ne correspondent pas',
                 style:
-                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                    TextStyle(color: CustomColorScheme.customError, fontWeight: FontWeight.bold),
               ),
-              backgroundColor: Colors.white.withOpacity(0.6),
+              backgroundColor: CustomColorScheme.customOnPrimary.withOpacity(0.6),
               duration: const Duration(seconds: 5),
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
@@ -204,29 +205,26 @@ class _CreateAccountState extends State<CreateAccount> {
     return TextFormField(
       obscureText: true,
       decoration: InputDecoration(
-        errorStyle: const TextStyle(color: Colors.red),
+        errorStyle: const TextStyle(color: CustomColorScheme.customError),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5.0),
         ),
         filled: true,
-        fillColor: Colors.white,
+        fillColor: CustomColorScheme.customOnPrimary,
         hintText: 'password',
         labelText: 'Confirm your password',
       ),
       style: const TextStyle(color: Colors.black),
       validator: (value) {
-        if (value!.isEmpty) {
-          return 'Veuillez confirmer votre mot de passe';
-        } else {
           if (value != _password) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: const Text(
                   'Les mots de passe ne correspondent pas',
                   style:
-                      TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                      TextStyle(color: CustomColorScheme.customError, fontWeight: FontWeight.bold),
                 ),
-                backgroundColor: Colors.white.withOpacity(0.6),
+                backgroundColor: CustomColorScheme.customOnPrimary.withOpacity(0.6),
                 duration: const Duration(seconds: 5),
                 behavior: SnackBarBehavior.floating,
                 shape: RoundedRectangleBorder(
@@ -236,7 +234,7 @@ class _CreateAccountState extends State<CreateAccount> {
               ),
             );
             return '';
-          }
+          
         }
         return null;
       },
@@ -258,7 +256,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                backgroundColor: Colors.white.withOpacity(0.5),
+                backgroundColor: CustomColorScheme.customOnPrimary.withOpacity(0.5),
                 duration: const Duration(seconds: 5),
                 behavior: SnackBarBehavior.floating,
                 shape: RoundedRectangleBorder(
@@ -272,8 +270,8 @@ class _CreateAccountState extends State<CreateAccount> {
           }
         },
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: const Color(0xFFFDD856),
+          foregroundColor: CustomColorScheme.customOnPrimary,
+          backgroundColor: CustomColorScheme.customSecondaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),
