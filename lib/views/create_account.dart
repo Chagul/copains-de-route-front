@@ -1,5 +1,8 @@
 import 'dart:typed_data';
 
+import 'package:copains_de_route/components/login_screen/email_widget.dart';
+import 'package:copains_de_route/components/login_screen/login_widget.dart';
+import 'package:copains_de_route/components/login_screen/password_confirm_widget.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/utils/pickimage.dart';
 import 'package:copains_de_route/views/login_screen.dart';
@@ -15,7 +18,6 @@ class CreateAccount extends StatefulWidget {
 
 class _CreateAccountState extends State<CreateAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String? _password;
   Uint8List? _image;
   void selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -65,13 +67,11 @@ class _CreateAccountState extends State<CreateAccount> {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    _emailField(),
+                    EmailWidget(),
                     const SizedBox(height: 20),
-                    _loginField(),
+                    LoginWidget(),
                     const SizedBox(height: 20),
-                    _passwordField(),
-                    const SizedBox(height: 20),
-                    _confirmPasswordField(),
+                    PasswordConfirmationWidget(),
                     const SizedBox(height: 20),
                     _submitButton(),
                     const SizedBox(height: 20),
@@ -82,162 +82,6 @@ class _CreateAccountState extends State<CreateAccount> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _emailField() {
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        filled: true,
-        fillColor: CustomColorScheme.customOnPrimary,
-        hintText: 'you@copainderoute.com',
-        labelText: 'Email',
-      ),
-      style: const TextStyle(color: Colors.black),
-      validator: (value) {
-        if (value!.isEmpty ||
-            !RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(value)) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text(
-                'Veuillez entrer une adresse email valide',
-                style:
-                    TextStyle(color: CustomColorScheme.customError, fontWeight: FontWeight.bold),
-              ),
-              backgroundColor: CustomColorScheme.customOnPrimary.withOpacity(0.6),
-              duration: const Duration(seconds: 5),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              margin: const EdgeInsets.all(10.0),
-            ),
-          );
-          return '';
-        }
-        return null;
-      },
-    );
-  }
-
-  Widget _loginField() {
-    return TextFormField(
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        filled: true,
-        fillColor: CustomColorScheme.customOnPrimary,
-        hintText: '@login',
-        labelText: 'Login',
-      ),
-      style: const TextStyle(color: Colors.black),
-      validator: (value) {
-        if (value!.isEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text(
-                'Veuillez entrer votre login',
-                style:
-                    TextStyle(color: CustomColorScheme.customError, fontWeight: FontWeight.bold),
-              ),
-              backgroundColor: CustomColorScheme.customOnPrimary.withOpacity(0.6),
-              duration: const Duration(seconds: 10),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              margin: const EdgeInsets.all(10.0),
-            ),
-          );
-          return '';
-        }
-        return null;
-      },
-    );
-  }
-
-  Widget _passwordField() {
-    return TextFormField(
-      obscureText: true,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        filled: true,
-        fillColor: CustomColorScheme.customOnPrimary,
-        hintText: 'password',
-        labelText: 'Password',
-      ),
-      style: const TextStyle(color: Colors.black),
-      validator: (value) {
-        if (value!.isEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text(
-                'Les mots de passe ne correspondent pas',
-                style:
-                    TextStyle(color: CustomColorScheme.customError, fontWeight: FontWeight.bold),
-              ),
-              backgroundColor: CustomColorScheme.customOnPrimary.withOpacity(0.6),
-              duration: const Duration(seconds: 5),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              margin: const EdgeInsets.all(.0),
-            ),
-          );
-          return '';
-        }
-      },
-      onChanged: (value) {
-        _password = value;
-      },
-    );
-  }
-
-  Widget _confirmPasswordField() {
-    return TextFormField(
-      obscureText: true,
-      decoration: InputDecoration(
-        errorStyle: const TextStyle(color: CustomColorScheme.customError),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        filled: true,
-        fillColor: CustomColorScheme.customOnPrimary,
-        hintText: 'password',
-        labelText: 'Confirm your password',
-      ),
-      style: const TextStyle(color: Colors.black),
-      validator: (value) {
-          if (value != _password) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text(
-                  'Les mots de passe ne correspondent pas',
-                  style:
-                      TextStyle(color: CustomColorScheme.customError, fontWeight: FontWeight.bold),
-                ),
-                backgroundColor: CustomColorScheme.customOnPrimary.withOpacity(0.6),
-                duration: const Duration(seconds: 5),
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                margin: const EdgeInsets.all(.0),
-              ),
-            );
-            return '';
-          
-        }
-        return null;
-      },
     );
   }
 
@@ -256,7 +100,8 @@ class _CreateAccountState extends State<CreateAccount> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                backgroundColor: CustomColorScheme.customOnPrimary.withOpacity(0.5),
+                backgroundColor:
+                    CustomColorScheme.customOnPrimary.withOpacity(0.5),
                 duration: const Duration(seconds: 5),
                 behavior: SnackBarBehavior.floating,
                 shape: RoundedRectangleBorder(

@@ -1,3 +1,5 @@
+import 'package:copains_de_route/components/login_screen/email_widget.dart';
+import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/views/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +16,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFC45C23),
+      backgroundColor: CustomColorScheme.customPrimaryColor,
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -43,7 +45,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
                     const SizedBox(height: 20),
-                    _emailField(),
+                    EmailWidget(),
                     const SizedBox(height: 20),
                     _submitButton(context),
                   ],
@@ -56,44 +58,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     );
   }
 
-  Widget _emailField() {
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        filled: true,
-        fillColor: Colors.white,
-        hintText: 'you@copainderoute.com',
-        labelText: 'Email',
-      ),
-      style: const TextStyle(color: Colors.black),
-      validator: (value) {
-        if (value!.isEmpty || !RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(value)) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text(
-                'Veuillez entrer une adresse email valide',
-                style:
-                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-              ),
-              backgroundColor: Colors.white.withOpacity(0.6),
-              duration: const Duration(seconds: 5),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              margin: const EdgeInsets.all(10.0),
-            ),
-          );
-          return '';
-        }
-        return null;
-      },
-    );
-  }
-
+  
   Widget _submitButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
@@ -103,7 +68,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: const Text(
-                  'Un email confirmant la création  du compte a été envoyé à  l’adresse mail spécifiée',
+                  'Un email vous a été envoyé pour réinitialiser votre mot de passe',
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,

@@ -1,3 +1,5 @@
+import 'package:copains_de_route/components/login_screen/login_widget.dart';
+import 'package:copains_de_route/components/login_screen/password_widget.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/views/forget_password.dart';
 import 'package:flutter/material.dart';
@@ -20,21 +22,21 @@ class LoginScreen extends StatelessWidget {
               height: 250.0,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/logo_copains_de_route_withoutbg.png'),
+                  image:
+                      AssetImage('assets/logo_copains_de_route_withoutbg.png'),
                   fit: BoxFit.contain,
                 ),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: Form(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    _loginField(),
+                    LoginWidget(),
                     const SizedBox(height: 20),
-                    _passwordField(),
+                    PasswordWidget(),
                     Align(
                       alignment: Alignment.centerRight,
                       child: _forgotPassword(context),
@@ -42,7 +44,6 @@ class LoginScreen extends StatelessWidget {
                     _button(context),
                     const SizedBox(height: 20),
                     _creationCompte(context),
-
                   ],
                 ),
               ),
@@ -52,60 +53,17 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-
 }
 
-
-
-
-Widget _loginField(){
-  return TextFormField(
-    keyboardType: TextInputType.emailAddress,
-     decoration : InputDecoration(
-      border: UnderlineInputBorder(
-      borderRadius:BorderRadius.circular(5.0)),
-      filled : true,
-      fillColor: CustomColorScheme.customOnPrimary,
-      hintText: '@login',
-      labelText: 'Login'
-      ),
-
-      style: const TextStyle(color: CustomColorScheme.customOnSecondary), // Set the text color to black
-      onChanged: (String value){},
-  );
-    
-}
-
-Widget _passwordField(){
-  return TextFormField(
-    keyboardType: TextInputType.emailAddress,
-    obscureText: true,
-    decoration : InputDecoration(
-
-      border: UnderlineInputBorder(
-      borderRadius:BorderRadius.circular(5.0)),
-      filled : true,
-      fillColor: CustomColorScheme.customOnPrimary,
-
-      hintText: 'password',
-      labelText: 'Password'
-      ),
-      
-      style: const TextStyle(color: CustomColorScheme.customOnSecondary), // Set the text color to black
-      onChanged: (String value){},
-  );
-    
-}
-
-Widget _forgotPassword(BuildContext context){
-  return  TextButton(
-    onPressed: (){
+Widget _forgotPassword(BuildContext context) {
+  return TextButton(
+    onPressed: () {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const ForgotPassword()),
       );
     },
-    style : TextButton.styleFrom(
+    style: TextButton.styleFrom(
       foregroundColor: CustomColorScheme.customOnPrimary,
     ),
     child: const Text('Mot de passe oublié ? '),
@@ -116,8 +74,7 @@ Widget _button(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(top: 20.0),
     child: ElevatedButton(
-      onPressed: () {        
-      },
+      onPressed: () {},
       style: ElevatedButton.styleFrom(
         primary: CustomColorScheme.customSecondaryColor,
         onPrimary: CustomColorScheme.customOnPrimary,
@@ -131,17 +88,15 @@ Widget _button(BuildContext context) {
   );
 }
 
-
-
-Widget _creationCompte(BuildContext context){
+Widget _creationCompte(BuildContext context) {
   return TextButton(
-    onPressed: (){
-     Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateAccount()));
-          },
-    style : TextButton.styleFrom(
+    onPressed: () {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const CreateAccount()));
+    },
+    style: TextButton.styleFrom(
       foregroundColor: CustomColorScheme.customOnPrimary,
     ),
     child: const Text('Pas encore de compte ? Créez en un !'),
   );
 }
-
