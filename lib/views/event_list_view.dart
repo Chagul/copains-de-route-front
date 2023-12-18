@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:copains_de_route/components/list_events/event_card.dart';
 import 'package:copains_de_route/components/list_events/filter_page.dart';
 import 'package:copains_de_route/components/map_event.dart';

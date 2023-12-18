@@ -7,10 +7,10 @@ class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);
 
   @override
-  _ForgotPasswordState createState() => _ForgotPasswordState();
+  ForgotPasswordState createState() => ForgotPasswordState();
 }
 
-class _ForgotPasswordState extends State<ForgotPassword> {
+class ForgotPasswordState extends State<ForgotPassword> {
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   @override
@@ -45,7 +45,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
                     const SizedBox(height: 20),
-                    EmailWidget(),
+                    const EmailWidget(),
                     const SizedBox(height: 20),
                     _submitButton(context),
                   ],
@@ -58,7 +58,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     );
   }
 
-  
   Widget _submitButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),

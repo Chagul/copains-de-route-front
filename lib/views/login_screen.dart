@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:copains_de_route/views/create_account.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key});
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +34,9 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    LoginWidget(),
+                    const LoginWidget(),
                     const SizedBox(height: 20),
-                    PasswordWidget(),
+                    const PasswordWidget(),
                     Align(
                       alignment: Alignment.centerRight,
                       child: _forgotPassword(context),
@@ -76,8 +76,8 @@ Widget _button(BuildContext context) {
     child: ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-        primary: CustomColorScheme.customSecondaryColor,
-        onPrimary: CustomColorScheme.customOnPrimary,
+        backgroundColor: CustomColorScheme.customSecondaryColor,
+        foregroundColor: CustomColorScheme.customOnPrimary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0),
         ),

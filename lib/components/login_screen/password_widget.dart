@@ -4,10 +4,10 @@ import 'package:copains_de_route/theme/custom_color_scheme.dart';
 class PasswordWidget extends StatefulWidget {
   const PasswordWidget({Key? key}) : super(key: key);
   @override
-  _PasswordWidgetState createState() => _PasswordWidgetState();
+  PasswordWidgetState createState() => PasswordWidgetState();
 }
 
-class _PasswordWidgetState extends State<PasswordWidget> {
+class PasswordWidgetState extends State<PasswordWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
