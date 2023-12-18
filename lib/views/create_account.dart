@@ -13,10 +13,10 @@ class CreateAccount extends StatefulWidget {
   const CreateAccount({Key? key}) : super(key: key);
 
   @override
-  _CreateAccountState createState() => _CreateAccountState();
+  CreateAccountState createState() => CreateAccountState();
 }
 
-class _CreateAccountState extends State<CreateAccount> {
+class CreateAccountState extends State<CreateAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Uint8List? _image;
   void selectImage() async {
@@ -32,11 +32,8 @@ class _CreateAccountState extends State<CreateAccount> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            const SizedBox(height: 50),
-            Container(
-              width: 230.0,
-              height: 250.0,
-            ),
+            const SizedBox(height: 300),
+            const SizedBox(width: 230),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: Form(
@@ -53,8 +50,7 @@ class _CreateAccountState extends State<CreateAccount> {
                               )
                             : const CircleAvatar(
                                 radius: 60,
-                                backgroundImage:
-                                    NetworkImage('assets/icon.png'),
+                                backgroundImage: AssetImage('assets/icon.png'),
                               ),
                         Positioned(
                           bottom: -10,
@@ -67,11 +63,11 @@ class _CreateAccountState extends State<CreateAccount> {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    EmailWidget(),
+                    const EmailWidget(),
                     const SizedBox(height: 20),
-                    LoginWidget(),
+                    const LoginWidget(),
                     const SizedBox(height: 20),
-                    PasswordConfirmationWidget(),
+                    const PasswordConfirmationWidget(),
                     const SizedBox(height: 20),
                     _submitButton(),
                     const SizedBox(height: 20),

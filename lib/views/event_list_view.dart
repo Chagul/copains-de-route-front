@@ -38,9 +38,12 @@ class EventListView extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.map),
                     color: CustomColorScheme.customOnSecondary,
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => const MapEvent())),
+                    onPressed: () => Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (_) {
+                      return BlocProvider.value(
+                          value: context.read<ListEventCubit>(),
+                          child: const MapEvent());
+                    })),
                   ),
                   Expanded(
                     child: Padding(

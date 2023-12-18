@@ -1,3 +1,4 @@
+import 'package:copains_de_route/cubit/position/position_cubit.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/views/create_itinerary_page.dart';
 import 'package:copains_de_route/views/home_page.dart';
@@ -5,6 +6,7 @@ import 'package:copains_de_route/views/login_screen.dart';
 import 'package:copains_de_route/views/my_itinerary_page.dart';
 import 'package:copains_de_route/views/profil_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
@@ -23,12 +25,16 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int selectedPageIndex = 0;
 
-  bool userIsLoggedIn = false;
+  bool userIsLoggedIn = true;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: userIsLoggedIn ? _buildMainApp() : LoginScreen(),
+    return BlocProvider(
+      create: (context) => PositionCubit()..initPosition(),
+      child: MaterialApp(
+        home: userIsLoggedIn ? _buildMainApp() : const LoginScreen(),
+        theme: ThemeData(colorScheme: const CustomColorScheme()),
+      ),
     );
   }
 
@@ -81,7 +87,6 @@ class _MyAppState extends State<MyApp> {
           ),
         ],
       ),
-      theme: ThemeData(colorScheme: const CustomColorScheme()),
     );
   }
 }
