@@ -25,7 +25,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int selectedPageIndex = 0;
 
-  bool userIsLoggedIn = false;
+  bool userIsLoggedIn = true;
 
   @override
   Widget build(BuildContext context) {

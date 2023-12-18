@@ -50,8 +50,7 @@ class CreateAccountState extends State<CreateAccount> {
                               )
                             : const CircleAvatar(
                                 radius: 60,
-                                backgroundImage:
-                                    NetworkImage('assets/icon.png'),
+                                backgroundImage: AssetImage('assets/icon.png'),
                               ),
                         Positioned(
                           bottom: -10,
