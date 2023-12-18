@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:copains_de_route/components/list_events/event_card.dart';
 import 'package:copains_de_route/components/list_events/filter_page.dart';
 import 'package:copains_de_route/components/map_event.dart';
@@ -38,9 +40,12 @@ class EventListView extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.map),
                     color: CustomColorScheme.customOnSecondary,
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => const MapEvent())),
+                    onPressed: () => Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (_) {
+                      return BlocProvider.value(
+                          value: context.read<ListEventCubit>(),
+                          child: const MapEvent());
+                    })),
                   ),
                   Expanded(
                     child: Padding(
