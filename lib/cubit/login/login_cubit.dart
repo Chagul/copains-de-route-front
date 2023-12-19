@@ -1,5 +1,6 @@
 import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/cubit/login/login_state.dart';
+import 'package:copains_de_route/model/login_dto.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginCubit extends Cubit<LoginState> {
@@ -13,6 +14,18 @@ class LoginCubit extends Cubit<LoginState> {
             {emit(TokenValidState())}
           else
             {emit(TokenInvalidState())}
+        });
+  }
+
+  login(String login, String password) async {
+    emit(LoggingInState());
+    var resp =
+        CopainsDeRouteApi().login(LoginDTO(login: login, password: password));
+    resp.then((value) => {
+          if (value.statusCode == 200)
+            {emit(TokenValidState())}
+          else
+            {emit(LoginFailedState())}
         });
   }
 }
