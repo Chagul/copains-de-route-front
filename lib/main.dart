@@ -1,3 +1,5 @@
+import 'package:copains_de_route/cubit/login/login_cubit.dart';
+import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/cubit/position/position_cubit.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/views/create_itinerary_page.dart';
@@ -10,9 +12,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Permission.location.request();
-  runApp(const MyApp());
+  /*WidgetsFlutterBinding.ensureInitialized();
+  await Permission.location.request();*/
+  runApp(BlocProvider(
+      create: (context) => LoginCubit(VerifyTokenState())..verifyToken(),
+      child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -25,16 +29,24 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int selectedPageIndex = 0;
 
-  bool userIsLoggedIn = true;
-
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+        theme: ThemeData(colorScheme: const CustomColorScheme()),
+        home: BlocBuilder<LoginCubit, LoginState>(
+          builder: (context, state) {
+            if (state is TokenValidState) {
+              return _initMainApp(context);
+            }
+            return const LoginScreen();
+          },
+        ));
+  }
+
+  BlocProvider<PositionCubit> _initMainApp(BuildContext context) {
     return BlocProvider(
       create: (context) => PositionCubit()..initPosition(),
-      child: MaterialApp(
-        home: userIsLoggedIn ? _buildMainApp() : const LoginScreen(),
-        theme: ThemeData(colorScheme: const CustomColorScheme()),
-      ),
+      child: _buildMainApp(),
     );
   }
 
