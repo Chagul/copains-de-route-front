@@ -17,7 +17,9 @@ class CopainsDeRouteApi {
 
   Future<Response> verifyToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString("token");
+    String? token = prefs.getString("token");
+    token =
+        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsdWNhcyIsImxvZ2luIjoibHVjYXMiLCJleHAiOjE3MDI5OTU2ODZ9.pESQA-8YKIDsLa1_2PAf-Fx3kYgV45vTYGZWQhlIGCQ";
     try {
       var resp = await _dio
           .post("/auth/verifyToken", queryParameters: {"token": "$token"},
@@ -41,11 +43,15 @@ class CopainsDeRouteApi {
 
   Future<Response> login(LoginDTO loginDTO) async {
     try {
-      var resp = await _dio.post("/auth/login", data: loginDTO);
+      var resp = await _dio.post("/auth/login", data: loginDTO,
+          options: Options(validateStatus: (status) {
+        return status == 400 || status == 200;
+      }));
       // save token
-      var json = jsonDecode(resp.data);
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString("token", json["token"]);
+      if (resp.statusCode == 200) {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString("token", resp.data["token"]);
+      }
       return resp;
     } catch (e) {
       return Future.error(e);
