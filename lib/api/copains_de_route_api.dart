@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:copains_de_route/model/create_evenement.dart';
 import 'package:copains_de_route/model/create_user_dto.dart';
 import 'package:copains_de_route/model/login_dto.dart';
@@ -18,8 +16,6 @@ class CopainsDeRouteApi {
   Future<Response> verifyToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token");
-    token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsdWNhcyIsImxvZ2luIjoibHVjYXMiLCJleHAiOjE3MDI5OTU2ODZ9.pESQA-8YKIDsLa1_2PAf-Fx3kYgV45vTYGZWQhlIGCQ";
     try {
       var resp = await _dio
           .post("/auth/verifyToken", queryParameters: {"token": "$token"},
