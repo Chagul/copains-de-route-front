@@ -4,6 +4,8 @@ abstract class ListEventState {}
 
 abstract class ListAllEventsState extends ListEventState {}
 
+class ListEventStateInitial extends ListEventState {}
+
 class ListAllEventsLoadingState extends ListAllEventsState {}
 
 class ListAllEventsLoadedState extends ListAllEventsState {
@@ -25,5 +27,3 @@ class ListFilteredState extends ListAllEventsState {
   final EventList data;
   ListFilteredState({required this.data});
 }
-
-abstract class ListMyEventsState extends ListEventState {}
