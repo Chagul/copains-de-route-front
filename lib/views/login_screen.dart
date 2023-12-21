@@ -101,8 +101,8 @@ Widget _button(BuildContext context) {
 Widget _creationCompte(BuildContext context) {
   return TextButton(
     onPressed: () {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const CreateAccount()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const CreateAccount()));
     },
     style: TextButton.styleFrom(
       foregroundColor: CustomColorScheme.customOnPrimary,
