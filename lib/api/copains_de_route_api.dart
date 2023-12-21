@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CopainsDeRouteApi {
-  static const baseUrl = "http://localhost:8080";
+  static const baseUrl = "https://app-o5ei237sga-ew.a.run.app";
   final _dio = Dio(BaseOptions(
       baseUrl: baseUrl, headers: {"Content-Type": Headers.jsonContentType}));
 
@@ -13,9 +13,14 @@ class CopainsDeRouteApi {
     return 'Bearer $token';
   }
 
-  Future<Response> verifyToken() async {
+  Future<String?> _getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token");
+    return token;
+  }
+
+  Future<Response> verifyToken() async {
+    String? token = await _getToken();
     try {
       var resp = await _dio
           .post("/auth/verifyToken", queryParameters: {"token": "$token"},
@@ -55,8 +60,12 @@ class CopainsDeRouteApi {
   }
 
   Future<Response> postItinerary(CreateEvenement evenement) async {
+    String? token = await _getToken();
     try {
-      var resp = await _dio.post("/events", data: evenement);
+      var resp = await _dio.post("/events",
+          data: evenement,
+          options:
+              Options(headers: {'Authorization': _getAuthorization(token)}));
       return resp;
     } catch (e) {
       return Future.error(e);
@@ -64,8 +73,7 @@ class CopainsDeRouteApi {
   }
 
   Future<Response> getEvents() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString("token");
+    String? token = await _getToken();
     try {
       var response = await _dio.get("/events",
           options:
@@ -77,8 +85,11 @@ class CopainsDeRouteApi {
   }
 
   Future<Response> participateToEvent(int idEvent, String login) async {
+    String? token = await _getToken();
     try {
-      var resp = await _dio.post("/events/participate/$idEvent/$login");
+      var resp = await _dio.post("/events/participate/$idEvent/$login",
+          options:
+              Options(headers: {'Authorization': _getAuthorization(token)}));
       return resp;
     } catch (e) {
       return Future.error(e);
@@ -86,8 +97,11 @@ class CopainsDeRouteApi {
   }
 
   Future<Response> unsubscribeToEvent(int idEvent, String login) async {
+    String? token = await _getToken();
     try {
-      var resp = await _dio.post("/events/participate/$idEvent/$login");
+      var resp = await _dio.post("/events/participate/$idEvent/$login",
+          options:
+              Options(headers: {'Authorization': _getAuthorization(token)}));
       return resp;
     } catch (e) {
       return Future.error(e);
