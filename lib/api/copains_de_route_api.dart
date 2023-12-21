@@ -84,6 +84,26 @@ class CopainsDeRouteApi {
     }
   }
 
+  Future<Response> getMyEvents() async {
+    try {
+      var response = await _dio.get(
+        "/events/createdEvents/ksrnass",
+      );
+      return response;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<Response> getEventsParticipated() async {
+    try {
+      var response = await _dio.get("/events/participatedEvents/ksrnass");
+      return response;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
   Future<Response> participateToEvent(int idEvent, String login) async {
     String? token = await _getToken();
     try {
