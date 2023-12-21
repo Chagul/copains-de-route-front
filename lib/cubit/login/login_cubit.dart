@@ -1,5 +1,6 @@
 import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/cubit/login/login_state.dart';
+import 'package:copains_de_route/model/create_user_dto.dart';
 import 'package:copains_de_route/model/login_dto.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,6 +9,9 @@ class LoginCubit extends Cubit<LoginState> {
 
   late String loginField;
   late String passwordField;
+
+  late String registerEmailField;
+  late String registerPassswordField;
 
   verifyToken() async {
     emit(VerifyTokenState());
@@ -29,6 +33,20 @@ class LoginCubit extends Cubit<LoginState> {
             {emit(TokenValidState())}
           else
             {emit(LoginFailedState())}
+        });
+  }
+
+  register() async {
+    emit(RegisteringState());
+    var resp = CopainsDeRouteApi().register(CreateUserDTO(
+        email: registerEmailField,
+        login: loginField,
+        password: registerPassswordField));
+    resp.then((value) => {
+          if (value.statusCode == 201)
+            {emit(RegisteredState())}
+          else
+            {emit(RegisterFailedState())}
         });
   }
 }
