@@ -6,6 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(super.initialState);
 
+  late String loginField;
+  late String passwordField;
+
   verifyToken() async {
     emit(VerifyTokenState());
     var resp = CopainsDeRouteApi().verifyToken();
@@ -17,10 +20,10 @@ class LoginCubit extends Cubit<LoginState> {
         });
   }
 
-  login(String login, String password) async {
+  login() async {
     emit(LoggingInState());
-    var resp =
-        CopainsDeRouteApi().login(LoginDTO(login: login, password: password));
+    var resp = CopainsDeRouteApi()
+        .login(LoginDTO(login: loginField, password: passwordField));
     resp.then((value) => {
           if (value.statusCode == 200)
             {emit(TokenValidState())}
