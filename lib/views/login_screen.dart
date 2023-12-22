@@ -1,9 +1,12 @@
 import 'package:copains_de_route/components/login_screen/login_widget.dart';
 import 'package:copains_de_route/components/login_screen/password_widget.dart';
+import 'package:copains_de_route/cubit/login/login_cubit.dart';
+import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/views/forget_password.dart';
 import 'package:flutter/material.dart';
 import 'package:copains_de_route/views/create_account.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -71,28 +74,35 @@ Widget _forgotPassword(BuildContext context) {
 }
 
 Widget _button(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 20.0),
-    child: ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(
-        backgroundColor: CustomColorScheme.customSecondaryColor,
-        foregroundColor: CustomColorScheme.customOnPrimary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.0),
+  return BlocConsumer<LoginCubit, LoginState>(listener: (context, state) {
+    if (state is LoginFailedState) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Erreur de connexion")));
+    }
+  }, builder: (context, state) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0),
+      child: ElevatedButton(
+        onPressed: () => {BlocProvider.of<LoginCubit>(context).login()},
+        style: ElevatedButton.styleFrom(
+          backgroundColor: CustomColorScheme.customSecondaryColor,
+          foregroundColor: CustomColorScheme.customOnPrimary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          minimumSize: const Size(400, 50),
         ),
-        minimumSize: const Size(400, 50),
+        child: const Text('Connexion'),
       ),
-      child: const Text('Connexion'),
-    ),
-  );
+    );
+  });
 }
 
 Widget _creationCompte(BuildContext context) {
   return TextButton(
     onPressed: () {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const CreateAccount()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const CreateAccount()));
     },
     style: TextButton.styleFrom(
       foregroundColor: CustomColorScheme.customOnPrimary,

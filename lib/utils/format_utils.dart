@@ -13,4 +13,10 @@ class FormatUtils {
         .parse("$eventDate ${formatTimeOfDay(eventTime)}");
     return DateFormat("yyyy-MM-ddThh:mm:ss").format(eventDateFormated);
   }
+
+  static DateTime formatDateTime(String eventDate, String eventTime) {
+    DateTime eventDateFormated =
+        DateFormat("yyyy-MM-dd hh:mm").parse("$eventDate $eventTime");
+    return eventDateFormated;
+  }
 }

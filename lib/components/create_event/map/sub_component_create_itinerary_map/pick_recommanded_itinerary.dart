@@ -2,6 +2,7 @@ import 'package:copains_de_route/components/commons/loading_widget.dart';
 import 'package:copains_de_route/cubit/create_event_global/create_itinerary_cubit.dart';
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_cubit.dart';
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_state.dart';
+import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/utils/enum_subcomponent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +31,7 @@ class PickRecommandedItinerary extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           child: PointerInterceptor(
             child: Card(
+              color: CustomColorScheme.customSecondaryColor,
               child: SizedBox(
                   height: 150,
                   width: 2000,
@@ -55,38 +57,70 @@ class PickRecommandedItinerary extends StatelessWidget {
                             ])),
                     Expanded(
                         flex: 2,
-                        child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ElevatedButton(
-                                  onPressed: () => {
-                                        BlocProvider.of<
-                                                    MapCreateItineraryCubit>(
-                                                context)
-                                            .clearPolyline(),
-                                        BlocProvider.of<
-                                                    MapCreateItineraryCubit>(
-                                                context)
-                                            .changeWidget(
-                                                SubComponentCreateItineraryPage
-                                                    .choseItineraryWidget),
-                                      },
-                                  child: const Text(
-                                    "Retour",
-                                    style: TextStyle(color: Colors.black),
-                                  )),
-                              ElevatedButton(
-                                  onPressed: () => BlocProvider.of<
-                                          CreateItineraryCubit>(context)
-                                      .addItinerarySelected(BlocProvider.of<
-                                              MapCreateItineraryCubit>(context)
-                                          .routeSelected),
-                                  child: const Text(
-                                    "Confirmer",
-                                    style: TextStyle(color: Colors.black),
-                                  ))
-                            ])),
+                        child: Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  ElevatedButton(
+                                      style: TextButton.styleFrom(
+                                          minimumSize: const Size(100, 40),
+                                          backgroundColor: CustomColorScheme
+                                              .customBackground),
+                                      onPressed: () => {
+                                            BlocProvider.of<
+                                                        MapCreateItineraryCubit>(
+                                                    context)
+                                                .clearPolyline(),
+                                            BlocProvider.of<
+                                                        MapCreateItineraryCubit>(
+                                                    context)
+                                                .changeWidget(
+                                                    SubComponentCreateItineraryPage
+                                                        .choseItineraryWidget),
+                                          },
+                                      child: const Text(
+                                        "Retour",
+                                        style: TextStyle(color: Colors.black),
+                                      )),
+                                  ElevatedButton(
+                                      style: TextButton.styleFrom(
+                                          minimumSize: const Size(100, 100),
+                                          backgroundColor: CustomColorScheme
+                                              .customBackground),
+                                      onPressed: () => {
+                                            BlocProvider.of<
+                                                        CreateItineraryCubit>(
+                                                    context)
+                                                .addItinerarySelected(BlocProvider
+                                                        .of<MapCreateItineraryCubit>(
+                                                            context)
+                                                    .routeSelected),
+                                            BlocProvider.of<
+                                                        CreateItineraryCubit>(
+                                                    context)
+                                                .addSteps(
+                                              BlocProvider.of<
+                                                          MapCreateItineraryCubit>(
+                                                      context)
+                                                  .steps,
+                                              BlocProvider.of<
+                                                          MapCreateItineraryCubit>(
+                                                      context)
+                                                  .markerStart!,
+                                              BlocProvider.of<
+                                                          MapCreateItineraryCubit>(
+                                                      context)
+                                                  .markerEnd!,
+                                            )
+                                          },
+                                      child: const Text(
+                                        "Confirmer",
+                                        style: TextStyle(color: Colors.black),
+                                      ))
+                                ]))),
                   ])),
             ),
           ));

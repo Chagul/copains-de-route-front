@@ -4,7 +4,7 @@ import 'package:copains_de_route/views/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({super.key});
+  const ForgotPassword({Key? key}) : super(key: key);
 
   @override
   ForgotPasswordState createState() => ForgotPasswordState();

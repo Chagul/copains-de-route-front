@@ -1,8 +1,10 @@
+import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PasswordConfirmationWidget extends StatefulWidget {
-  const PasswordConfirmationWidget({super.key});
+  const PasswordConfirmationWidget({Key? key}) : super(key: key);
   @override
   PasswordConfirmationWidgetState createState() =>
       PasswordConfirmationWidgetState();
@@ -66,9 +68,12 @@ class PasswordConfirmationWidgetState
                   margin: const EdgeInsets.all(.0),
                 ),
               );
-              return '';
+              return 'Mot de passe invalide';
+            } else {
+              BlocProvider.of<LoginCubit>(context).registerPassswordField =
+                  value!;
+              return null;
             }
-            return null;
           },
         ),
       ],

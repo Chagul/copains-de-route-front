@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapEventDetails extends StatelessWidget {
   final Event event;
-  const MapEventDetails({super.key, required this.event});
+  const MapEventDetails({Key? key, required this.event}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

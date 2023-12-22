@@ -1,5 +1,6 @@
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_cubit.dart';
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_state.dart';
+import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/utils/enum_subcomponent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,23 +19,46 @@ class PickStartEndItinerary extends StatelessWidget {
       }
     }, builder: (context, state) {
       return Card(
+        color: CustomColorScheme.customSecondaryColor,
         child: SizedBox(
             height: 200,
-            width: 200,
+            width: 250,
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  const Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Text(
+                          textAlign: TextAlign.center,
+                          "Cliquez sur la map après avoir choisi départ ou arrivée !")),
                   TextButton(
+                      style: TextButton.styleFrom(
+                          minimumSize: const Size(100, 40),
+                          backgroundColor:
+                              CustomColorScheme.customPrimaryColor),
                       onPressed: () =>
                           BlocProvider.of<MapCreateItineraryCubit>(context)
                               .startPickStart(),
-                      child: const Text("Départ")),
+                      child: const Text(
+                        "Départ",
+                        style: TextStyle(color: Colors.white),
+                      )),
                   TextButton(
+                      style: TextButton.styleFrom(
+                          minimumSize: const Size(100, 40),
+                          backgroundColor:
+                              CustomColorScheme.customPrimaryColor),
                       onPressed: () =>
                           BlocProvider.of<MapCreateItineraryCubit>(context)
                               .startPickEnd(),
-                      child: const Text("Arrivée")),
+                      child: const Text(
+                        "Arrivée",
+                        style: TextStyle(color: Colors.white),
+                      )),
                   ElevatedButton(
+                      style: TextButton.styleFrom(
+                          minimumSize: const Size(100, 40),
+                          backgroundColor: CustomColorScheme.customOnPrimary),
                       onPressed: () =>
                           BlocProvider.of<MapCreateItineraryCubit>(context)
                               .changeWidget(SubComponentCreateItineraryPage
