@@ -107,4 +107,16 @@ class CopainsDeRouteApi {
       return Future.error(e);
     }
   }
+
+  Future<Response> getUser () async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.get("/users/me",
+          options:
+          Options(headers: {'Authorization': _getAuthorization(token)}));
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
 }

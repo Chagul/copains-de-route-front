@@ -2,85 +2,68 @@ import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 
 class CardStatiquesFriend extends StatelessWidget {
-  const CardStatiquesFriend({super.key});
+  const CardStatiquesFriend({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children :[
-       Card(
-        color: CustomColorScheme.customBackground, // Couleur de la Card en rouge
-        child: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, // Centrer le contenu verticalement
-            children: [
-              Text(
-                "Statistiques :",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.underline,
-                ),
+    return Card(
+      color: CustomColorScheme.customBackground,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              "Statistiques :",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+                color: Colors.black,
               ),
-              SizedBox(height: 20),
-              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Row(children: [
-                  Icon(Icons.directions_bike),
-                  SizedBox(width: 10),
-                  Text(
-                    "A participé à 3 événements",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                ]),
-                SizedBox(height: 10),
-                Row(children: [
-                  Icon(Icons.pin_drop),
-                  SizedBox(width: 10),
-                  Text(
-                    "A créé à 2 événements",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                ]),
-                SizedBox(height: 10),
-                Row(children: [
-                  Icon(Icons.map),
-                  SizedBox(width: 10),
-                  Text(
-                    "A parcouru à 100 km",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                ]),
-                SizedBox(height: 10),
-                Row(children: [
-                  Icon(Icons.co2),
-                  SizedBox(width: 10),
-                  Text(
-                    "A économisé 1000 g de CO2",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                ]),
-              ]),
-              SizedBox(height: 20),
-            ],
-          ),
+            ),
+            const SizedBox(height: 15),
+            Container(
+              decoration: BoxDecoration(
+                color: CustomColorScheme.customPrimaryColor.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              padding: const EdgeInsets.all(16.0), 
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildStatRow(Icons.directions_bike, "A participé à 3 événements"),
+                  _buildStatRow(Icons.pin_drop, "A créé à 2 événements"),
+                  _buildStatRow(Icons.map, "A parcouru à 100 km"),
+                  _buildStatRow(Icons.co2, "A économisé 1000 g de CO2"),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
-      ],
+    );
+  }
+
+  Widget _buildStatRow(IconData icon, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        children: [
+          Icon(icon),
+          const SizedBox(width: 10),
+          Text(
+            text,
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

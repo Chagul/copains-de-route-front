@@ -1,4 +1,3 @@
-import 'package:copains_de_route/components/profil/profile.dart';
 import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/cubit/position/position_cubit.dart';

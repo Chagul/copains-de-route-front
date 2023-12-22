@@ -18,6 +18,7 @@ class CardStatiques extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
+      const SizedBox(height: 10),
       const Align(
           alignment: Alignment.topLeft,
           child: Text("Statistiques:",
@@ -26,11 +27,12 @@ class CardStatiques extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   decoration: TextDecoration.underline))),
       Card(
-          color: CustomColorScheme.customPrimaryColor,
+          color: CustomColorScheme.customPrimaryColor.withOpacity(0.8),
           child: Padding(
               padding: const EdgeInsets.only(left: 10, top: 10),
               child: Column(children: [
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  const SizedBox (height: 10,),
                   Row(children: [
                     const Icon(Icons.directions_bike,
                         color: CustomColorScheme.customOnSecondary),
@@ -74,8 +76,10 @@ class CardStatiques extends StatelessWidget {
                           fontSize: 15, fontWeight: FontWeight.bold),
                     )
                   ]),
+                  const SizedBox(height: 20),
                 ]),
-              ])))
+              ]))),
     ]);
+    
   }
 }

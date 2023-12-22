@@ -1,4 +1,5 @@
 import 'package:copains_de_route/components/commons/card_statistiques.dart';
+import 'package:copains_de_route/components/commons/card_statistiques_friend.dart';
 import 'package:copains_de_route/components/commons/custom_title.dart';
 import 'package:copains_de_route/components/commons/loading_widget.dart';
 import 'package:copains_de_route/components/commons/row_image_text.dart';
@@ -30,26 +31,37 @@ class ProfilePage extends StatelessWidget {
             Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => const SettingsProfilPage())),
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (_) {
+                        return BlocProvider(
+                            create: (context) => ProfilViewCubit(),
+                            child: const SettingsProfilPage());
+                      }));
+                    },
                     icon: const Icon(Icons.settings))),
-            const Column(children: [
+            Column(children: [
               CircleAvatar(
                   radius: 50,
-                  backgroundColor: CustomColorScheme.customPrimaryColor,
-                  child: CircleAvatar(
+                  backgroundColor:
+                      CustomColorScheme.customPrimaryColor.withOpacity(0.5),
+                  child: const CircleAvatar(
                       radius: 47,
                       backgroundImage: NetworkImage(
                           'https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png'))),
-              SizedBox(height: 10),
-              Text("Rick",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              if (state is MyProfileState)
+                Text(
+                  state.login,
+                  style: const TextStyle(
+                      fontSize: 25, fontWeight: FontWeight.bold),
+                )
             ]),
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: Column(
                 children: [
+                  const SizedBox(height: 10),
                   const Align(
                       alignment: Alignment.topLeft,
                       child: Text("Liste d'amis:",
@@ -58,7 +70,8 @@ class ProfilePage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               decoration: TextDecoration.underline))),
                   Card(
-                      color: CustomColorScheme.customPrimaryColor,
+                      color:
+                          CustomColorScheme.customPrimaryColor.withOpacity(0.8),
                       child: Padding(
                           padding: const EdgeInsets.only(left: 10, top: 10),
                           child: Column(children: [
@@ -73,13 +86,13 @@ class ProfilePage extends StatelessWidget {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const ProfilePage())),
+                                                        const CardStatiquesFriend())),
                                           },
                                       child: const RowImageText(
                                           image:
                                               "https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png",
                                           text: "Ami 1")),
-                                  const SizedBox(height: 10),
+                                //  const SizedBox(height: 10),
                                   InkWell(
                                     onTap: () => {
                                       BlocProvider.of<ProfilViewCubit>(context)
@@ -113,12 +126,14 @@ class ProfilePage extends StatelessWidget {
                                                 .customOnSecondary,
                                             fontSize: 20))))
                           ]))),
-                  const SizedBox(height: 10),
-                  const CardStatiques(
-                      evenementJoinedNumber: "1",
-                      evenementCreatedNumber: "10",
-                      kmDriven: "50",
-                      co2Saved: "25")
+                  if (state is MyProfileState)
+                    CardStatiques(
+                        evenementJoinedNumber:
+                            state.numberEventsParticipated.toString(),
+                        evenementCreatedNumber:
+                            state.numberEventsCreated.toString(),
+                        kmDriven: state.distanceTraveled.toString(),
+                        co2Saved: state.co2NotEmitted.toString())
                 ],
               ),
             )
@@ -128,7 +143,10 @@ class ProfilePage extends StatelessWidget {
     });
   }
 }
-       /* return SafeArea(
+
+
+
+/* return SafeArea(
             child: Scaffold(
                 body: SingleChildScrollView(
                     child: Column(children: [
@@ -162,4 +180,3 @@ class ProfilePage extends StatelessWidget {
     });
   }
 }*/
-
