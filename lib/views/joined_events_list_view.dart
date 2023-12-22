@@ -101,6 +101,10 @@ class JoinedEventsListView extends StatelessWidget {
             ),
           ),
         );
+      } else if (state is ListMyEventsJoinedNoContentState) {
+        return const Center(
+          child: Text("Aucun événement participé"),
+        );
       } else {
         return const LoadingWidget();
       }
