@@ -138,3 +138,8 @@ app.*.symbols
 !.vscode/settings.json
 
 local.properties
+ios/Flutter/
+.vscode/
+ios/Podfile
+devtools_options.yaml
+macos/Podfile
