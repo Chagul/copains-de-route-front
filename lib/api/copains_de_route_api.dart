@@ -85,10 +85,11 @@ class CopainsDeRouteApi {
   }
 
   Future<Response> getMyEvents() async {
+    String? token = await _getToken();
     try {
-      var response = await _dio.get(
-        "/events/createdEvents/ksrnass",
-      );
+      var response = await _dio.get("/events/createdEvents",
+          options:
+              Options(headers: {'Authorization': _getAuthorization(token)}));
       return response;
     } catch (e) {
       return Future.error(e);
@@ -96,18 +97,21 @@ class CopainsDeRouteApi {
   }
 
   Future<Response> getEventsParticipated() async {
+    String? token = await _getToken();
     try {
-      var response = await _dio.get("/events/participatedEvents/ksrnass");
+      var response = await _dio.get("/events/participatedEvents",
+          options:
+              Options(headers: {'Authorization': _getAuthorization(token)}));
       return response;
     } catch (e) {
       return Future.error(e);
     }
   }
 
-  Future<Response> participateToEvent(int idEvent, String login) async {
+  Future<Response> participateToEvent(int idEvent) async {
     String? token = await _getToken();
     try {
-      var resp = await _dio.post("/events/participate/$idEvent/$login",
+      var resp = await _dio.post("/events/participate/$idEvent",
           options:
               Options(headers: {'Authorization': _getAuthorization(token)}));
       return resp;
@@ -116,10 +120,10 @@ class CopainsDeRouteApi {
     }
   }
 
-  Future<Response> unsubscribeToEvent(int idEvent, String login) async {
+  Future<Response> unsubscribeToEvent(int idEvent) async {
     String? token = await _getToken();
     try {
-      var resp = await _dio.post("/events/participate/$idEvent/$login",
+      var resp = await _dio.post("/events/participate/$idEvent/",
           options:
               Options(headers: {'Authorization': _getAuthorization(token)}));
       return resp;

@@ -16,7 +16,7 @@ class DetailEventCubit extends Cubit<DetailEventState> {
   participate(int eventId, String login) async {
     emit(DetailEventParticipateLoadingState());
 
-    var response = CopainsDeRouteApi().participateToEvent(eventId, login);
+    var response = CopainsDeRouteApi().participateToEvent(eventId);
     response.then((value) => {
           if (value.statusCode == 200)
             {emit(DetailEventParticipateSucessState())}
@@ -28,7 +28,7 @@ class DetailEventCubit extends Cubit<DetailEventState> {
   unsubscribe(int eventId, String login) async {
     emit(DetailEventParticipateLoadingState());
 
-    var response = CopainsDeRouteApi().participateToEvent(eventId, login);
+    var response = CopainsDeRouteApi().participateToEvent(eventId);
     response.then((value) => {
           if (value.statusCode == 200)
             {emit(DetailEventParticipateSucessState())}
