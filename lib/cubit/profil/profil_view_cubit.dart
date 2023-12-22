@@ -9,7 +9,6 @@ class ProfilViewCubit extends Cubit<ProfilViewState> {
   }
 
   updateUser() {
-    print("sending api call");
   }
 
   friendClicked(int i) {

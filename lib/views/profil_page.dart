@@ -8,8 +8,8 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => ProfilViewCubit()..waitLoading(),
+    return BlocProvider<ProfilViewCubit>(
+        create: (_) => ProfilViewCubit()..waitLoading(),
         child: const ProfilePage());
   }
 }

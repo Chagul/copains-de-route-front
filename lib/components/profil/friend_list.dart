@@ -90,7 +90,7 @@ return SafeArea(
         ])),
       ));
       } else if(cubit.state is OtherProfileState) {
-        return Container(child: Text("OTHER PRFILE"));
+        return const Text("OTHER PRFILE");
       } else if(cubit.state is LoadingState){
         return const LoadingWidget();
       } else {

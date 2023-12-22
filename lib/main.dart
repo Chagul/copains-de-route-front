@@ -7,6 +7,7 @@ import 'package:copains_de_route/views/create_itinerary_page.dart';
 import 'package:copains_de_route/views/home_page.dart';
 import 'package:copains_de_route/views/login_screen.dart';
 import 'package:copains_de_route/views/my_itinerary_page.dart';
+import 'package:copains_de_route/views/profil_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -56,7 +57,7 @@ class _MyAppState extends State<MyApp> {
         HomePage(),
         MyIntineraryPage(),
         CreateItineraryPage(),
-        ProfilePage()
+        ProfileView()
       ][selectedPageIndex],
       bottomNavigationBar: NavigationBar(
         indicatorColor: CustomColorScheme.customSecondaryColor,

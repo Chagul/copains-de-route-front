@@ -27,6 +27,7 @@ class SettingsProfilPage extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           InkWell(
+              // ignore: avoid_print
               onTap: () => {print("change avatar")},
               child: const CircleAvatar(
                   radius: 50,
