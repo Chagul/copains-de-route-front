@@ -79,7 +79,7 @@ class CreateAccountState extends State<CreateAccount> {
         body: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
+            children: [
               const SizedBox(height: 300),
               const SizedBox(width: 230),
               Padding(
@@ -88,7 +88,7 @@ class CreateAccountState extends State<CreateAccount> {
                   key: _formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
+                    children: [
                       Stack(
                         children: [
                           _image != null
