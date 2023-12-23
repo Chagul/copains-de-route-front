@@ -119,4 +119,17 @@ class CopainsDeRouteApi {
       return Future.error(e);
     }
   }
+
+  Future<Response> updateUser (String newLogin) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.put("/users/me",
+          data: {"login": newLogin},
+          options:
+          Options(headers: {'Authorization': _getAuthorization(token)}));
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
 }

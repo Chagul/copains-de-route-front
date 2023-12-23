@@ -36,7 +36,7 @@ class ProfilePage extends StatelessWidget {
                           .push(MaterialPageRoute(builder: (_) {
                         return BlocProvider(
                             create: (context) => ProfilViewCubit(),
-                            child: const SettingsProfilPage());
+                            child: SettingsProfilPage());
                       }));
                     },
                     icon: const Icon(Icons.settings))),

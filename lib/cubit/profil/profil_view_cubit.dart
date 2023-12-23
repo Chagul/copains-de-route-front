@@ -3,10 +3,15 @@ import 'package:copains_de_route/cubit/profil/profil_view_state.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
 class ProfilViewCubit extends Cubit<ProfilViewState> {
+  // ignore: prefer_typing_uninitialized_variables
   var login;
+  // ignore: prefer_typing_uninitialized_variables
   var numberEventsCreated;
+  // ignore: prefer_typing_uninitialized_variables
   var numberEventsParticipated;
+  // ignore: prefer_typing_uninitialized_variables
   var distanceTraveled;
+  // ignore: prefer_typing_uninitialized_variables
   var co2NotEmitted;
 
   ProfilViewCubit() : super(ProfilViewInitial());
@@ -15,7 +20,17 @@ class ProfilViewCubit extends Cubit<ProfilViewState> {
     emit(SettingsViewClicked());
   }
 
-  updateUser() {}
+  updateUser(String newLogin) {
+    emit(LoadingState());
+    var response = CopainsDeRouteApi().updateUser(newLogin);
+
+    response.then((value) => {
+          if (value.statusCode == 200)
+            {emit(MyProfileState(newLogin, numberEventsCreated, numberEventsParticipated, distanceTraveled, co2NotEmitted))}
+          else
+            {emit(ErrorState())}
+        });
+  }
 
   friendClicked(int i) {
     emit(OtherProfileState(i));

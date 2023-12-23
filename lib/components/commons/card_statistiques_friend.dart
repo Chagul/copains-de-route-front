@@ -18,7 +18,7 @@ class CardStatiquesFriend extends StatelessWidget {
           children: [
             // Bouton de retour à la page précédente
             IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.of(context).pop(); // Retour à la page précédente
               },
