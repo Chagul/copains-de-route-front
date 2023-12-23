@@ -1,5 +1,5 @@
-import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:copains_de_route/theme/custom_color_scheme.dart';
 
 class CardStatiquesFriend extends StatelessWidget {
   const CardStatiquesFriend({Key? key}) : super(key: key);
@@ -16,6 +16,13 @@ class CardStatiquesFriend extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Bouton de retour à la page précédente
+            IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.of(context).pop(); // Retour à la page précédente
+              },
+            ),
             const Text(
               "Statistiques :",
               style: TextStyle(
@@ -31,7 +38,7 @@ class CardStatiquesFriend extends StatelessWidget {
                 color: CustomColorScheme.customPrimaryColor.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              padding: const EdgeInsets.all(16.0), 
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

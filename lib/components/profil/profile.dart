@@ -80,28 +80,33 @@ class ProfilePage extends StatelessWidget {
                                 children: [
                                   InkWell(
                                       onTap: () => {
-                                            BlocProvider.of<ProfilViewCubit>(
-                                                    context)
-                                                .friendClicked(1),
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const CardStatiquesFriend())),
+                                                    builder: (_) {
+                                              return BlocProvider(
+                                                create: (context) => ProfilViewCubit(),
+                                                child: const CardStatiquesFriend()
+                                              );
+                                            }))
                                           },
+                                          
+                                          
                                       child: const RowImageText(
                                           image:
                                               "https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png",
                                           text: "Ami 1")),
-                                //  const SizedBox(height: 10),
+                                          
                                   InkWell(
                                     onTap: () => {
-                                      BlocProvider.of<ProfilViewCubit>(context)
-                                          .friendClicked(2),
                                       Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const ProfilePage()))
-                                    },
+                                                MaterialPageRoute(
+                                                    builder: (_) {
+                                              return BlocProvider(
+                                                create: (context) => ProfilViewCubit(),
+                                                child: const CardStatiquesFriend()
+                                              );
+                                            }))
+                                          },
                                     child: const RowImageText(
                                         image:
                                             "https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png",
