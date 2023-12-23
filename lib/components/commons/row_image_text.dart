@@ -16,7 +16,7 @@ class RowImageText extends StatelessWidget {
               CircleAvatar(radius: 27, backgroundImage: NetworkImage(image))),
       const SizedBox(width: 10),
       Text(text,
-          style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold))
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold))
     ]);
   }
 }
