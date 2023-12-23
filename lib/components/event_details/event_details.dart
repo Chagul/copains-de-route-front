@@ -109,7 +109,7 @@ class EventDetails extends StatelessWidget {
                                       .read<DetailEventCubit>()
                                       .event
                                       .promoter ==
-                                  "test") ...{
+                                  "TODO") ...{
                                 const Spacer(),
                                 PopupMenuButton(
                                   itemBuilder: (BuildContext context) {

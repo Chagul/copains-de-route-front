@@ -2,12 +2,11 @@ import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/cubit/list_my_event/list_my_events_state.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/model/event_list.dart';
-import 'package:copains_de_route/utils/format_utils.dart';
+import 'package:copains_de_route/utils/sort.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ListMyEventsCubit extends Cubit<ListMyEventsState> {
   EventList myEvents = EventList(eventList: []);
-  EventList eventParticipated = EventList(eventList: []);
   bool sortedByDate = false;
   bool sortedByDistance = false;
   bool sortedByParticipants = false;
@@ -43,8 +42,8 @@ class ListMyEventsCubit extends Cubit<ListMyEventsState> {
               eventList = (value.data as List)
                   .map((item) => Event.fromJson(item))
                   .toList(),
-              eventParticipated = EventList(eventList: eventList),
-              emit(ListMyEventsLoadedState(data: eventParticipated)),
+              myEvents = EventList(eventList: eventList),
+              emit(ListMyEventsLoadedState(data: myEvents)),
             }
           else if (value.statusCode == 204)
             emit(ListMyEventsNoContentState())
@@ -54,45 +53,34 @@ class ListMyEventsCubit extends Cubit<ListMyEventsState> {
   void sortEventsByDistance() {
     emit(ListSortingState());
 
-    if (sortedByDistance) {
-      myEvents.eventList.sort((a, b) => b.distance.compareTo(a.distance));
-      sortedByDistance = false;
-    } else {
-      myEvents.eventList.sort((a, b) => a.distance.compareTo(b.distance));
-      sortedByDistance = true;
-    }
+    var (resSortedByDistance, resDataDisplayed) =
+        SortUtils().sortByDistance(myEvents, sortedByDistance);
+
+    sortedByDistance = resSortedByDistance;
+    myEvents = resDataDisplayed;
+
     emit(ListSortedState(data: myEvents));
   }
 
   void sortEventsByParticipants() {
     emit(ListSortingState());
+    var (resSortedByParticipants, resDataDisplayed) =
+        SortUtils().sortByParticipants(myEvents, sortedByParticipants);
 
-    if (sortedByParticipants) {
-      myEvents.eventList.sort(
-          (a, b) => b.participants.length.compareTo(a.participants.length));
-      sortedByParticipants = false;
-    } else {
-      myEvents.eventList.sort(
-          (a, b) => a.participants.length.compareTo(b.participants.length));
-      sortedByParticipants = true;
-    }
+    sortedByParticipants = resSortedByParticipants;
+    myEvents = resDataDisplayed;
+
     emit(ListSortedState(data: myEvents));
   }
 
   void sortEventsByDate() {
     emit(ListSortingState());
+    var (resSortedByDate, resDataDisplayed) =
+        SortUtils().sortByDate(myEvents, sortedByDate);
 
-    if (sortedByDate) {
-      myEvents.eventList.sort((a, b) =>
-          (FormatUtils.formatDateTime(b.startDate, b.startTime))
-              .compareTo(FormatUtils.formatDateTime(a.startDate, a.startTime)));
-      sortedByDate = false;
-    } else {
-      myEvents.eventList.sort((a, b) =>
-          (FormatUtils.formatDateTime(a.startDate, a.startTime))
-              .compareTo(FormatUtils.formatDateTime(b.startDate, b.startTime)));
-      sortedByDate = true;
-    }
+    sortedByDate = resSortedByDate;
+    myEvents = resDataDisplayed;
+
     emit(ListSortedState(data: myEvents));
   }
 }
