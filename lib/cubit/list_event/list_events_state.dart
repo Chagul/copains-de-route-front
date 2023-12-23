@@ -27,3 +27,8 @@ class ListFilteredState extends ListAllEventsState {
   final EventList data;
   ListFilteredState({required this.data});
 }
+
+class ListChangedState extends ListAllEventsState {
+  final EventList data;
+  ListChangedState({required this.data});
+}

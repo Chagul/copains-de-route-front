@@ -91,4 +91,11 @@ class ListEventCubit extends Cubit<ListEventState> {
     }
     emit(ListFilteredState(data: dataDisplayed));
   }
+
+  void deletedEvent(int eventId) {
+    emit(ListFilterLoadingState());
+    dataDisplayed.eventList.removeWhere((element) => element.id == eventId);
+    data.eventList.removeWhere((element) => element.id == eventId);
+    emit(ListChangedState(data: dataDisplayed));
+  }
 }

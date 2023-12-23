@@ -98,7 +98,7 @@ class CreatedEventsListView extends StatelessWidget {
         );
       } else if (state is ListMyEventsNoContentState) {
         return const Center(
-          child: Text("No events created yet"),
+          child: Text("Aucun événement créé"),
         );
       } else {
         return const LoadingWidget();

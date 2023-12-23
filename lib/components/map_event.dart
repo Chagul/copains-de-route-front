@@ -52,7 +52,7 @@ class MapEvent extends StatelessWidget {
                             snippet: e.description,
                             onTap: () => Navigator.of(context)
                                     .push(MaterialPageRoute(builder: (_) {
-                                  return BlocProvider(
+                                  return BlocProvider<DetailEventCubit>(
                                       create: (context) =>
                                           DetailEventCubit(event: e),
                                       child: const EventDetails());

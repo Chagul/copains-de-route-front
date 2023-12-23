@@ -79,7 +79,7 @@ class EventCard extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (_) {
-                        return BlocProvider(
+                        return BlocProvider<DetailEventCubit>(
                             create: (context) => DetailEventCubit(event: event),
                             child: const EventDetails());
                       }));
