@@ -25,7 +25,9 @@ class EventListView extends StatelessWidget {
       return const Center(child: CircularProgressIndicator());
     }
 
-    if (state is ListAllEventsLoadedState || state is ListFilteredState) {
+    if (state is ListAllEventsLoadedState ||
+        state is ListFilteredState ||
+        state is ListChangedState) {
       return SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

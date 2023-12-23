@@ -14,10 +14,10 @@ class MyIntineraryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(
+          BlocProvider<ListMyEventsCubit>(
               create: (context) =>
                   ListMyEventsCubit(ListMyEventsStateInitial())),
-          BlocProvider(
+          BlocProvider<ListMyEventsJoinedCubit>(
               create: (context) =>
                   ListMyEventsJoinedCubit(ListMyEventsJoinedStateInitial()))
         ],

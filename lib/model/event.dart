@@ -15,7 +15,7 @@ class Event {
   final String startDate;
   final String startTime;
   final String visibility;
-  final int distance;
+  final double distance;
   final String startAddress;
   final String endAddress;
   final String? roadType1;

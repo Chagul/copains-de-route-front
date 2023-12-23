@@ -13,7 +13,7 @@ class CreateEventForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DateTime today = DateTime.now();
-    return BlocProvider(
+    return BlocProvider<EventFormBloc>(
         create: (context) => EventFormBloc(),
         child: Builder(
           builder: (context) {

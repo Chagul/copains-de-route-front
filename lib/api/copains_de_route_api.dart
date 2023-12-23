@@ -1,5 +1,6 @@
 import 'package:copains_de_route/model/create_evenement.dart';
 import 'package:copains_de_route/model/create_user_dto.dart';
+import 'package:copains_de_route/model/edit_event_dto.dart';
 import 'package:copains_de_route/model/login_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -124,6 +125,31 @@ class CopainsDeRouteApi {
     String? token = await _getToken();
     try {
       var resp = await _dio.post("/events/participate/$idEvent/",
+          options:
+              Options(headers: {'Authorization': _getAuthorization(token)}));
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<Response> editEvent(EditEvenementDto editEvent, int idEvent) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.patch("/events/$idEvent",
+          data: editEvent,
+          options:
+              Options(headers: {'Authorization': _getAuthorization(token)}));
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<Response> deleteEvent(int idEvent) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.delete("/events/$idEvent",
           options:
               Options(headers: {'Authorization': _getAuthorization(token)}));
       return resp;
