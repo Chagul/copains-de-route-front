@@ -1,10 +1,14 @@
-abstract class ProfilViewState {}
+abstract class ProfilViewState {
+  get login => null;
+}
 
 class ProfilViewInitial extends ProfilViewState {}
 
 class SettingsViewClicked extends ProfilViewState {}
 
 class FriendViewClicked extends ProfilViewState {}
+
+
 
 class MyProfileState extends ProfilViewState {
   final String login;

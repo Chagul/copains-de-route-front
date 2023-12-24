@@ -20,17 +20,7 @@ class ProfilViewCubit extends Cubit<ProfilViewState> {
     emit(SettingsViewClicked());
   }
 
-  updateUser(String newLogin) {
-    emit(LoadingState());
-    var response = CopainsDeRouteApi().updateUser(newLogin);
 
-    response.then((value) => {
-          if (value.statusCode == 200)
-            {emit(MyProfileState(newLogin, numberEventsCreated, numberEventsParticipated, distanceTraveled, co2NotEmitted))}
-          else
-            {emit(ErrorState())}
-        });
-  }
 
   friendClicked(int i) {
     emit(OtherProfileState(i));
@@ -79,4 +69,6 @@ class ProfilViewCubit extends Cubit<ProfilViewState> {
             {emit(ErrorState())}
         });
   }
+
+
 }

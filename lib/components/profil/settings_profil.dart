@@ -9,8 +9,8 @@ class SettingsProfilPage extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
   final _loginController = TextEditingController();
-  String? _newPassword;
-  String? _confirmPassword;
+  final _newPasswordController = TextEditingController();
+  final _confirmNewPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,190 +18,241 @@ class SettingsProfilPage extends StatelessWidget {
       final cubit = BlocProvider.of<ProfilViewCubit>(context);
 
       return SafeArea(
-          child: Scaffold(
-              body: SingleChildScrollView(
-                  child: Column(
-        children: [
-          Row(
-            children: [
-              IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.arrow_back)),
-              const Text("Paramètres",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))
-            ],
-          ),
-          const SizedBox(height: 20),
-          InkWell(
-              // ignore: avoid_print
-              onTap: () => {print("change avatar")},
-              child: const CircleAvatar(
-                  radius: 50,
-                  backgroundColor: CustomColorScheme.customPrimaryColor,
-                  child: CircleAvatar(
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.arrow_back),
+                    ),
+                    const Text(
+                      "Paramètres",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 20),
+                InkWell(
+                  // ignore: avoid_print
+                  onTap: () => {print("change avatar")},
+                  child: const CircleAvatar(
+                    radius: 50,
+                    backgroundColor: CustomColorScheme.customPrimaryColor,
+                    child: CircleAvatar(
                       radius: 47,
                       backgroundImage: NetworkImage(
-                          'https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png')))),
-          Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 60),
-              child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      Column(children: [
-                        const Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
+                        'https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png',
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30, right: 30, top: 60),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Column(
+                          children: [
+                            const Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "Login",
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
-                                  decoration: TextDecoration.underline),
-                            )),
-                        TextFormField(
-                          controller: _loginController,
-                          decoration: const InputDecoration(
-                            hintText: 'rickasley',
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                            TextFormField(
+                              controller: _loginController,
+                              decoration: const InputDecoration(
+                                hintText: 'rickasley',
+                                filled: true,
+                                fillColor: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                      ]),
-                      const SizedBox(height: 20),
-                      Column(children: [
-                        const Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "Email",
-                              style: TextStyle(
+                        const SizedBox(height: 20),
+                        Column(
+                          children: [
+                            const Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "Email",
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
-                                  decoration: TextDecoration.underline),
-                            )),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            hintText: 'rick.asley@gmail.com',
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                hintText: 'rick.asley@gmail.com',
+                                filled: true,
+                                fillColor: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                      ]),
-                      const SizedBox(height: 20),
-                      Column(children: [
-                        const Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "Mot de passe actuel",
-                              style: TextStyle(
+                        const SizedBox(height: 20),
+                        Column(
+                          children: [
+                            const Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "Mot de passe actuel",
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
-                                  decoration: TextDecoration.underline),
-                            )),
-                        TextFormField(
-                          obscureText: true,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          decoration: const InputDecoration(
-                            hintText: 'Mot de passe actuel',
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                            TextFormField(
+                              obscureText: true,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              decoration: const InputDecoration(
+                                hintText: 'Mot de passe actuel',
+                                filled: true,
+                                fillColor: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                      ]),
-                      const SizedBox(height: 20),
-                      Column(children: [
-                        const Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "Nouveau mot de passe",
-                              style: TextStyle(
+                        const SizedBox(height: 20),
+                        Column(
+                          children: [
+                            const Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "Nouveau mot de passe",
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
-                                  decoration: TextDecoration.underline),
-                            )),
-                        TextFormField(
-                          obscureText: true,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          onChanged: (value) => _newPassword = value,
-                          decoration: const InputDecoration(
-                            hintText: 'Nouveau mot de passe',
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                            TextFormField(
+                              controller: _newPasswordController,
+                              obscureText: true,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              decoration: const InputDecoration(
+                                hintText: 'Nouveau mot de passe',
+                                filled: true,
+                                fillColor: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                      ]),
-                      const SizedBox(height: 20),
-                      Column(children: [
-                        const Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "Confirmer le nouveau mot de passe",
-                              style: TextStyle(
+                        const SizedBox(height: 20),
+                        Column(
+                          children: [
+                            const Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "Confirmer le nouveau mot de passe",
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
-                                  decoration: TextDecoration.underline),
-                            )),
-                        TextFormField(
-                          obscureText: true,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          onChanged: (value) => _confirmPassword = value,
-                          decoration: const InputDecoration(
-                            hintText: 'Confirmer le nouveau mot de passe',
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                            TextFormField(
+                              controller: _confirmNewPasswordController,
+                              obscureText: true,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              decoration: const InputDecoration(
+                                hintText: 'Confirmer le nouveau mot de passe',
+                                filled: true,
+                                fillColor: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                      ]),
-                      const SizedBox(height: 20),
-                      Align(
+                        const SizedBox(height: 20),
+                        Align(
                           alignment: Alignment.bottomRight,
                           child: ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  if (_newPassword != _confirmPassword) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        backgroundColor: CustomColorScheme
-                                            .customPrimaryColor
-                                            .withOpacity(0.5),
-                                        content: const Text(
-                                            'Les mots de passe ne correspondent pas',
-                                            style: TextStyle(
-                                                color: CustomColorScheme
-                                                    .customOnSurface,
-                                                fontSize: 17)),
-                                      ),
-                                    );
-                                    return;
-                                  }
-                                  cubit.updateUser(_loginController
-                                      .text); // Pass the new login to the updateUser method
-
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                if (_newPasswordController.text !=
+                                    _confirmNewPasswordController.text) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      backgroundColor: CustomColorScheme
-                                          .customPrimaryColor
-                                          .withOpacity(0.5),
+                                      backgroundColor:
+                                          CustomColorScheme.customPrimaryColor
+                                              .withOpacity(0.5),
                                       content: const Text(
-                                        'Un email a été envoyé pour modifier le mot de passe',
+                                        'Les mots de passe ne correspondent pas',
                                         style: TextStyle(
-                                            color: CustomColorScheme
-                                                .customOnSurface,
-                                            fontSize: 17),
+                                          color:
+                                              CustomColorScheme.customOnSurface,
+                                          fontSize: 17,
+                                        ),
                                       ),
-                                      duration: const Duration(seconds: 3),
                                     ),
                                   );
-                                  Navigator.of(context).pop();
+                                  return;
                                 }
-                              },
-                              child: const Text("Sauvegarder")))
-                    ],
-                  )))
-        ],
-      ))));
+
+                                String message = '';
+                                  message = 'Un email a été envoyé à votre adresse mail pour confirmer le changement de login';
+                                
+
+                                if (_newPasswordController.text.isNotEmpty) {
+                                  message = 'Un email a été envoyé à votre adresse mail pour confirmer le changement de mot de passe';
+                                  _newPasswordController.clear();
+                                  _confirmNewPasswordController.clear();
+                                }
+
+                                if (message.isNotEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor:
+                                          CustomColorScheme.customPrimaryColor
+                                              .withOpacity(0.5),
+                                      content: Text(
+                                        message,
+                                        style: const TextStyle(
+                                          color:
+                                              CustomColorScheme.customOnSurface,
+                                          fontSize: 17,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+
+                                Navigator.pop(
+                                    context); 
+                              }
+                            },
+                            child: const Text("Sauvegarder"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
     });
   }
 }
+
+
