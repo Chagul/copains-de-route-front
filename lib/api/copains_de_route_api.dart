@@ -1,6 +1,7 @@
 import 'package:copains_de_route/model/create_evenement.dart';
 import 'package:copains_de_route/model/create_user_dto.dart';
 import 'package:copains_de_route/model/edit_event_dto.dart';
+import 'package:copains_de_route/model/gps_coordinates_dto.dart';
 import 'package:copains_de_route/model/login_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -152,6 +153,20 @@ class CopainsDeRouteApi {
       var resp = await _dio.delete("/events/$idEvent",
           options:
               Options(headers: {'Authorization': _getAuthorization(token)}));
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  getEventsAround(GpsCoordinateDto gpsCoordinates) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.get(
+        "/events/location",
+        data: gpsCoordinates,
+        options: Options(headers: {'Authorization': _getAuthorization(token)}),
+      );
       return resp;
     } catch (e) {
       return Future.error(e);
