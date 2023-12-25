@@ -13,6 +13,15 @@ class ListAllEventsLoadedState extends ListAllEventsState {
   ListAllEventsLoadedState({required this.data});
 }
 
+class ListEventsAroundLoadingState extends ListAllEventsState {}
+
+class ListEventsAroundLoadedState extends ListAllEventsState {
+  final EventList data;
+  ListEventsAroundLoadedState({required this.data});
+}
+
+class ListEventsAroundNoContentState extends ListAllEventsState {}
+
 class ListAllEventsNoContentState extends ListAllEventsState {}
 
 class ListAllEventsParticipateLoadingState extends ListAllEventsState {}
