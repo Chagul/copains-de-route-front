@@ -48,4 +48,15 @@ class DetailEventCubit extends Cubit<DetailEventState> {
             {emit(DetailEventParticipateErrorState())}
         });
   }
+
+  void postComment(String comment, String login, int eventId) {
+
+    var response = CopainsDeRouteApi().postComment(comment, login, eventId);
+    response.then((value) => {
+          if (value.statusCode == 200)
+            {emit(DetailEventCommentPostedState(comment, login))}
+          else
+            {emit(DetailEventCommentErrorState())}
+        });
+  }
 }
