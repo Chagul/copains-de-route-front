@@ -162,7 +162,7 @@ class CopainsDeRouteApi {
   getEventsAround(GpsCoordinateDto gpsCoordinates) async {
     String? token = await _getToken();
     try {
-      var resp = await _dio.get(
+      var resp = await _dio.post(
         "/events/location",
         data: gpsCoordinates,
         options: Options(headers: {'Authorization': _getAuthorization(token)}),

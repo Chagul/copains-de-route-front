@@ -95,7 +95,9 @@ class MapEventState extends State<MapEvent> {
                         .eventList
                         .map((e) => Marker(
                             flat: false,
-                            icon: markerIconPublic,
+                            icon: e.visibility == "PRIVATE"
+                                ? markerIconPrivate
+                                : markerIconPublic,
                             markerId: MarkerId(e.id.toString()),
                             position: LatLng(
                                 e.steps[0].latitude, e.steps[0].longitude),
