@@ -85,6 +85,18 @@ class CopainsDeRouteApi {
     }
   }
 
+  Future<Response> getLoggedUser () async {
+    String? token = await _getToken();
+    try {
+      var response = await _dio.get("/users/me",
+          options:
+          Options(headers: {'Authorization': _getAuthorization(token)}));
+      return response;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
   Future<Response> getMyEvents() async {
     String? token = await _getToken();
     try {
@@ -166,6 +178,18 @@ class CopainsDeRouteApi {
           "userWhoCommented": login,
           "event": eventId,
           "likes": 0},
+          options:
+              Options(headers: {'Authorization': _getAuthorization(token)}));
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<Response> getComments(int eventId) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.get("/comments/$eventId",
           options:
               Options(headers: {'Authorization': _getAuthorization(token)}));
       return resp;

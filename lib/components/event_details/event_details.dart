@@ -173,7 +173,7 @@ class EventDetails extends StatelessWidget {
                           event: context.read<DetailEventCubit>().event),
                       const SizedBox(height: 10),
                       CommentSection(
-                          event: context.read<DetailEventCubit>().event)
+                          event: context.read<DetailEventCubit>().event, state: state)
                     ],
                   ))),
                 ]))));

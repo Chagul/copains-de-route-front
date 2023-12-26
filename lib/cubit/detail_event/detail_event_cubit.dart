@@ -4,6 +4,7 @@ import 'package:copains_de_route/model/event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DetailEventCubit extends Cubit<DetailEventState> {
+  var login = "";
   final Event event;
   bool joined = false;
   DetailEventCubit({required this.event}) : super(DetailEventInitialState());
@@ -50,7 +51,6 @@ class DetailEventCubit extends Cubit<DetailEventState> {
   }
 
   void postComment(String comment, String login, int eventId) {
-
     var response = CopainsDeRouteApi().postComment(comment, login, eventId);
     response.then((value) => {
           if (value.statusCode == 200)

@@ -1,65 +1,119 @@
+import 'dart:convert';
 import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/components/event_details/comment_card.dart';
+import 'package:copains_de_route/cubit/detail_event/detail_event_state.dart';
+import 'package:copains_de_route/model/comment_dto.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 
-class CommentSection extends StatelessWidget {
+class CommentSection extends StatefulWidget {
   final Event event;
-  final _controller = TextEditingController();
+  final DetailEventState state;
 
- CommentSection({super.key, required this.event});
+  CommentSection({super.key, required this.event, required this.state});
+
+  @override
+  _CommentSectionState createState() => _CommentSectionState();
+}
+
+class _CommentSectionState extends State<CommentSection> {
+  final _controller = TextEditingController();
+  List<CommentDTO> comments = [];
+  String username = "";
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialisez la liste des commentaires avec les commentaires existants
+    for (var comment in widget.event.comments) {
+      comments.add(comment);
+    }
+    _fetchUsername();
+  }
+
+  _fetchUsername() {
+    var user = CopainsDeRouteApi().getLoggedUser();
+    user.then((value) => {
+          if (value.statusCode == 200) {username = value.data['login']}
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
-    var comments = <Widget>[];
-    for (var comment in event.comments) {
-      comments.add(CommentCard(
-        comment: comment,
-      ));
-    }
+    return FutureBuilder<void>(
+      future: _fetchUsername(),
+      builder: (context, snapshot) {
+        var commentWidgets = <Widget>[];
+        for (var comment in comments) {
+          CommentDTO commentdto = CommentDTO(
+            login: comment.login,
+            content: comment.content,
+            date: comment.date,
+            likes: comment.likes,
+          );
+          commentWidgets.add(CommentCard(comment: commentdto));
+        }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Column(
+        return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "Commentaires (${event.comments.length})",
-              style: const TextStyle(
-                  color: CustomColorScheme.customOnSecondary,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.90,
-              child: TextField(
-                  controller: _controller,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Commentaires (${comments.length})",
                   style: const TextStyle(
-                      color: CustomColorScheme.customOnSecondary),
-                  decoration: InputDecoration(
+                    color: CustomColorScheme.customOnSecondary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.90,
+                  child: TextField(
+                    controller: _controller,
+                    style: const TextStyle(
+                      color: CustomColorScheme.customOnSecondary,
+                    ),
+                    decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: "Postez votre commentaire ...",
                       labelStyle: const TextStyle(
-                          color: CustomColorScheme.customOnSecondary),
+                        color: CustomColorScheme.customOnSecondary,
+                      ),
                       suffixIcon: IconButton(
                         icon: const Icon(
                           Icons.send,
                           color: CustomColorScheme.customOnSecondary,
                         ),
-                        onPressed: () {
-                          CopainsDeRouteApi()
-                              .postComment(_controller.text, "nas", event.id);
+                        onPressed: () async {
+                          CommentDTO comment = CommentDTO(
+                            login: username!,
+                            content: _controller.text,
+                            date: DateTime.now().toString(),
+                            likes: 0,
+                          );
+                            await CopainsDeRouteApi().postComment(
+                                _controller.text, username!, widget.event.id);
+                            comments.add(comment);
+                            _controller.clear();
+                            setState(
+                                () {}); // Rebuild the widget to show the new comment
+                          
                         },
-                      ))),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                for (var commentWidget in commentWidgets) commentWidget,
+              ],
             ),
-            const SizedBox(height: 10),
-            for (var comment in comments) comment,
           ],
-        ),
-      ],
+        );
+      },
     );
   }
 }
