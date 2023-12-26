@@ -19,10 +19,6 @@ class CreateAccount extends StatefulWidget {
 class CreateAccountState extends State<CreateAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Uint8List? _image;
- //void selectImage() async {
-   // Uint8List img = await pickImage(ImageSource.gallery);
-   // setState(() => _image = img);
-  //}
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +99,7 @@ class CreateAccountState extends State<CreateAccount> {
                             bottom: -10,
                             left: 80,
                             child: IconButton(
-                              onPressed: (){},//selectImage,
+                              onPressed: (){},
                               icon: const Icon(Icons.add_a_photo),
                             ),
                           ),

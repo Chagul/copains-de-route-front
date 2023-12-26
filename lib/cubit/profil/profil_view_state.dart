@@ -1,5 +1,6 @@
+import 'package:copains_de_route/model/user_dto.dart';
+
 abstract class ProfilViewState {
-  get login => null;
 }
 
 class ProfilViewInitial extends ProfilViewState {}
@@ -11,14 +12,11 @@ class FriendViewClicked extends ProfilViewState {}
 
 
 class MyProfileState extends ProfilViewState {
-  final String login;
-  final int numberEventsCreated;
-  final int numberEventsParticipated;
-  final int distanceTraveled;
-  final int co2NotEmitted;
+  UserDTO userdto;
 
-  MyProfileState(this.login, this.numberEventsCreated,
-      this.numberEventsParticipated, this.distanceTraveled, this.co2NotEmitted);
+  MyProfileState(this.userdto);
+
+  String get login => this.userdto.login;
 
 }
 

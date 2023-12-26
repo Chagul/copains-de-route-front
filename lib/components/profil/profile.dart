@@ -33,9 +33,9 @@ class ProfilePage extends StatelessWidget {
               child: IconButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                    return BlocProvider(create: 
-                    (context) => ProfilViewCubit(), child:  SettingsProfilPage()
-                    );
+                    return BlocProvider(
+                        create: (context) => ProfilViewCubit(),
+                        child: SettingsProfilPage());
                   }));
                 },
                 icon: const Icon(Icons.settings),
@@ -51,7 +51,7 @@ class ProfilePage extends StatelessWidget {
                       backgroundImage: NetworkImage(
                           'https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png'))),
               const SizedBox(height: 10),
-              if (state is MyProfileState)            
+              if (state is MyProfileState)
                 Text(
                   state.login,
                   style: const TextStyle(
@@ -72,7 +72,7 @@ class ProfilePage extends StatelessWidget {
                               decoration: TextDecoration.underline))),
                   Card(
                       color:
-                          CustomColorScheme.customPrimaryColor.withOpacity(0.8),
+                          CustomColorScheme.customPrimaryColor.withOpacity(0.5),
                       child: Padding(
                           padding: const EdgeInsets.only(left: 10, top: 10),
                           child: Column(children: [
@@ -87,7 +87,7 @@ class ProfilePage extends StatelessWidget {
                                                   create: (context) =>
                                                       ProfilViewCubit(),
                                                   child:
-                                                      const CardStatiquesFriend());
+                                                      const CardStatistiquesFriend());
                                             }))
                                           },
                                       child: const RowImageText(
@@ -101,7 +101,8 @@ class ProfilePage extends StatelessWidget {
                                         return BlocProvider(
                                             create: (context) =>
                                                 ProfilViewCubit(),
-                                            child: const CardStatiquesFriend());
+                                            child:
+                                                const CardStatistiquesFriend());
                                       }))
                                     },
                                     child: const RowImageText(
@@ -129,13 +130,13 @@ class ProfilePage extends StatelessWidget {
                                             fontSize: 20))))
                           ]))),
                   if (state is MyProfileState)
-                    CardStatiques(
+                    CardStatistiques(
                         evenementJoinedNumber:
-                            state.numberEventsParticipated.toString(),
+                            state.userdto.numberEventsParticipated.toString(),
                         evenementCreatedNumber:
-                            state.numberEventsCreated.toString(),
-                        kmDriven: state.distanceTraveled.toString(),
-                        co2Saved: state.co2NotEmitted.toString())
+                            state.userdto.numberEventsCreated.toString(),
+                        kmDriven: state.userdto.distanceTraveled.toString(),
+                        co2Saved: state.userdto.co2NotEmitted.toString())
                 ],
               ),
             )

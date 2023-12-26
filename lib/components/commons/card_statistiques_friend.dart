@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 
-class CardStatiquesFriend extends StatelessWidget {
-  const CardStatiquesFriend({Key? key}) : super(key: key);
+class CardStatistiquesFriend extends StatelessWidget {
+  const CardStatistiquesFriend({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,8 @@ class CardStatiquesFriend extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildStatRow(Icons.directions_bike, "A participé à 3 événements"),
+                  _buildStatRow(
+                      Icons.directions_bike, "A participé à 3 événements"),
                   _buildStatRow(Icons.pin_drop, "A créé à 2 événements"),
                   _buildStatRow(Icons.map, "A parcouru à 100 km"),
                   _buildStatRow(Icons.co2, "A économisé 1000 g de CO2"),

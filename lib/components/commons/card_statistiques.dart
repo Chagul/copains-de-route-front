@@ -1,13 +1,13 @@
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 
-class CardStatiques extends StatelessWidget {
+class CardStatistiques extends StatelessWidget {
   final String evenementJoinedNumber;
   final String evenementCreatedNumber;
   final String kmDriven;
   final String co2Saved;
 
-  const CardStatiques(
+  const CardStatistiques(
       {Key? key,
       required this.evenementJoinedNumber,
       required this.evenementCreatedNumber,
@@ -27,12 +27,14 @@ class CardStatiques extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   decoration: TextDecoration.underline))),
       Card(
-          color: CustomColorScheme.customPrimaryColor.withOpacity(0.8),
+          color: CustomColorScheme.customPrimaryColor.withOpacity(0.5),
           child: Padding(
               padding: const EdgeInsets.only(left: 10, top: 10),
               child: Column(children: [
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  const SizedBox (height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Row(children: [
                     const Icon(Icons.directions_bike,
                         color: CustomColorScheme.customOnSecondary),
@@ -80,6 +82,5 @@ class CardStatiques extends StatelessWidget {
                 ]),
               ]))),
     ]);
-    
   }
 }
