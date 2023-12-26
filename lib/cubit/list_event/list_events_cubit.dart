@@ -2,8 +2,10 @@ import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/cubit/list_event/list_events_state.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/model/event_list.dart';
-import 'package:copains_de_route/utils/format_utils.dart';
+import 'package:copains_de_route/model/gps_coordinates_dto.dart';
+import 'package:copains_de_route/utils/sort.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ListEventCubit extends Cubit<ListEventState> {
   EventList dataDisplayed = EventList(eventList: []);
@@ -34,6 +36,36 @@ class ListEventCubit extends Cubit<ListEventState> {
         });
   }
 
+  getEventsAround(GoogleMapController controller) async {
+    emit(ListEventsAroundLoadingState());
+
+    LatLngBounds bounds = await controller.getVisibleRegion();
+    GpsCoordinateDto gpsCoordinates = GpsCoordinateDto(
+        northeastLatitude: bounds.northeast.latitude,
+        northeastLongitude: bounds.northeast.longitude,
+        southwestLatitude: bounds.southwest.latitude,
+        southwestLongitude: bounds.southwest.longitude,
+        northwestLatitude: bounds.northeast.latitude,
+        northwestLongitude: bounds.southwest.longitude,
+        southeastLatitude: bounds.southwest.latitude,
+        southeastLongitude: bounds.northeast.longitude);
+    var response = CopainsDeRouteApi().getEventsAround(gpsCoordinates);
+    List<Event> eventList;
+    response.then((value) => {
+          if (value.statusCode == 200)
+            {
+              eventList = (value.data as List)
+                  .map((item) => Event.fromJson(item))
+                  .toList(),
+              data = EventList(eventList: eventList),
+              dataDisplayed = data,
+              emit(ListEventsAroundLoadedState(data: data)),
+            }
+          else if (value.statusCode == 204)
+            emit(ListEventsAroundNoContentState())
+        });
+  }
+
   void searchEvents(String search) {
     emit(ListFilterLoadingState());
     if (search.isEmpty || dataDisplayed.eventList.isEmpty) {
@@ -50,45 +82,41 @@ class ListEventCubit extends Cubit<ListEventState> {
   void sortEventsByDistance() {
     emit(ListFilterLoadingState());
 
-    if (sortedByDistance) {
-      dataDisplayed.eventList.sort((a, b) => b.distance.compareTo(a.distance));
-      sortedByDistance = false;
-    } else {
-      dataDisplayed.eventList.sort((a, b) => a.distance.compareTo(b.distance));
-      sortedByDistance = true;
-    }
+    var (resSortedByDistance, resDataDisplayed) =
+        SortUtils().sortByDistance(dataDisplayed, sortedByDistance);
+
+    sortedByDistance = resSortedByDistance;
+    dataDisplayed = resDataDisplayed;
+
     emit(ListFilteredState(data: dataDisplayed));
   }
 
   void sortEventsByParticipants() {
     emit(ListFilterLoadingState());
+    var (resSortedByParticipants, resDataDisplayed) =
+        SortUtils().sortByParticipants(dataDisplayed, sortedByParticipants);
 
-    if (sortedByParticipants) {
-      dataDisplayed.eventList.sort(
-          (a, b) => b.participants.length.compareTo(a.participants.length));
-      sortedByParticipants = false;
-    } else {
-      dataDisplayed.eventList.sort(
-          (a, b) => a.participants.length.compareTo(b.participants.length));
-      sortedByParticipants = true;
-    }
+    sortedByParticipants = resSortedByParticipants;
+    dataDisplayed = resDataDisplayed;
+
     emit(ListFilteredState(data: dataDisplayed));
   }
 
   void sortEventsByDate() {
     emit(ListFilterLoadingState());
+    var (resSortedByDate, resDataDisplayed) =
+        SortUtils().sortByDate(dataDisplayed, sortedByDate);
 
-    if (sortedByDate) {
-      dataDisplayed.eventList.sort((a, b) =>
-          (FormatUtils.formatDateTime(b.startDate, b.startTime))
-              .compareTo(FormatUtils.formatDateTime(a.startDate, a.startTime)));
-      sortedByDate = false;
-    } else {
-      dataDisplayed.eventList.sort((a, b) =>
-          (FormatUtils.formatDateTime(a.startDate, a.startTime))
-              .compareTo(FormatUtils.formatDateTime(b.startDate, b.startTime)));
-      sortedByDate = true;
-    }
+    sortedByDate = resSortedByDate;
+    dataDisplayed = resDataDisplayed;
+
     emit(ListFilteredState(data: dataDisplayed));
+  }
+
+  void deletedEvent(int eventId) {
+    emit(ListFilterLoadingState());
+    dataDisplayed.eventList.removeWhere((element) => element.id == eventId);
+    data.eventList.removeWhere((element) => element.id == eventId);
+    emit(ListChangedState(data: dataDisplayed));
   }
 }

@@ -10,9 +10,8 @@ class HomePageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          ListEventCubit(ListAllEventsLoadingState())..getEvents(),
-      child: const EventListView(),
-    );
+        create: (context) =>
+            ListEventCubit(ListAllEventsLoadingState())..getEvents(),
+        child: const EventListView());
   }
 }

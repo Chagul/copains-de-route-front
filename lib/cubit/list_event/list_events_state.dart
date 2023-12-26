@@ -4,12 +4,23 @@ abstract class ListEventState {}
 
 abstract class ListAllEventsState extends ListEventState {}
 
+class ListEventStateInitial extends ListEventState {}
+
 class ListAllEventsLoadingState extends ListAllEventsState {}
 
 class ListAllEventsLoadedState extends ListAllEventsState {
   final EventList data;
   ListAllEventsLoadedState({required this.data});
 }
+
+class ListEventsAroundLoadingState extends ListAllEventsState {}
+
+class ListEventsAroundLoadedState extends ListAllEventsState {
+  final EventList data;
+  ListEventsAroundLoadedState({required this.data});
+}
+
+class ListEventsAroundNoContentState extends ListAllEventsState {}
 
 class ListAllEventsNoContentState extends ListAllEventsState {}
 
@@ -26,4 +37,7 @@ class ListFilteredState extends ListAllEventsState {
   ListFilteredState({required this.data});
 }
 
-abstract class ListMyEventsState extends ListEventState {}
+class ListChangedState extends ListAllEventsState {
+  final EventList data;
+  ListChangedState({required this.data});
+}

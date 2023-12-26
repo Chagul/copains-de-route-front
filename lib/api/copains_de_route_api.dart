@@ -1,5 +1,7 @@
 import 'package:copains_de_route/model/create_evenement.dart';
 import 'package:copains_de_route/model/create_user_dto.dart';
+import 'package:copains_de_route/model/edit_event_dto.dart';
+import 'package:copains_de_route/model/gps_coordinates_dto.dart';
 import 'package:copains_de_route/model/login_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -84,10 +86,34 @@ class CopainsDeRouteApi {
     }
   }
 
-  Future<Response> participateToEvent(int idEvent, String login) async {
+  Future<Response> getMyEvents() async {
     String? token = await _getToken();
     try {
-      var resp = await _dio.post("/events/participate/$idEvent/$login",
+      var response = await _dio.get("/events/createdEvents",
+          options:
+              Options(headers: {'Authorization': _getAuthorization(token)}));
+      return response;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<Response> getEventsParticipated() async {
+    String? token = await _getToken();
+    try {
+      var response = await _dio.get("/events/participatedEvents",
+          options:
+              Options(headers: {'Authorization': _getAuthorization(token)}));
+      return response;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<Response> participateToEvent(int idEvent) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.post("/events/participate/$idEvent",
           options:
               Options(headers: {'Authorization': _getAuthorization(token)}));
       return resp;
@@ -96,10 +122,35 @@ class CopainsDeRouteApi {
     }
   }
 
-  Future<Response> unsubscribeToEvent(int idEvent, String login) async {
+  Future<Response> unsubscribeToEvent(int idEvent) async {
     String? token = await _getToken();
     try {
-      var resp = await _dio.post("/events/participate/$idEvent/$login",
+      var resp = await _dio.post("/events/participate/$idEvent/",
+          options:
+              Options(headers: {'Authorization': _getAuthorization(token)}));
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<Response> editEvent(EditEvenementDto editEvent, int idEvent) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.patch("/events/$idEvent",
+          data: editEvent,
+          options:
+              Options(headers: {'Authorization': _getAuthorization(token)}));
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<Response> deleteEvent(int idEvent) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.delete("/events/$idEvent",
           options:
               Options(headers: {'Authorization': _getAuthorization(token)}));
       return resp;
@@ -126,6 +177,20 @@ class CopainsDeRouteApi {
       var resp = await _dio.patch(
         "/users/me",
         queryParameters: {'login': newLogin},
+        options: Options(headers: {'Authorization': _getAuthorization(token)}),
+      );
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  getEventsAround(GpsCoordinateDto gpsCoordinates) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.post(
+        "/events/location",
+        data: gpsCoordinates,
         options: Options(headers: {'Authorization': _getAuthorization(token)}),
       );
       return resp;

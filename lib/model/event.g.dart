@@ -15,7 +15,7 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
       json['startDate'] as String,
       json['startTime'] as String,
       json['visibility'] as String,
-      json['distance'] as int,
+      (json['distance'] as num).toDouble(),
       json['roadType1'] as String,
       json['roadType2'] as String,
       json['roadType3'] as String,
