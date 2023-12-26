@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
       body: const [
         HomePage(),
-        MyIntineraryPage(),
+        MyEventsPage(),
         CreateItineraryPage(),
         ProfilPage()
       ][selectedPageIndex],
