@@ -20,6 +20,7 @@ class CommentSection extends StatefulWidget {
 
 class _CommentSectionState extends State<CommentSection> {
   final _controller = TextEditingController();
+  
   List<CommentDTO> comments = [];
   var idComment = 0;
 
@@ -86,6 +87,15 @@ class _CommentSectionState extends State<CommentSection> {
                                 username,
                                 widget.event.id,
                               );
+                              
+                          CommentDTO commentdto = CommentDTO(
+                            id: idComment++,
+                            login: username,
+                            content: _controller.text,
+                            date: DateTime.now().toIso8601String(),
+                            likes: 0,
+                          );
+                          comments.add(commentdto);
                           _controller.clear();
                         },
                       ),
