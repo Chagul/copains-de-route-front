@@ -1,6 +1,7 @@
 import 'package:copains_de_route/components/list_events/event_card.dart';
 import 'package:copains_de_route/components/list_events/filter_page.dart';
 import 'package:copains_de_route/components/map_event.dart';
+import 'package:copains_de_route/cubit/filter_form_cubit/filter_form_cubit.dart';
 import 'package:copains_de_route/cubit/list_event/list_events_cubit.dart';
 import 'package:copains_de_route/cubit/list_event/list_events_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
@@ -26,8 +27,9 @@ class EventListView extends StatelessWidget {
     }
 
     if (state is ListAllEventsLoadedState ||
-        state is ListFilteredState ||
-        state is ListChangedState) {
+        state is ListSortedState ||
+        state is ListChangedState ||
+        state is ListFilteredState) {
       return SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -120,23 +122,39 @@ class EventListView extends StatelessWidget {
                         "Participants",
                         style: _getButtonTextStyle(),
                       )),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      padding: const EdgeInsets.all(5.0),
-                      side: const BorderSide(color: Colors.black),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (_) {
-                        return BlocProvider.value(
-                            value: context.read<ListEventCubit>(),
-                            child: const FilterPage());
-                      }));
-                    },
-                    child: const Icon(Icons.table_rows_sharp,
-                        color: CustomColorScheme.customOnSecondary),
-                  )
+                  if (!context.read<ListEventCubit>().filtered)
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        padding: const EdgeInsets.all(5.0),
+                        side: const BorderSide(color: Colors.black),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (_) {
+                          return BlocProvider.value(
+                              value: context.read<ListEventCubit>(),
+                              child: BlocProvider(
+                                  create: (_) => FilterFormCubit(),
+                                  child: const FilterPage()));
+                        }));
+                      },
+                      child: const Icon(Icons.table_rows_sharp,
+                          color: CustomColorScheme.customOnSecondary),
+                    )
+                  else
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        padding: const EdgeInsets.all(5.0),
+                        side: const BorderSide(color: Colors.black),
+                      ),
+                      onPressed: () {
+                        context.read<ListEventCubit>().resetFilter();
+                      },
+                      child: const Icon(Icons.cancel,
+                          color: CustomColorScheme.customOnSecondary),
+                    )
                 ],
               ),
               Expanded(
