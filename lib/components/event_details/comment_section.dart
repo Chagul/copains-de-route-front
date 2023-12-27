@@ -6,7 +6,6 @@ import 'package:copains_de_route/model/comment_dto.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CommentSection extends StatefulWidget {
   final Event event;
@@ -20,22 +19,33 @@ class CommentSection extends StatefulWidget {
 
 class _CommentSectionState extends State<CommentSection> {
   final _controller = TextEditingController();
-  
   List<CommentDTO> comments = [];
+  String username = "";
   var idComment = 0;
+
 
   @override
   void initState() {
+    
     super.initState();
     for (var comment in widget.event.comments) {
       comments.add(comment);
     }
+    _fetchUsername();
+  }
+
+  _fetchUsername() {
+    var user = CopainsDeRouteApi().getLoggedUser();
+    user.then((value) => {
+          if (value.statusCode == 200) {username = value.data['login']}
+        });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DetailEventCubit, DetailEventState>(
-      builder: (context, state) {
+    return FutureBuilder<void>(
+      future: _fetchUsername(),
+      builder: (context, snapshot) {
         var commentWidgets = <Widget>[];
         for (var comment in comments) {
           CommentDTO commentdto = CommentDTO(
@@ -46,6 +56,7 @@ class _CommentSectionState extends State<CommentSection> {
             likes: comment.likes,
           );
           commentWidgets.add(CommentCard(comment: commentdto));
+
         }
 
         return Row(
@@ -77,35 +88,34 @@ class _CommentSectionState extends State<CommentSection> {
                         color: CustomColorScheme.customOnSecondary,
                       ),
                       suffixIcon: IconButton(
-                        icon: const Icon(Icons.send),
+                        icon: const Icon(
+                          Icons.send,
+                          color: CustomColorScheme.customOnSecondary,
+                        ),
                         onPressed: () async {
-                          var username = await context
-                              .read<DetailEventCubit>()
-                              .fetchUsername();
-                          context.read<DetailEventCubit>().postComment(
-                                _controller.text,
-                                username,
-                                widget.event.id,
-                              );
-                              
-                          CommentDTO commentdto = CommentDTO(
-                            id: idComment++,
-                            login: username,
+                        var data = await CopainsDeRouteApi().postComment(
+                               _controller.text, username!, widget.event.id);
+                       idComment = int.parse(data.data.toString());
+
+                         CommentDTO comment = CommentDTO(
+                            id: idComment,
+                            login: username!,
                             content: _controller.text,
-                            date: DateTime.now().toIso8601String(),
+                            date: DateTime.now().toString(),
                             likes: 0,
                           );
-                          comments.add(commentdto);
-                          _controller.clear();
+                            comments.add(comment);
+                            _controller.clear();
+                            setState(
+                                () {});
+                          
                         },
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 10),
-                Column(
-                      children: commentWidgets,
-                    ),
+                for (var commentWidget in commentWidgets) commentWidget,
               ],
             ),
           ],
