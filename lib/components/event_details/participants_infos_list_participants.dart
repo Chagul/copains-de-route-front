@@ -34,14 +34,17 @@ class ParticipantsInfosListParticipants extends StatelessWidget {
                       if (participants.isEmpty)
                         const Text("Aucun participant pour le moment")
                       else
-                        Card(
+                        Expanded(
+                          child: Card(
                             child: ListView.builder(
-                          padding: const EdgeInsets.all(8.0),
-                          itemCount: participants.length,
-                          itemBuilder: (context, index) {
-                            return _buildRow(participants[index]);
-                          },
-                        ))
+                              padding: const EdgeInsets.all(8.0),
+                              itemCount: participants.length,
+                              itemBuilder: (context, index) {
+                                return _buildRow(participants[index]);
+                              },
+                            ),
+                          ),
+                        )
                     ]))));
   }
 
@@ -55,7 +58,7 @@ class ParticipantsInfosListParticipants extends StatelessWidget {
         Text(
           participant.login,
           style: const TextStyle(
-              color: CustomColorScheme.customOnSecondary, fontSize: 14),
+              color: CustomColorScheme.customOnSecondary, fontSize: 17),
         )
       ],
     );
