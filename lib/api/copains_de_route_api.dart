@@ -197,4 +197,18 @@ class CopainsDeRouteApi {
       return Future.error(e);
     }
   }
+
+  Future<Response> likeComment (int commentId) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.patch("/comments/$commentId",
+          data : {"likes": 1},
+          options:
+          Options(headers: {'Authorization': _getAuthorization(token)}));
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
 }

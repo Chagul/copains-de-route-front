@@ -20,4 +20,5 @@ class DetailEventCommentPostedState extends DetailEventState {
   DetailEventCommentPostedState(this.comment, this.user);
 }
 
+
 class DetailEventCommentErrorState extends DetailEventState {}  

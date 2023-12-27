@@ -7,6 +7,7 @@ part of 'comment_dto.dart';
 // **************************************************************************
 
 CommentDTO _$CommentDTOFromJson(Map<String, dynamic> json) => CommentDTO(
+      id: json['id'] as int?,
       login: json['login'] as String,
       content: json['content'] as String,
       date: json['date'] as String,
@@ -15,6 +16,7 @@ CommentDTO _$CommentDTOFromJson(Map<String, dynamic> json) => CommentDTO(
 
 Map<String, dynamic> _$CommentDTOToJson(CommentDTO instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'login': instance.login,
       'content': instance.content,
       'date': instance.date,

@@ -59,4 +59,5 @@ class DetailEventCubit extends Cubit<DetailEventState> {
             {emit(DetailEventCommentErrorState())}
         });
   }
+
 }

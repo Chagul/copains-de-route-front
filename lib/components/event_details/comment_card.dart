@@ -1,12 +1,20 @@
+import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/model/comment_dto.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 
-class CommentCard extends StatelessWidget {
+class CommentCard extends StatefulWidget {
   final CommentDTO comment;
 
-  const CommentCard({super.key, required this.comment});
+  const CommentCard({Key? key, required this.comment}) : super(key: key);
 
+  @override
+  // ignore: library_private_types_in_public_api
+  _CommentCardState createState() => _CommentCardState();
+}
+
+class _CommentCardState extends State<CommentCard> {
+  bool isLiked = false;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -28,10 +36,10 @@ class CommentCard extends StatelessWidget {
                               color: CustomColorScheme.customOnSecondary),
                           children: [
                         TextSpan(
-                            text: "${comment.login}, ",
+                            text: "${widget.comment.login}, ",
                             style:
                                 const TextStyle(fontWeight: FontWeight.bold)),
-                        TextSpan(text: "le ${comment.date}"),
+                        TextSpan(text: "le ${widget.comment.date}"),
                       ])),
                 ),
               ],
@@ -41,7 +49,7 @@ class CommentCard extends StatelessWidget {
               children: [
                 const SizedBox(width: 27),
                 Text(
-                  comment.content,
+                  widget.comment.content,
                   style: const TextStyle(
                       color: CustomColorScheme.customOnSecondary),
                 )
@@ -50,14 +58,29 @@ class CommentCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text("${comment.likes}",
+                Text("${widget.comment.likes}",
                     style: const TextStyle(
                         color: CustomColorScheme.customError,
                         fontWeight: FontWeight.bold)),
-                const Icon(
-                  Icons.favorite,
-                  color: CustomColorScheme.customError,
-                )
+                IconButton(
+                  icon: Icon(
+                    Icons.favorite,
+                    color: isLiked
+                        ? CustomColorScheme.customError
+                        : CustomColorScheme.customOnSecondary,
+                  ),
+                  onPressed: () async {
+                    if (!isLiked) {
+                      setState(() {
+                        isLiked = true;
+                      });
+                      int likedCommentId = widget.comment.id ?? 0;
+                      await CopainsDeRouteApi().likeComment(likedCommentId);
+                      widget.comment.likes++;
+                      setState(() {});
+                    }
+                  },
+                ),
               ],
             )
           ],
