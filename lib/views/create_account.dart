@@ -1,5 +1,4 @@
-import 'dart:typed_data';
-
+import 'dart:io';
 import 'package:copains_de_route/components/login_screen/email_widget.dart';
 import 'package:copains_de_route/components/login_screen/login_widget.dart';
 import 'package:copains_de_route/components/login_screen/password_confirm_widget.dart';
@@ -8,6 +7,7 @@ import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({Key? key}) : super(key: key);
@@ -18,7 +18,18 @@ class CreateAccount extends StatefulWidget {
 
 class CreateAccountState extends State<CreateAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Uint8List? _image;
+  File? _image;
+
+  Future getImage() async {
+    final ImagePicker picker = ImagePicker();
+    final image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      setState(() {
+        _image = File(image.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +85,7 @@ class CreateAccountState extends State<CreateAccount> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              const SizedBox(height: 300),
-              const SizedBox(width: 230),
+              const SizedBox(height: 100),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: Form(
@@ -88,7 +98,7 @@ class CreateAccountState extends State<CreateAccount> {
                           _image != null
                               ? CircleAvatar(
                                   radius: 60,
-                                  backgroundImage: MemoryImage(_image!),
+                                  backgroundImage: FileImage(_image!),
                                 )
                               : const CircleAvatar(
                                   radius: 60,
@@ -99,7 +109,9 @@ class CreateAccountState extends State<CreateAccount> {
                             bottom: -10,
                             left: 80,
                             child: IconButton(
-                              onPressed: (){},
+                              onPressed: () async {
+                                await getImage();
+                              },
                               icon: const Icon(Icons.add_a_photo),
                             ),
                           ),
