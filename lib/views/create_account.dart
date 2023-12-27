@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:path/path.dart' as p;
 import 'package:copains_de_route/components/login_screen/email_widget.dart';
 import 'package:copains_de_route/components/login_screen/login_widget.dart';
 import 'package:copains_de_route/components/login_screen/password_confirm_widget.dart';
@@ -143,6 +146,14 @@ class CreateAccountState extends State<CreateAccount> {
       child: ElevatedButton(
         onPressed: () {
           if (_formKey.currentState!.validate()) {
+            if (_image != null) {
+              Uint8List bytes = _image!.readAsBytesSync();
+              String base64Image = base64.encode(bytes);
+              BlocProvider.of<LoginCubit>(context).base64ProfilePic =
+                  base64Image;
+              BlocProvider.of<LoginCubit>(context).profilePicFormat =
+                  p.extension(_image!.path);
+            }
             BlocProvider.of<LoginCubit>(context).register();
           }
         },

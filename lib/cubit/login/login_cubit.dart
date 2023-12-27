@@ -13,6 +13,9 @@ class LoginCubit extends Cubit<LoginState> {
   late String registerEmailField;
   late String registerPassswordField;
 
+  late String base64ProfilePic;
+  late String profilePicFormat;
+
   verifyToken() async {
     emit(VerifyTokenState());
     var resp = CopainsDeRouteApi().verifyToken();
@@ -41,7 +44,9 @@ class LoginCubit extends Cubit<LoginState> {
     var resp = CopainsDeRouteApi().register(CreateUserDTO(
         email: registerEmailField,
         login: loginField,
-        password: registerPassswordField));
+        password: registerPassswordField,
+        base64ProfilePic: base64ProfilePic,
+        profilePicFormat: profilePicFormat));
     resp.then((value) => {
           if (value.statusCode == 201)
             {emit(RegisteredState())}
