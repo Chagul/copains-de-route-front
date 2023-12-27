@@ -86,4 +86,26 @@ class Event {
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
 
   Map<String, dynamic> toJson() => _$EventToJson(this);
+
+  factory Event.clone(Event event) => Event(
+      event.id,
+      event.name,
+      event.description,
+      event.promoter,
+      event.maxParticipants,
+      event.startDate,
+      event.startTime,
+      event.visibility,
+      event.distance,
+      event.roadType1,
+      event.roadType2,
+      event.roadType3,
+      event.bikeType1,
+      event.bikeType2,
+      event.comments,
+      event.participants,
+      event.steps,
+      event.route,
+      event.startAddress,
+      event.endAddress);
 }

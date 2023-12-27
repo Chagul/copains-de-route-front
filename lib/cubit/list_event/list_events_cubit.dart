@@ -13,6 +13,7 @@ class ListEventCubit extends Cubit<ListEventState> {
   bool sortedByDistance = false;
   bool sortedByParticipants = false;
   bool sortedByDate = false;
+  bool filtered = false;
 
   ListEventCubit(super.initialState);
 
@@ -28,7 +29,9 @@ class ListEventCubit extends Cubit<ListEventState> {
                   .map((item) => Event.fromJson(item))
                   .toList(),
               data = EventList(eventList: eventList),
-              dataDisplayed = data,
+              dataDisplayed = EventList(
+                  eventList:
+                      data.eventList.map((e) => Event.clone(e)).toList()),
               emit(ListAllEventsLoadedState(data: data)),
             }
           else if (value.statusCode == 204)
@@ -58,7 +61,9 @@ class ListEventCubit extends Cubit<ListEventState> {
                   .map((item) => Event.fromJson(item))
                   .toList(),
               data = EventList(eventList: eventList),
-              dataDisplayed = data,
+              dataDisplayed = EventList(
+                  eventList:
+                      data.eventList.map((e) => Event.clone(e)).toList()),
               emit(ListEventsAroundLoadedState(data: data)),
             }
           else if (value.statusCode == 204)
@@ -69,14 +74,15 @@ class ListEventCubit extends Cubit<ListEventState> {
   void searchEvents(String search) {
     emit(ListFilterLoadingState());
     if (search.isEmpty || dataDisplayed.eventList.isEmpty) {
-      dataDisplayed = data;
+      dataDisplayed = EventList(
+          eventList: data.eventList.map((e) => Event.clone(e)).toList());
     }
     dataDisplayed = EventList(
         eventList: dataDisplayed.eventList
             .where((event) =>
                 event.name.toLowerCase().contains(search.toLowerCase()))
             .toList());
-    emit(ListFilteredState(data: dataDisplayed));
+    emit(ListSortedState(data: dataDisplayed));
   }
 
   void sortEventsByDistance() {
@@ -88,7 +94,7 @@ class ListEventCubit extends Cubit<ListEventState> {
     sortedByDistance = resSortedByDistance;
     dataDisplayed = resDataDisplayed;
 
-    emit(ListFilteredState(data: dataDisplayed));
+    emit(ListSortedState(data: dataDisplayed));
   }
 
   void sortEventsByParticipants() {
@@ -99,7 +105,7 @@ class ListEventCubit extends Cubit<ListEventState> {
     sortedByParticipants = resSortedByParticipants;
     dataDisplayed = resDataDisplayed;
 
-    emit(ListFilteredState(data: dataDisplayed));
+    emit(ListSortedState(data: dataDisplayed));
   }
 
   void sortEventsByDate() {
@@ -110,13 +116,28 @@ class ListEventCubit extends Cubit<ListEventState> {
     sortedByDate = resSortedByDate;
     dataDisplayed = resDataDisplayed;
 
-    emit(ListFilteredState(data: dataDisplayed));
+    emit(ListSortedState(data: dataDisplayed));
   }
 
   void deletedEvent(int eventId) {
     emit(ListFilterLoadingState());
     dataDisplayed.eventList.removeWhere((element) => element.id == eventId);
     data.eventList.removeWhere((element) => element.id == eventId);
+    emit(ListChangedState(data: dataDisplayed));
+  }
+
+  void filterEvents(filterDtos) {
+    //todo call Api with filterDtos
+    //change dataDisplayed
+    filtered = true;
+    dataDisplayed.eventList.removeLast();
+    emit(ListFilteredState(data: dataDisplayed));
+  }
+
+  void resetFilter() {
+    filtered = false;
+    dataDisplayed = EventList(
+        eventList: data.eventList.map((e) => Event.clone(e)).toList());
     emit(ListChangedState(data: dataDisplayed));
   }
 }
