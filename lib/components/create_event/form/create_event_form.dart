@@ -48,7 +48,7 @@ class CreateEventForm extends StatelessWidget {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const ProfilPage()));
+                                builder: (context) => const ProfileView()));
                       },
                       onFailure: (context, state) {
                         ScaffoldMessenger.of(context).showSnackBar(

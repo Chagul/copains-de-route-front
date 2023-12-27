@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
         HomePage(),
         MyEventsPage(),
         CreateItineraryPage(),
-        ProfilPage()
+        ProfileView()
       ][selectedPageIndex],
       bottomNavigationBar: NavigationBar(
         indicatorColor: CustomColorScheme.customSecondaryColor,

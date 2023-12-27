@@ -18,11 +18,11 @@ class Event {
   final double distance;
   final String startAddress;
   final String endAddress;
-  final String? roadType1;
-  final String? roadType2;
-  final String? roadType3;
-  final String? bikeType1;
-  final String? bikeType2;
+  final String roadType1;
+  final String roadType2;
+  final String roadType3;
+  final String bikeType1;
+  final String bikeType2;
   final String route;
   final List<CommentDTO> comments;
   final List<UserDTO> participants;

@@ -138,4 +138,15 @@ app.*.symbols
 !.vscode/settings.json
 
 local.properties
-android/java_pid*
+ios/Flutter/
+.vscode/
+ios/Podfile
+devtools_options.yaml
+macos/Podfile
+ios/Flutter/Debug.xcconfig
+macos/Flutter/Flutter-Release.xcconfig
+macos/Flutter/Flutter-Debug.xcconfig
+ios/Runner.xcworkspace/contents.xcworkspacedata
+ios/Runner.xcodeproj/project.pbxproj
+ios/Flutter/Release.xcconfig
+ios/Flutter/Debug.xcconfig

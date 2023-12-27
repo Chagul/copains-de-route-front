@@ -6,10 +6,8 @@ import 'package:copains_de_route/components/login_screen/password_confirm_widget
 import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
-import 'package:copains_de_route/utils/pickimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({Key? key}) : super(key: key);
@@ -21,10 +19,6 @@ class CreateAccount extends StatefulWidget {
 class CreateAccountState extends State<CreateAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Uint8List? _image;
-  void selectImage() async {
-    Uint8List img = await pickImage(ImageSource.gallery);
-    setState(() => _image = img);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +99,7 @@ class CreateAccountState extends State<CreateAccount> {
                             bottom: -10,
                             left: 80,
                             child: IconButton(
-                              onPressed: selectImage,
+                              onPressed: (){},
                               icon: const Icon(Icons.add_a_photo),
                             ),
                           ),

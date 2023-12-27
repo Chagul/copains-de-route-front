@@ -16,11 +16,11 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
       json['startTime'] as String,
       json['visibility'] as String,
       (json['distance'] as num).toDouble(),
-      json['roadType1'] as String?,
-      json['roadType2'] as String?,
-      json['roadType3'] as String?,
-      json['bikeType1'] as String?,
-      json['bikeType2'] as String?,
+      json['roadType1'] as String,
+      json['roadType2'] as String,
+      json['roadType3'] as String,
+      json['bikeType1'] as String,
+      json['bikeType2'] as String,
       (json['comments'] as List<dynamic>)
           .map((e) => CommentDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
