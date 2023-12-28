@@ -11,8 +11,8 @@ CreateUserDTO _$CreateUserDTOFromJson(Map<String, dynamic> json) =>
       email: json['email'] as String,
       login: json['login'] as String,
       password: json['password'] as String,
-      base64ProfilePic: json['base64ProfilePic'] as String,
-      profilePicFormat: json['profilePicFormat'] as String,
+      base64ProfilePic: json['base64ProfilePic'] as String?,
+      profilePicFormat: json['profilePicFormat'] as String?,
     );
 
 Map<String, dynamic> _$CreateUserDTOToJson(CreateUserDTO instance) =>

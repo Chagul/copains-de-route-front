@@ -7,8 +7,8 @@ class CreateUserDTO {
   final String email;
   final String login;
   final String password;
-  final String base64ProfilePic;
-  final String profilePicFormat;
+  final String? base64ProfilePic;
+  final String? profilePicFormat;
 
   CreateUserDTO(
       {required this.email,

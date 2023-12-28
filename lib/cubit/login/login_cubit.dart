@@ -13,8 +13,8 @@ class LoginCubit extends Cubit<LoginState> {
   late String registerEmailField;
   late String registerPassswordField;
 
-  late String base64ProfilePic;
-  late String profilePicFormat;
+  String? base64ProfilePic;
+  String? profilePicFormat;
 
   verifyToken() async {
     emit(VerifyTokenState());
