@@ -63,6 +63,7 @@ class RouteInfosMoreInfos extends StatelessWidget {
                                 Icons.person,
                                 CustomColorScheme.customOnSecondary,
                                 "${event.participants.length} / ${event.maxParticipants} participants"),
+                            const SizedBox(height: 10),
                             _buildDescription()
                           ],
                         )),
@@ -94,7 +95,9 @@ class RouteInfosMoreInfos extends StatelessWidget {
           children: [
             const Text("Description : ",
                 style: TextStyle(
-                    fontSize: 14, color: CustomColorScheme.customOnSecondary)),
+                    fontSize: 14,
+                    color: CustomColorScheme.customOnSecondary,
+                    fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             Text(event.description,
                 style: const TextStyle(
