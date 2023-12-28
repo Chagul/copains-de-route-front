@@ -1,6 +1,7 @@
 import 'package:copains_de_route/model/create_evenement.dart';
 import 'package:copains_de_route/model/create_user_dto.dart';
 import 'package:copains_de_route/model/edit_event_dto.dart';
+import 'package:copains_de_route/model/filter_evenement.dart';
 import 'package:copains_de_route/model/gps_coordinates_dto.dart';
 import 'package:copains_de_route/model/login_dto.dart';
 import 'package:dio/dio.dart';
@@ -185,7 +186,7 @@ class CopainsDeRouteApi {
     }
   }
 
-  getEventsAround(GpsCoordinateDto gpsCoordinates) async {
+  Future<Response> getEventsAround(GpsCoordinateDto gpsCoordinates) async {
     String? token = await _getToken();
     try {
       var resp = await _dio.post(
@@ -201,5 +202,19 @@ class CopainsDeRouteApi {
 
   getUserProfilePicUrl(String profilePicPath) {
     return baseUrl + profilePicPath;
+  }
+
+  Future<Response> filterEvent(FilterEvenement filterEvenement) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.post(
+        "/events/eventsByFilter",
+        data: filterEvenement,
+        options: Options(headers: {'Authorization': _getAuthorization(token)}),
+      );
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
   }
 }
