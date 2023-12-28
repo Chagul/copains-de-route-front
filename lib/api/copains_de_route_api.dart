@@ -126,7 +126,7 @@ class CopainsDeRouteApi {
   Future<Response> unsubscribeToEvent(int idEvent) async {
     String? token = await _getToken();
     try {
-      var resp = await _dio.post("/events/participate/$idEvent/",
+      var resp = await _dio.post("/events/discard/$idEvent",
           options:
               Options(headers: {'Authorization': _getAuthorization(token)}));
       return resp;
