@@ -25,138 +25,135 @@ class EventListView extends StatelessWidget {
     if (state is ListAllEventsLoadingState) {
       return const Center(child: CircularProgressIndicator());
     }
-
-    if (state is ListAllEventsLoadedState ||
-        state is ListSortedState ||
-        state is ListChangedState ||
-        state is ListFilteredState) {
-      return SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.map),
-                    color: CustomColorScheme.customOnSecondary,
-                    onPressed: () => Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (_) {
-                      return BlocProvider.value(
-                          value: context.read<ListEventCubit>(),
-                          child: const MapEvent());
-                    })),
-                  ),
-                  Expanded(
-                    child: Padding(
-                        padding: const EdgeInsets.only(right: 8.0, top: 8.0),
-                        child: TextField(
-                          style: const TextStyle(color: Colors.black),
-                          onSubmitted: (text) {
-                            context
-                                .read<ListEventCubit>()
-                                .searchEvents(text.toLowerCase());
-                          },
-                          decoration: const InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              border: OutlineInputBorder(),
-                              constraints: BoxConstraints(maxHeight: 50),
-                              hintText: "Rechercher ...",
-                              suffixIcon: Icon(
-                                Icons.search,
-                                color: CustomColorScheme.customOnSecondary,
-                              )),
-                        )),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              context.read<ListEventCubit>().sortedByDate
-                                  ? Colors.lightBlue
-                                  : Colors.white,
-                          padding: const EdgeInsets.all(5.0),
-                          side: const BorderSide(color: Colors.black)),
-                      onPressed: () {
-                        context.read<ListEventCubit>().sortEventsByDate();
-                      },
-                      child: Text("Date", style: _getButtonTextStyle())),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            context.read<ListEventCubit>().sortedByDistance
-                                ? Colors.lightBlue
-                                : Colors.white,
-                        padding: const EdgeInsets.all(5.0),
-                        side: const BorderSide(color: Colors.black),
-                      ),
-                      onPressed: () {
-                        context.read<ListEventCubit>().sortEventsByDistance();
-                      },
-                      child: Text("Distance", style: _getButtonTextStyle())),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            context.read<ListEventCubit>().sortedByParticipants
-                                ? Colors.lightBlue
-                                : Colors.white,
-                        padding: const EdgeInsets.all(5.0),
-                        side: const BorderSide(color: Colors.black),
-                      ),
-                      onPressed: () {
-                        context
-                            .read<ListEventCubit>()
-                            .sortEventsByParticipants();
-                      },
-                      child: Text(
-                        "Participants",
-                        style: _getButtonTextStyle(),
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.map),
+                  color: CustomColorScheme.customOnSecondary,
+                  onPressed: () => Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (_) {
+                    return BlocProvider.value(
+                        value: context.read<ListEventCubit>(),
+                        child: const MapEvent());
+                  })),
+                ),
+                Expanded(
+                  child: Padding(
+                      padding: const EdgeInsets.only(right: 8.0, top: 8.0),
+                      child: TextField(
+                        style: const TextStyle(color: Colors.black),
+                        onSubmitted: (text) {
+                          context
+                              .read<ListEventCubit>()
+                              .searchEvents(text.toLowerCase());
+                        },
+                        decoration: const InputDecoration(
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: OutlineInputBorder(),
+                            constraints: BoxConstraints(maxHeight: 50),
+                            hintText: "Rechercher ...",
+                            suffixIcon: Icon(
+                              Icons.search,
+                              color: CustomColorScheme.customOnSecondary,
+                            )),
                       )),
-                  if (!context.read<ListEventCubit>().filtered)
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            context.read<ListEventCubit>().sortedByDate
+                                ? Colors.lightBlue
+                                : Colors.white,
                         padding: const EdgeInsets.all(5.0),
-                        side: const BorderSide(color: Colors.black),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (_) {
-                          return BlocProvider.value(
-                              value: context.read<ListEventCubit>(),
-                              child: BlocProvider(
-                                  create: (_) => FilterFormCubit(),
-                                  child: const FilterPage()));
-                        }));
-                      },
-                      child: const Icon(Icons.table_rows_sharp,
-                          color: CustomColorScheme.customOnSecondary),
-                    )
-                  else
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        padding: const EdgeInsets.all(5.0),
-                        side: const BorderSide(color: Colors.black),
-                      ),
-                      onPressed: () {
-                        context.read<ListEventCubit>().resetFilter();
-                      },
-                      child: const Icon(Icons.cancel,
-                          color: CustomColorScheme.customOnSecondary),
-                    )
-                ],
-              ),
+                        side: const BorderSide(color: Colors.black)),
+                    onPressed: () {
+                      context.read<ListEventCubit>().sortEventsByDate();
+                    },
+                    child: Text("Date", style: _getButtonTextStyle())),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          context.read<ListEventCubit>().sortedByDistance
+                              ? Colors.lightBlue
+                              : Colors.white,
+                      padding: const EdgeInsets.all(5.0),
+                      side: const BorderSide(color: Colors.black),
+                    ),
+                    onPressed: () {
+                      context.read<ListEventCubit>().sortEventsByDistance();
+                    },
+                    child: Text("Distance", style: _getButtonTextStyle())),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          context.read<ListEventCubit>().sortedByParticipants
+                              ? Colors.lightBlue
+                              : Colors.white,
+                      padding: const EdgeInsets.all(5.0),
+                      side: const BorderSide(color: Colors.black),
+                    ),
+                    onPressed: () {
+                      context.read<ListEventCubit>().sortEventsByParticipants();
+                    },
+                    child: Text(
+                      "Participants",
+                      style: _getButtonTextStyle(),
+                    )),
+                if (!context.read<ListEventCubit>().filtered)
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      padding: const EdgeInsets.all(5.0),
+                      side: const BorderSide(color: Colors.black),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (_) {
+                        return BlocProvider.value(
+                            value: context.read<ListEventCubit>(),
+                            child: BlocProvider(
+                                create: (_) => FilterFormCubit(),
+                                child: const FilterPage()));
+                      }));
+                    },
+                    child: const Icon(Icons.table_rows_sharp,
+                        color: CustomColorScheme.customOnSecondary),
+                  )
+                else
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      padding: const EdgeInsets.all(5.0),
+                      side: const BorderSide(color: Colors.black),
+                    ),
+                    onPressed: () {
+                      context.read<ListEventCubit>().resetFilter();
+                    },
+                    child: const Icon(Icons.cancel,
+                        color: CustomColorScheme.customOnSecondary),
+                  )
+              ],
+            ),
+            if (state is ListAllEventsLoadedState ||
+                state is ListSortedState ||
+                state is ListChangedState ||
+                state is ListFilteredState) ...[
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.all(8.0),
@@ -173,18 +170,23 @@ class EventListView extends StatelessWidget {
                             .eventList[index]);
                   },
                 ),
+              )
+            ] else ...[
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.3,
               ),
+              const Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Pas d'événements :psad:",
+                    style:
+                        TextStyle(color: CustomColorScheme.customOnSecondary),
+                  ))
             ],
-          ),
+          ],
         ),
-      );
-    }
-
-    return const Center(
-        child: Text(
-      "Pas d'événements :psad:",
-      style: TextStyle(color: CustomColorScheme.customOnSecondary),
-    ));
+      ),
+    );
   }
 
   TextStyle _getButtonTextStyle() {
