@@ -2,6 +2,7 @@ import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/components/event_details/comment_card.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_cubit.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_state.dart';
+import 'package:copains_de_route/cubit/list_event/list_events_cubit.dart';
 import 'package:copains_de_route/model/comment_dto.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
@@ -104,11 +105,9 @@ class _CommentSectionState extends State<CommentSection> {
                             date: DateTime.now().toString(),
                             likes: 0,
                           );
-                            comments.add(comment);
-                            _controller.clear();
-                            setState(
-                                () {});
-                          
+                          comments.add(comment);
+                          widget.event.comments.add(comment);
+                          _controller.clear();
                         },
                       ),
                     ),
