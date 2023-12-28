@@ -98,18 +98,6 @@ class CopainsDeRouteApi {
     }
   }
 
-  Future<Response> getLoggedUser () async {
-    String? token = await _getToken();
-    try {
-      var response = await _dio.get("/users/me",
-          options:
-          Options(headers: {'Authorization': _getAuthorization(token)}));
-      return response;
-    } catch (e) {
-      return Future.error(e);
-    }
-  }
-
   Future<Response> getMyEvents() async {
     String? token = await _getToken();
     try {
