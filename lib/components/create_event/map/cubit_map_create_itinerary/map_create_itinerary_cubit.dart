@@ -55,7 +55,7 @@ class MapCreateItineraryCubit extends Cubit<MapCreateItineraryState> {
     emit(MapPolylinesLoading());
     List<PolylineResult> res = await PolylinePoints().getRouteWithAlternatives(
         request: PolylineRequest(
-      apiKey: "{GMP_KEY}",
+      apiKey: "AIzaSyBmTuVlxx7E58O3dVKioKprGaDK31mC4TE",
       origin: PointLatLng(
           markerStart!.position.latitude, markerStart!.position.longitude),
       destination: PointLatLng(
