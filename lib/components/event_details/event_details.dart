@@ -44,7 +44,7 @@ class EventDetails extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              context.read<DetailEventCubit>().joined
+                              !context.read<DetailEventCubit>().joined
                                   ? ElevatedButton(
                                       onPressed: () => {
                                             context
@@ -110,7 +110,7 @@ class EventDetails extends StatelessWidget {
                                       .read<DetailEventCubit>()
                                       .event
                                       .promoter ==
-                                  "TODO") ...{
+                                  context.read<LoginCubit>().user.login) ...{
                                 const Spacer(),
                                 PopupMenuButton(
                                   itemBuilder: (BuildContext context) {

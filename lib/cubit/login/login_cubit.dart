@@ -52,4 +52,14 @@ class LoginCubit extends Cubit<LoginState> {
             {emit(RegisterFailedState())}
         });
   }
+
+  void getUser() async {
+    var resp = CopainsDeRouteApi().getUser();
+    resp.then((value) => {
+          if (value.statusCode == 200)
+            {
+              user = UserDTO.fromJson(value.data),
+            }
+        });
+  }
 }
