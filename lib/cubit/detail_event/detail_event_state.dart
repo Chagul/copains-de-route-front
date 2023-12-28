@@ -22,3 +22,15 @@ class DetailEventCommentPostedState extends DetailEventState {
 
 
 class DetailEventCommentErrorState extends DetailEventState {}  
+
+class DetailEventLikedCommentState extends DetailEventState {
+  final int commentId;
+  final int likes;
+  DetailEventLikedCommentState(this.commentId, this.likes);
+}
+
+class DetailEventDislikeCommentState extends DetailEventState {
+  final int commentId;
+  final int likes;
+  DetailEventDislikeCommentState(this.commentId, this.likes);
+} 

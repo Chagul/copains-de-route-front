@@ -1,8 +1,6 @@
 import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/components/event_details/comment_card.dart';
-import 'package:copains_de_route/cubit/detail_event/detail_event_cubit.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_state.dart';
-import 'package:copains_de_route/cubit/list_event/list_events_cubit.dart';
 import 'package:copains_de_route/model/comment_dto.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
@@ -23,6 +21,7 @@ class _CommentSectionState extends State<CommentSection> {
   List<CommentDTO> comments = [];
   String username = "";
   var idComment = 0;
+
 
 
   @override
@@ -47,16 +46,10 @@ class _CommentSectionState extends State<CommentSection> {
     return FutureBuilder<void>(
       future: _fetchUsername(),
       builder: (context, snapshot) {
+
         var commentWidgets = <Widget>[];
         for (var comment in comments) {
-          CommentDTO commentdto = CommentDTO(
-            id: comment.id,
-            login: comment.login,
-            content: comment.content,
-            date: comment.date,
-            likes: comment.likes,
-          );
-          commentWidgets.add(CommentCard(comment: commentdto));
+          commentWidgets.add(CommentCard(comment: comment));
 
         }
 
@@ -104,6 +97,7 @@ class _CommentSectionState extends State<CommentSection> {
                             content: _controller.text,
                             date: DateTime.now().toString(),
                             likes: 0,
+                            isLiked: false,
                           );
                           comments.add(comment);
                           widget.event.comments.add(comment);

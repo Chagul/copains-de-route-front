@@ -12,6 +12,7 @@ CommentDTO _$CommentDTOFromJson(Map<String, dynamic> json) => CommentDTO(
       content: json['content'] as String,
       date: json['date'] as String,
       likes: json['likes'] as int,
+      isLiked: json['isLiked'] as bool?,
     );
 
 Map<String, dynamic> _$CommentDTOToJson(CommentDTO instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$CommentDTOToJson(CommentDTO instance) =>
       'content': instance.content,
       'date': instance.date,
       'likes': instance.likes,
+      'isLiked': instance.isLiked,
     };

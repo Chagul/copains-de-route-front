@@ -9,6 +9,7 @@ class CommentDTO {
   final String content;
   final String date;
   int likes;
+  bool? isLiked;
 
   CommentDTO(
       {required this.id,
@@ -16,7 +17,7 @@ class CommentDTO {
       required this.content,
       required this.date,
       required this.likes,
-});
+      required this.isLiked});
 
   factory CommentDTO.fromJson(Map<String, dynamic> json) =>
       _$CommentDTOFromJson(json);

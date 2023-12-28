@@ -60,13 +60,25 @@ class DetailEventCubit extends Cubit<DetailEventState> {
         });
   }
 
-  Future<String> fetchUsername() async {
-  var user = await CopainsDeRouteApi().getLoggedUser();
-  if (user.statusCode == 200) {
-    username = user.data['login'];
+  void likeComment(int commentId, int likes) {
+    var response = CopainsDeRouteApi().likeComment(commentId);
+    response.then((value) => {
+          if (value.statusCode == 200)
+            {emit(DetailEventLikedCommentState(commentId, likes+1))}
+          else
+            {emit(DetailEventCommentErrorState())}
+        });
   }
-  return username;
-}
+
+  void dislikeComment(int commentId, int likes) {
+    var response = CopainsDeRouteApi().dislikeComment(commentId);
+    response.then((value) => {
+          if (value.statusCode == 200)
+            {emit(DetailEventDislikeCommentState(commentId, likes-1))}
+          else
+            {emit(DetailEventCommentErrorState())}
+        });
+  }
 
 
 }

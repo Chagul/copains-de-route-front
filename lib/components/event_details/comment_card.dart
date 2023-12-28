@@ -1,4 +1,5 @@
 import 'package:copains_de_route/api/copains_de_route_api.dart';
+import 'package:copains_de_route/cubit/detail_event/detail_event_state.dart';
 import 'package:copains_de_route/model/comment_dto.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +16,14 @@ class CommentCard extends StatefulWidget {
 
 class _CommentCardState extends State<CommentCard> {
   bool isLiked = false;
+
+
+
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context ) {
+
+
     return Card(
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.90,
@@ -63,21 +70,27 @@ class _CommentCardState extends State<CommentCard> {
                         color: CustomColorScheme.customError,
                         fontWeight: FontWeight.bold)),
                 IconButton(
-                  icon: Icon(
+                  icon: Icon (
                     Icons.favorite,
-                    color: isLiked
-                        ? CustomColorScheme.customError
-                        : CustomColorScheme.customOnSecondary,
+                    color:  CustomColorScheme.customError
                   ),
                   onPressed: () async {
+                    isLiked = widget.comment.isLiked ?? false;  
+                    int likedCommentId = widget.comment.id!;
                     if (!isLiked) {
+                      await CopainsDeRouteApi().likeComment(likedCommentId);
                       setState(() {
                         isLiked = true;
+                        widget.comment.likes = widget.comment.likes +1;
+                        widget.comment.isLiked = true;
                       });
-                      int likedCommentId = widget.comment.id ?? 0;
-                      await CopainsDeRouteApi().likeComment(likedCommentId);
-                      widget.comment.likes++;
-                      setState(() {});
+                    } else {
+                      await CopainsDeRouteApi().dislikeComment(likedCommentId);
+                      setState(() {
+                        isLiked = false;
+                        widget.comment.likes = widget.comment.likes -1;
+                        widget.comment.isLiked = false;
+                      });
                     }
                   },
                 ),

@@ -7,7 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CopainsDeRouteApi {
-  static const baseUrl = "https://app-o5ei237sga-ew.a.run.app";
+  static const baseUrl = "http://10.0.2.2:8080";
   final _dio = Dio(BaseOptions(
       baseUrl: baseUrl, headers: {"Content-Type": Headers.jsonContentType}));
 
@@ -75,7 +75,8 @@ class CopainsDeRouteApi {
   }
 
   Future<Response> getEvents() async {
-    String? token = await _getToken();
+    String? token = await 
+    _getToken();
     try {
       var response = await _dio.get("/events",
           options:
@@ -202,8 +203,19 @@ class CopainsDeRouteApi {
   Future<Response> likeComment (int commentId) async {
     String? token = await _getToken();
     try {
-      var resp = await _dio.patch("/comments/$commentId",
-          data : {"likes": 1},
+      var resp = await _dio.patch("/comments/$commentId/like",
+          options:
+          Options(headers: {'Authorization': _getAuthorization(token)}));
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<Response> dislikeComment (int commentId) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.patch("/comments/$commentId/unlike",
           options:
           Options(headers: {'Authorization': _getAuthorization(token)}));
       return resp;
