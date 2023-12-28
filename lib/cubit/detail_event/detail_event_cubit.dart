@@ -48,12 +48,4 @@ class DetailEventCubit extends Cubit<DetailEventState> {
             {emit(DetailEventParticipateErrorState())}
         });
   }
-
-  String? getUrlProfilePicPromoter() {
-    if (event.promoterProfilePicLocation != null) {
-      return CopainsDeRouteApi()
-          .getUserProfilePicUrl(event.promoterProfilePicLocation!);
-    }
-    return null;
-  }
 }

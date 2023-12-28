@@ -9,13 +9,15 @@ class UserDTO {
   final int numberEventsParticipated;
   final int distanceTraveled;
   final int co2NotEmitted;
+  final String? profilePicLocation;
 
   UserDTO(
       {required this.login,
       required this.numberEventsCreated,
       required this.numberEventsParticipated,
       required this.distanceTraveled,
-      required this.co2NotEmitted});
+      required this.co2NotEmitted,
+      required this.profilePicLocation});
 
   factory UserDTO.fromJson(Map<String, dynamic> json) =>
       _$UserDTOFromJson(json);

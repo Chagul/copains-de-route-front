@@ -12,6 +12,7 @@ UserDTO _$UserDTOFromJson(Map<String, dynamic> json) => UserDTO(
       numberEventsParticipated: json['numberEventsParticipated'] as int,
       distanceTraveled: json['distanceTraveled'] as int,
       co2NotEmitted: json['co2NotEmitted'] as int,
+      profilePicLocation: json['profilePicLocation'] as String?,
     );
 
 Map<String, dynamic> _$UserDTOToJson(UserDTO instance) => <String, dynamic>{
@@ -20,4 +21,5 @@ Map<String, dynamic> _$UserDTOToJson(UserDTO instance) => <String, dynamic>{
       'numberEventsParticipated': instance.numberEventsParticipated,
       'distanceTraveled': instance.distanceTraveled,
       'co2NotEmitted': instance.co2NotEmitted,
+      'profilePicLocation': instance.profilePicLocation,
     };

@@ -8,6 +8,7 @@ import 'package:copains_de_route/components/profil/settings_profil.dart';
 import 'package:copains_de_route/cubit/profil/profil_view_cubit.dart';
 import 'package:copains_de_route/cubit/profil/profil_view_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
+import 'package:copains_de_route/utils/profile_picture_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
@@ -42,14 +43,7 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
             Column(children: [
-              CircleAvatar(
-                  radius: 50,
-                  backgroundColor:
-                      CustomColorScheme.customPrimaryColor.withOpacity(0.5),
-                  child: const CircleAvatar(
-                      radius: 47,
-                      backgroundImage: NetworkImage(
-                          'https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png'))),
+              ProfilePictureUtils.getUserProfilePicWidget(context),
               const SizedBox(height: 10),
               if (state is MyProfileState)
                 Text(

@@ -198,4 +198,8 @@ class CopainsDeRouteApi {
       return Future.error(e);
     }
   }
+
+  getUserProfilePicUrl(String profilePicPath) {
+    return baseUrl + profilePicPath;
+  }
 }

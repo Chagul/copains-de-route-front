@@ -7,6 +7,7 @@ import 'package:copains_de_route/cubit/detail_event/detail_event_cubit.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_state.dart';
 import 'package:copains_de_route/cubit/list_event/list_events_cubit.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
+import 'package:copains_de_route/utils/profile_picture_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -96,21 +97,10 @@ class EventDetails extends StatelessWidget {
                                             style: const TextStyle(
                                                 color: CustomColorScheme
                                                     .customOnSecondary)),
-                                        if (context
-                                                .read<DetailEventCubit>()
-                                                .getUrlProfilePicPromoter() !=
-                                            null)
-                                          CircleAvatar(
-                                            radius: 15,
-                                            backgroundImage: NetworkImage(context
-                                                .read<DetailEventCubit>()
-                                                .getUrlProfilePicPromoter()!),
-                                          ),
-                                        if (context
-                                                .read<DetailEventCubit>()
-                                                .getUrlProfilePicPromoter() ==
-                                            null)
-                                          const Icon(Icons.person),
+                                        const SizedBox(width: 10),
+                                        ProfilePictureUtils
+                                            .getEventPromoterProfilePicWidget(
+                                                context),
                                       ],
                                     ),
                                 ],

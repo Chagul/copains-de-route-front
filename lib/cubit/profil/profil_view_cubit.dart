@@ -9,17 +9,15 @@ class ProfilViewCubit extends Cubit<ProfilViewState> {
       numberEventsCreated: 0,
       numberEventsParticipated: 0,
       distanceTraveled: 0,
-      co2NotEmitted: 0);
-  // ignore: prefer_typing_uninitialized_variables
-  var login;
-  // ignore: prefer_typing_uninitialized_variables
-  var numberEventsCreated;
-  // ignore: prefer_typing_uninitialized_variables
-  var numberEventsParticipated;
-  // ignore: prefer_typing_uninitialized_variables
-  var distanceTraveled;
-  // ignore: prefer_typing_uninitialized_variables
-  var co2NotEmitted;
+      co2NotEmitted: 0,
+      profilePicLocation: null);
+
+  late String login;
+  late int numberEventsCreated;
+  late int numberEventsParticipated;
+  late double distanceTraveled;
+  late double co2NotEmitted;
+  late String? profilePicLocation;
 
   ProfilViewCubit() : super(ProfilViewInitial());
 
@@ -44,7 +42,8 @@ class ProfilViewCubit extends Cubit<ProfilViewState> {
                   numberEventsParticipated:
                       value.data['numberEventsParticipated'],
                   distanceTraveled: value.data['distanceTraveled'],
-                  co2NotEmitted: value.data['co2NotEmitted']),
+                  co2NotEmitted: value.data['co2NotEmitted'],
+                  profilePicLocation: value.data['profilePicLocation']),
               emit(MyProfileState(userdto))
             }
           else
@@ -67,7 +66,8 @@ class ProfilViewCubit extends Cubit<ProfilViewState> {
                   numberEventsParticipated:
                       value.data['numberEventsParticipated'],
                   distanceTraveled: value.data['distanceTraveled'],
-                  co2NotEmitted: value.data['co2NotEmitted']),
+                  co2NotEmitted: value.data['co2NotEmitted'],
+                  profilePicLocation: value.data['profilePicLocation']),
               emit(MyProfileState(userdto))
             }
           else
