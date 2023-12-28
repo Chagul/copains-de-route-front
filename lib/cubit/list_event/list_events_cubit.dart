@@ -127,10 +127,21 @@ class ListEventCubit extends Cubit<ListEventState> {
   }
 
   void filterEvents(filterDtos) {
-    //todo call Api with filterDtos
-    //change dataDisplayed
+    var response = CopainsDeRouteApi().filterEvent(filterDtos);
+    List<Event> eventList;
+    response.then((value) => {
+          if (value.statusCode == 200)
+            {
+              eventList = (value.data as List)
+                  .map((item) => Event.fromJson(item))
+                  .toList(),
+              dataDisplayed = EventList(eventList: eventList),
+              emit(ListAllEventsLoadedState(data: data)),
+            }
+          else if (value.statusCode == 204)
+            emit(ListAllEventsNoContentState())
+        });
     filtered = true;
-    dataDisplayed.eventList.removeLast();
     emit(ListFilteredState(data: dataDisplayed));
   }
 
