@@ -27,8 +27,8 @@ class EventDetails extends StatelessWidget {
                           onPressed: () => Navigator.pop(context),
                           icon: const Icon(Icons.arrow_back,
                               color: Colors.black)),
-                      const Text("Trajet",
-                          style: TextStyle(
+                      Text(context.read<DetailEventCubit>().event.name,
+                          style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.black))
@@ -82,10 +82,6 @@ class EventDetails extends StatelessWidget {
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Text(context
-                                      .read<DetailEventCubit>()
-                                      .event
-                                      .name),
                                   if (context
                                           .read<DetailEventCubit>()
                                           .event

@@ -35,25 +35,35 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
       json['endAddress'] as String,
     );
 
-Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'description': instance.description,
-      'promoter': instance.promoter,
-      'maxParticipants': instance.maxParticipants,
-      'startDate': instance.startDate,
-      'startTime': instance.startTime,
-      'visibility': instance.visibility,
-      'distance': instance.distance,
-      'startAddress': instance.startAddress,
-      'endAddress': instance.endAddress,
-      'roadType1': instance.roadType1,
-      'roadType2': instance.roadType2,
-      'roadType3': instance.roadType3,
-      'bikeType1': instance.bikeType1,
-      'bikeType2': instance.bikeType2,
-      'route': instance.route,
-      'comments': instance.comments,
-      'participants': instance.participants,
-      'steps': instance.steps,
-    };
+Map<String, dynamic> _$EventToJson(Event instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'name': instance.name,
+    'description': instance.description,
+    'promoter': instance.promoter,
+    'maxParticipants': instance.maxParticipants,
+    'startDate': instance.startDate,
+    'startTime': instance.startTime,
+    'visibility': instance.visibility,
+    'distance': instance.distance,
+    'startAddress': instance.startAddress,
+    'endAddress': instance.endAddress,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('roadType1', instance.roadType1);
+  writeNotNull('roadType2', instance.roadType2);
+  writeNotNull('roadType3', instance.roadType3);
+  writeNotNull('bikeType1', instance.bikeType1);
+  writeNotNull('bikeType2', instance.bikeType2);
+  val['route'] = instance.route;
+  val['comments'] = instance.comments;
+  val['participants'] = instance.participants;
+  val['steps'] = instance.steps;
+  return val;
+}

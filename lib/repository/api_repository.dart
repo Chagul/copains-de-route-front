@@ -8,5 +8,10 @@ class CopainsDeRouteRepository {
 
   Future<void> postEvenement({required CreateEvenement evenement}) {
     return api.postItinerary(evenement);
+
+  }
+
+  Future<void> getUser() {
+    return api.getUser();
   }
 }

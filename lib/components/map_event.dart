@@ -12,8 +12,44 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MapEvent extends StatelessWidget {
+class MapEvent extends StatefulWidget {
   const MapEvent({Key? key}) : super(key: key);
+
+  @override
+  State<MapEvent> createState() => MapEventState();
+}
+
+class MapEventState extends State<MapEvent> {
+  BitmapDescriptor markerIconPublic = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor markerIconPrivate = BitmapDescriptor.defaultMarker;
+  late GoogleMapController mapController;
+  void onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<ListEventCubit>(context).getEvents();
+    addCustomIconPublic();
+    addCustomIconPrivate();
+  }
+
+  void addCustomIconPublic() async {
+    markerIconPublic = BitmapDescriptor.fromBytes(
+        await getBytesFromAsset('assets/marker_public.png', 100));
+    setState(() {
+      markerIconPublic = markerIconPublic;
+    });
+  }
+
+  void addCustomIconPrivate() async {
+    markerIconPrivate = BitmapDescriptor.fromBytes(
+        await getBytesFromAsset('assets/marker_private.png', 100));
+    setState(() {
+      markerIconPrivate = markerIconPrivate;
+    });
+  }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
@@ -33,33 +69,61 @@ class MapEvent extends StatelessWidget {
       } else {
         return BlocBuilder<ListEventCubit, ListEventState>(
             builder: (context, stateListEvent) {
-          return GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: BlocProvider.of<PositionCubit>(context).position,
-              zoom: 11,
+          return SafeArea(
+              child: Scaffold(
+                  body: Column(children: [
+            Row(
+              children: [
+                IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.arrow_back, color: Colors.black)),
+              ],
             ),
-            markers: {
-              if (stateListEvent is ListAllEventsLoadedState)
-                ...BlocProvider.of<ListEventCubit>(context)
-                    .dataDisplayed
-                    .eventList
-                    .map((e) => Marker(
-                        markerId: MarkerId(e.id.toString()),
-                        position:
-                            LatLng(e.steps[0].latitude, e.steps[0].longitude),
-                        infoWindow: InfoWindow(
-                            title: e.name,
-                            snippet: e.description,
-                            onTap: () => Navigator.of(context)
-                                    .push(MaterialPageRoute(builder: (_) {
-                                  return BlocProvider<DetailEventCubit>(
-                                      create: (context) =>
-                                          DetailEventCubit(event: e),
-                                      child: const EventDetails());
-                                })))))
-                    .toSet(),
-            },
-          );
+            Flexible(
+                child: Stack(children: [
+              GoogleMap(
+                onMapCreated: onMapCreated,
+                initialCameraPosition: CameraPosition(
+                  target: BlocProvider.of<PositionCubit>(context).position,
+                  zoom: 11,
+                ),
+                markers: {
+                  if (stateListEvent is ListAllEventsLoadedState ||
+                      stateListEvent is ListEventsAroundLoadedState)
+                    ...BlocProvider.of<ListEventCubit>(context)
+                        .dataDisplayed
+                        .eventList
+                        .map((e) => Marker(
+                            flat: false,
+                            icon: e.visibility == "PRIVATE"
+                                ? markerIconPrivate
+                                : markerIconPublic,
+                            markerId: MarkerId(e.id.toString()),
+                            position: LatLng(
+                                e.steps[0].latitude, e.steps[0].longitude),
+                            infoWindow: InfoWindow(
+                                title: e.name,
+                                snippet: e.description,
+                                onTap: () => Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: (_) {
+                                      return BlocProvider<DetailEventCubit>(
+                                          create: (context) =>
+                                              DetailEventCubit(event: e),
+                                          child: const EventDetails());
+                                    })))))
+                        .toSet(),
+                },
+              ),
+              IconButton(
+                  onPressed: () => {
+                        BlocProvider.of<ListEventCubit>(context)
+                            .getEventsAround(
+                          mapController,
+                        ),
+                      },
+                  icon: const Icon(Icons.refresh))
+            ]))
+          ])));
         });
       }
     });

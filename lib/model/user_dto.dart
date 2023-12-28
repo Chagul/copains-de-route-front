@@ -6,12 +6,14 @@ part 'user_dto.g.dart';
 class UserDTO {
   final String login;
   final int numberEventsCreated;
+  final int numberEventsParticipated;
   final int distanceTraveled;
   final int co2NotEmitted;
 
   UserDTO(
       {required this.login,
       required this.numberEventsCreated,
+      required this.numberEventsParticipated,
       required this.distanceTraveled,
       required this.co2NotEmitted});
 

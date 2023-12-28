@@ -3,29 +3,27 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'create_evenement.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class CreateEvenement {
-  String promoter;
   int maxParticipants;
   String startDate;
   String startTime;
-  String roadType1;
-  String roadType2;
-  String roadType3;
+  String? roadType1;
+  String? roadType2;
+  String? roadType3;
   String startAddress;
   String endAddress;
   List<PointCustom> steps;
   String name;
   String description;
-  String bikeType1;
-  String bikeType2;
+  String? bikeType1;
+  String? bikeType2;
   String visibility;
   String route;
   double distance;
 
   CreateEvenement(
-      {required this.promoter,
-      required this.maxParticipants,
+      {required this.maxParticipants,
       required this.startDate,
       required this.startTime,
       required this.roadType1,

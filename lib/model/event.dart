@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'event.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Event {
   final int id;
   final String name;
@@ -51,11 +51,36 @@ class Event {
       this.endAddress);
 
   getRoadTypes() {
-    return "$roadType1, $roadType2, $roadType3";
+    String roadTypes = "";
+    if (roadType1 != null) {
+      roadTypes = _concatenateStringWithComma(roadTypes, roadType1);
+    }
+    if (roadType2 != null) {
+      roadTypes = _concatenateStringWithComma(roadTypes, roadType2);
+    }
+    if (roadType3 != null) {
+      roadTypes = _concatenateStringWithComma(roadTypes, roadType3);
+    }
+    return roadTypes;
   }
 
   getBikeTypes() {
-    return "$bikeType1, $bikeType2";
+    String bikeTypes = "";
+    if (bikeType1 != null) {
+      bikeTypes = _concatenateStringWithComma(bikeTypes, bikeType1);
+    }
+    if (bikeType2 != null) {
+      bikeTypes = _concatenateStringWithComma(bikeTypes, bikeType2);
+    }
+    return bikeTypes;
+  }
+
+  _concatenateStringWithComma(String base, String? toAdd) {
+    if (base.isEmpty) {
+      return base + toAdd!;
+    } else {
+      return "$base, $toAdd";
+    }
   }
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
