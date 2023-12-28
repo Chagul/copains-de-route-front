@@ -6,6 +6,7 @@ import 'package:copains_de_route/components/event_details/route_infos.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_cubit.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_state.dart';
 import 'package:copains_de_route/cubit/list_event/list_events_cubit.dart';
+import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,13 +49,15 @@ class EventDetails extends StatelessWidget {
                                       onPressed: () => {
                                             context
                                                 .read<DetailEventCubit>()
-                                                .participate(context
-                                                    .read<DetailEventCubit>()
-                                                    .event
-                                                    .id),
-                                            context
-                                                .read<DetailEventCubit>()
-                                                .changeJoined(),
+                                                .participate(
+                                                    context
+                                                        .read<
+                                                            DetailEventCubit>()
+                                                        .event
+                                                        .id,
+                                                    context
+                                                        .read<LoginCubit>()
+                                                        .user),
                                           },
                                       child: const Text("Rejoindre",
                                           style: TextStyle(
@@ -66,13 +69,15 @@ class EventDetails extends StatelessWidget {
                                       onPressed: () => {
                                             context
                                                 .read<DetailEventCubit>()
-                                                .unsubscribe(context
-                                                    .read<DetailEventCubit>()
-                                                    .event
-                                                    .id),
-                                            context
-                                                .read<DetailEventCubit>()
-                                                .changeJoined(),
+                                                .unsubscribe(
+                                                    context
+                                                        .read<
+                                                            DetailEventCubit>()
+                                                        .event
+                                                        .id,
+                                                    context
+                                                        .read<LoginCubit>()
+                                                        .user),
                                           },
                                       child: const Text("Rejoint",
                                           style: TextStyle(
