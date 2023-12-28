@@ -100,7 +100,21 @@ class EventDetails extends StatelessWidget {
                                             style: const TextStyle(
                                                 color: CustomColorScheme
                                                     .customOnSecondary)),
-                                        const Icon(Icons.person)
+                                        if (context
+                                                .read<DetailEventCubit>()
+                                                .getUrlProfilePicPromoter() !=
+                                            null)
+                                          CircleAvatar(
+                                            radius: 15,
+                                            backgroundImage: NetworkImage(context
+                                                .read<DetailEventCubit>()
+                                                .getUrlProfilePicPromoter()!),
+                                          ),
+                                        if (context
+                                                .read<DetailEventCubit>()
+                                                .getUrlProfilePicPromoter() ==
+                                            null)
+                                          const Icon(Icons.person),
                                       ],
                                     ),
                                 ],

@@ -11,6 +11,7 @@ class Event {
   final String name;
   final String description;
   final String promoter;
+  final String? promoterProfilePicLocation;
   final int maxParticipants;
   final String startDate;
   final String startTime;
@@ -33,6 +34,7 @@ class Event {
       this.name,
       this.description,
       this.promoter,
+      this.promoterProfilePicLocation,
       this.maxParticipants,
       this.startDate,
       this.startTime,
