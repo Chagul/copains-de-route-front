@@ -2,6 +2,7 @@ import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/components/event_details/comment_card.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_cubit.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_state.dart';
+import 'package:copains_de_route/cubit/list_event/list_events_cubit.dart';
 import 'package:copains_de_route/model/comment_dto.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
@@ -20,7 +21,7 @@ class CommentSection extends StatefulWidget {
 
 class _CommentSectionState extends State<CommentSection> {
   final _controller = TextEditingController();
-  
+
   List<CommentDTO> comments = [];
   var idComment = 0;
 
@@ -87,7 +88,7 @@ class _CommentSectionState extends State<CommentSection> {
                                 username,
                                 widget.event.id,
                               );
-                              
+
                           CommentDTO commentdto = CommentDTO(
                             id: idComment++,
                             login: username,
@@ -96,6 +97,7 @@ class _CommentSectionState extends State<CommentSection> {
                             likes: 0,
                           );
                           comments.add(commentdto);
+                          widget.event.comments.add(commentdto);
                           _controller.clear();
                         },
                       ),
@@ -104,8 +106,8 @@ class _CommentSectionState extends State<CommentSection> {
                 ),
                 const SizedBox(height: 10),
                 Column(
-                      children: commentWidgets,
-                    ),
+                  children: commentWidgets,
+                ),
               ],
             ),
           ],
