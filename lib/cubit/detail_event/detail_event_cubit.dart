@@ -9,19 +9,14 @@ class DetailEventCubit extends Cubit<DetailEventState> {
   bool joined = false;
   DetailEventCubit({required this.event}) : super(DetailEventInitialState());
 
-  changeJoined() {
-    joined = !joined;
-    emit(DetailEventChangedJoinedState());
-  }
-
   participate(int eventId, UserDTO user) async {
     emit(DetailEventParticipateLoadingState());
     var response = CopainsDeRouteApi().participateToEvent(eventId);
     response.then((value) => {
           if (value.statusCode == 200)
             {
-              joined = true,
               event.participants.add(user),
+              joined = true,
               emit(DetailEventParticipateSucessState())
             }
           else
@@ -36,9 +31,9 @@ class DetailEventCubit extends Cubit<DetailEventState> {
     response.then((value) => {
           if (value.statusCode == 200)
             {
-              joined = false,
               event.participants.removeWhere(
                   (participant) => participant.login == user.login),
+              joined = false,
               emit(DetailEventParticipateSucessState())
             }
           else
@@ -56,5 +51,10 @@ class DetailEventCubit extends Cubit<DetailEventState> {
           else
             {emit(DetailEventParticipateErrorState())}
         });
+  }
+
+  void updateJoined(UserDTO user) {
+    joined = event.participants
+        .any((participant) => participant.login == user.login);
   }
 }

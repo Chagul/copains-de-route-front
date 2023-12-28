@@ -1,5 +1,6 @@
 import 'package:copains_de_route/components/event_details/event_details.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_cubit.dart';
+import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +81,8 @@ class EventCard extends StatelessWidget {
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (_) {
                         return BlocProvider<DetailEventCubit>(
-                            create: (context) => DetailEventCubit(event: event),
+                            create: (context) => DetailEventCubit(event: event)
+                              ..updateJoined(context.read<LoginCubit>().user),
                             child: const EventDetails());
                       }));
                     },
