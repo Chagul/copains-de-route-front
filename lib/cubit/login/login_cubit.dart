@@ -1,6 +1,7 @@
 import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/model/create_user_dto.dart';
+import 'package:copains_de_route/model/friends_dto.dart';
 import 'package:copains_de_route/model/login_dto.dart';
 import 'package:copains_de_route/model/user_dto.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,9 @@ class LoginCubit extends Cubit<LoginState> {
   String? profilePicFormat;
 
   late UserDTO user;
+  late List<FriendsDTO> acceptedFriends;
+  late List<FriendsDTO> pendingFriends;
+  late List<FriendsDTO> friendsToAccept;
 
   verifyToken() async {
     emit(VerifyTokenState());
@@ -64,6 +68,16 @@ class LoginCubit extends Cubit<LoginState> {
           if (value.statusCode == 200)
             {
               user = UserDTO.fromJson(value.data),
+              acceptedFriends = user.sentFriends
+                      .where((f) => f.status == "ACCEPTED")
+                      .toList() +
+                  user.addedFriends
+                      .where((f) => f.status == "ACCEPTED")
+                      .toList(),
+              pendingFriends =
+                  user.sentFriends.where((f) => f.status == "SENT").toList(),
+              friendsToAccept =
+                  user.addedFriends.where((f) => f.status == "SENT").toList(),
             }
         });
   }

@@ -1,6 +1,6 @@
 import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_cubit.dart';
-import 'package:copains_de_route/cubit/profil/profil_view_cubit.dart';
+import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/model/user_dto.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
@@ -40,7 +40,7 @@ class ProfilePictureUtils {
 
   static Widget getUserProfilePicWidget(BuildContext context) {
     if (ProfilePictureUtils._getUrlProfilePicPromoterFromUser(
-            context.read<ProfilViewCubit>().userdto) !=
+            context.read<LoginCubit>().user) !=
         null) {
       return CircleAvatar(
           radius: 50,
@@ -50,7 +50,7 @@ class ProfilePictureUtils {
               radius: 47,
               backgroundImage: NetworkImage(
                   ProfilePictureUtils._getUrlProfilePicPromoterFromUser(
-                      context.read<ProfilViewCubit>().userdto)!)));
+                      context.read<LoginCubit>().user)!)));
     } else {
       return const Icon(Icons.person);
     }

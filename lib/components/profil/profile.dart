@@ -1,10 +1,10 @@
 import 'package:copains_de_route/components/commons/card_statistiques.dart';
-import 'package:copains_de_route/components/commons/card_statistiques_friend.dart';
 import 'package:copains_de_route/components/commons/custom_title.dart';
 import 'package:copains_de_route/components/commons/loading_widget.dart';
-import 'package:copains_de_route/components/commons/row_image_text.dart';
+import 'package:copains_de_route/components/profil/friend_inkwell.dart';
 import 'package:copains_de_route/components/profil/friend_list.dart';
 import 'package:copains_de_route/components/profil/settings_profil.dart';
+import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/cubit/profil/profil_view_cubit.dart';
 import 'package:copains_de_route/cubit/profil/profil_view_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
@@ -34,9 +34,7 @@ class ProfilePage extends StatelessWidget {
               child: IconButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                    return BlocProvider(
-                        create: (context) => ProfilViewCubit(),
-                        child: SettingsProfilPage());
+                    return SettingsProfilPage();
                   }));
                 },
                 icon: const Icon(Icons.settings),
@@ -73,49 +71,33 @@ class ProfilePage extends StatelessWidget {
                             Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  InkWell(
-                                      onTap: () => {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(builder: (_) {
-                                              return BlocProvider(
-                                                  create: (context) =>
-                                                      ProfilViewCubit(),
-                                                  child:
-                                                      const CardStatistiquesFriend());
-                                            }))
-                                          },
-                                      child: const RowImageText(
-                                          image:
-                                              "https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png",
-                                          text: "Ami 1")),
-                                  InkWell(
-                                    onTap: () => {
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(builder: (_) {
-                                        return BlocProvider(
-                                            create: (context) =>
-                                                ProfilViewCubit(),
-                                            child:
-                                                const CardStatistiquesFriend());
-                                      }))
-                                    },
-                                    child: const RowImageText(
-                                        image:
-                                            "https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png",
-                                        text: "Ami 2"),
-                                  ),
+                                  if (BlocProvider.of<LoginCubit>(context)
+                                      .acceptedFriends
+                                      .isNotEmpty)
+                                    FriendInkwell(
+                                        friend:
+                                            BlocProvider.of<LoginCubit>(context)
+                                                .acceptedFriends[0]),
+                                  if (BlocProvider.of<LoginCubit>(context)
+                                          .acceptedFriends
+                                          .length >
+                                      1)
+                                    FriendInkwell(
+                                        friend:
+                                            BlocProvider.of<LoginCubit>(context)
+                                                .acceptedFriends[1]),
                                 ]),
                             Align(
                                 alignment: Alignment.bottomRight,
                                 child: TextButton(
                                     onPressed: () => {
-                                          BlocProvider.of<ProfilViewCubit>(
-                                                  context)
-                                              .moreFriendClicked(),
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const FriendList()))
+                                                  builder: (context) => FriendList(
+                                                      friends: BlocProvider.of<
+                                                                  LoginCubit>(
+                                                              context)
+                                                          .acceptedFriends)))
                                         },
                                     child: const Text("Voir plus",
                                         style: TextStyle(
@@ -140,40 +122,3 @@ class ProfilePage extends StatelessWidget {
     });
   }
 }
-
-
-
-/* return SafeArea(
-            child: Scaffold(
-                body: SingleChildScrollView(
-                    child: Column(children: [
-          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                icon: const Icon(Icons.arrow_back)),
-            const Text("Profil",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          ]),
-          const Align(
-              alignment: Alignment.topLeft,
-              child: Row(children: [
-                CircleAvatar(
-                    radius: 30,
-                    backgroundColor: CustomColorScheme.customPrimaryColor,
-                    child: CircleAvatar(
-                        radius: 27,
-                        backgroundImage: NetworkImage(
-                            'https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png'))),
-                SizedBox(width: 10),
-                Text(
-                  "Ami 1",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                )
-              ])),
-        ]))));
-      } else {
-        return const LoadingWidget();
-      }
-    });
-  }
-}*/
