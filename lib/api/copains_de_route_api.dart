@@ -7,7 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CopainsDeRouteApi {
-  static const baseUrl = "http://10.0.2.2:8080";
+  static const baseUrl = "https://app-o5ei237sga-ew.a.run.app";
   final _dio = Dio(BaseOptions(
       baseUrl: baseUrl, headers: {"Content-Type": Headers.jsonContentType}));
 
