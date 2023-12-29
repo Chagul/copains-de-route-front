@@ -38,6 +38,7 @@ class _MyAppState extends State<MyApp> {
             home: BlocBuilder<LoginCubit, LoginState>(
               builder: (context, state) {
                 if (state is TokenValidState) {
+                  context.read<LoginCubit>().getUser();
                   return _buildMainApp();
                 }
                 return const LoginScreen();

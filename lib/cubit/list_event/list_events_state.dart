@@ -32,6 +32,11 @@ class ListAllEventsParticipateErrorState extends ListAllEventsState {}
 
 class ListFilterLoadingState extends ListAllEventsState {}
 
+class ListSortedState extends ListAllEventsState {
+  final EventList data;
+  ListSortedState({required this.data});
+}
+
 class ListFilteredState extends ListAllEventsState {
   final EventList data;
   ListFilteredState({required this.data});

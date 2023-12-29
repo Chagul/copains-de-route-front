@@ -25,6 +25,8 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
           child: TextField(
             controller: widget.input,
             decoration: const InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
                 icon: Icon(Icons.calendar_today,
                     color: CustomColorScheme.customOnSecondary)),
             style: const TextStyle(color: CustomColorScheme.customOnSecondary),
