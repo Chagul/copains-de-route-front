@@ -35,7 +35,8 @@ class ParticipantsInfos extends StatelessWidget {
                             .person /*event.participants.thirdUser.profilePic*/),
                         const SizedBox(width: 5),
                         Text(
-                          "+ ${event.participants.length - 3} autres",
+                           
+                         " ${event.participants.length} participant(s)",
                           style: const TextStyle(
                               color: CustomColorScheme.customOnSecondary),
                         )

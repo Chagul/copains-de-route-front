@@ -70,7 +70,7 @@ class _CommentCardState extends State<CommentCard> {
                         color: CustomColorScheme.customError,
                         fontWeight: FontWeight.bold)),
                 IconButton(
-                  icon: Icon (
+                  icon: const Icon (
                     Icons.favorite,
                     color:  CustomColorScheme.customError
                   ),
