@@ -1,6 +1,5 @@
 import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/components/event_details/comment_card.dart';
-import 'package:copains_de_route/cubit/detail_event/detail_event_state.dart';
 import 'package:copains_de_route/model/comment_dto.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
@@ -8,9 +7,8 @@ import 'package:flutter/material.dart';
 
 class CommentSection extends StatefulWidget {
   final Event event;
-  final DetailEventState state;
 
-  const CommentSection({super.key, required this.event, required this.state});
+  const CommentSection({super.key, required this.event});
 
   @override
   _CommentSectionState createState() => _CommentSectionState();
@@ -22,11 +20,8 @@ class _CommentSectionState extends State<CommentSection> {
   String username = "";
   var idComment = 0;
 
-
-
   @override
   void initState() {
-    
     super.initState();
     for (var comment in widget.event.comments) {
       comments.add(comment);
@@ -35,7 +30,7 @@ class _CommentSectionState extends State<CommentSection> {
   }
 
   _fetchUsername() {
-    var user = CopainsDeRouteApi().getLoggedUser();
+    var user = CopainsDeRouteApi().getUser();
     user.then((value) => {
           if (value.statusCode == 200) {username = value.data['login']}
         });
@@ -46,11 +41,9 @@ class _CommentSectionState extends State<CommentSection> {
     return FutureBuilder<void>(
       future: _fetchUsername(),
       builder: (context, snapshot) {
-
         var commentWidgets = <Widget>[];
         for (var comment in comments) {
           commentWidgets.add(CommentCard(comment: comment));
-
         }
 
         return Row(
@@ -87,11 +80,11 @@ class _CommentSectionState extends State<CommentSection> {
                           color: CustomColorScheme.customOnSecondary,
                         ),
                         onPressed: () async {
-                        var data = await CopainsDeRouteApi().postComment(
-                               _controller.text, username!, widget.event.id);
-                       idComment = int.parse(data.data.toString());
+                          var data = await CopainsDeRouteApi().postComment(
+                              _controller.text, username!, widget.event.id);
+                          idComment = int.parse(data.data.toString());
 
-                         CommentDTO comment = CommentDTO(
+                          CommentDTO comment = CommentDTO(
                             id: idComment,
                             login: username!,
                             content: _controller.text,
@@ -99,8 +92,12 @@ class _CommentSectionState extends State<CommentSection> {
                             likes: 0,
                             isLiked: false,
                           );
-                          comments.add(comment);
-                          widget.event.comments.add(comment);
+
+                          setState(() {
+                            comments.add(comment);
+                            widget.event.comments.add(comment);
+                          });
+
                           _controller.clear();
                         },
                       ),
