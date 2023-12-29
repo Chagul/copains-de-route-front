@@ -10,11 +10,10 @@ class CommentCard extends StatefulWidget {
   const CommentCard({Key? key, required this.comment}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _CommentCardState createState() => _CommentCardState();
+  CommentCardState createState() => CommentCardState();
 }
 
-class _CommentCardState extends State<CommentCard> {
+class CommentCardState extends State<CommentCard> {
   bool isLiked = false;
 
   @override
@@ -73,10 +72,11 @@ class _CommentCardState extends State<CommentCard> {
                     if (!isLiked) {
                       context
                           .read<DetailEventCubit>()
-                          .likeComment(likedCommentId, widget.comment.likes!);
+                          .likeComment(likedCommentId, widget.comment.likes);
                     } else {
-                      context.read<DetailEventCubit>().dislikeComment(
-                          likedCommentId, widget.comment.likes!);
+                      context
+                          .read<DetailEventCubit>()
+                          .dislikeComment(likedCommentId, widget.comment.likes);
                     }
                   },
                 ),

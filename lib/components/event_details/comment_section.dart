@@ -31,10 +31,8 @@ class CommentSectionContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String username = "";
-    context.read<LoginCubit>().user.login != null
-        ? username = context.read<LoginCubit>().user.login!
-        : username = "Anonyme";
-    var _controller = TextEditingController();
+    username = context.read<LoginCubit>().user.login;
+    var controller = TextEditingController();
     int idComment = 0;
 
     return BlocBuilder<DetailEventCubit, DetailEventState>(
@@ -51,13 +49,13 @@ class CommentSectionContent extends StatelessWidget {
         }
 
         return _buildCommentSection(
-            context, event.comments, username, _controller);
+            context, event.comments, username, controller);
       },
     );
   }
 
   Widget _buildCommentSection(BuildContext context, List<CommentDTO> comments,
-      String username, TextEditingController _controller) {
+      String username, TextEditingController controller) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -73,7 +71,7 @@ class CommentSectionContent extends StatelessWidget {
         SizedBox(
           width: MediaQuery.of(context).size.width * 0.90,
           child: TextField(
-            controller: _controller,
+            controller: controller,
             style: const TextStyle(
               color: CustomColorScheme.customOnSecondary,
             ),
@@ -90,11 +88,11 @@ class CommentSectionContent extends StatelessWidget {
                 ),
                 onPressed: () {
                   context.read<DetailEventCubit>().postComment(
-                        _controller.text,
+                        controller.text,
                         username,
                         event.id,
                       );
-                  _controller.clear();
+                  controller.clear();
                 },
               ),
             ),
