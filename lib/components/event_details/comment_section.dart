@@ -45,7 +45,7 @@ class CommentSectionContent extends StatelessWidget {
           idComment = state.idComment;
           context.read<DetailEventCubit>().addCommentToEvent(
                 idComment,
-                idComment.toString(),
+                state.comment,
                 username,
               );
         }

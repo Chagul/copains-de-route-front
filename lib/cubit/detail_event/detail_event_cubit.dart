@@ -59,19 +59,19 @@ class DetailEventCubit extends Cubit<DetailEventState> {
         .any((participant) => participant.login == user.login);
   }
 
-
-void postComment(String comment, String login, int eventId) async {
-  var response = await CopainsDeRouteApi().postComment(comment, login, eventId);
-  int idComment = 0;
-  if (response.statusCode == 201) {
-    idComment = response.data;
-    emit(DetailEventCommentPostedState(comment, login, idComment));
-  } else {
-    emit(DetailEventCommentErrorState());
+  void postComment(String comment, String login, int eventId) async {
+    var response =
+        await CopainsDeRouteApi().postComment(comment, login, eventId);
+    int idComment = 0;
+    if (response.statusCode == 201) {
+      idComment = response.data;
+      emit(DetailEventCommentPostedState(comment, login, idComment));
+    } else {
+      emit(DetailEventCommentErrorState());
+    }
   }
-}
 
-  void addCommentToEvent (int id, String content, String login) {
+  void addCommentToEvent(int id, String content, String login) {
     event.comments.add(CommentDTO(
       id: id,
       content: content,
@@ -83,23 +83,29 @@ void postComment(String comment, String login, int eventId) async {
     emit(DetailEventCommentSucessState(event.comments));
   }
 
-  void likeComment(int commentId, int likes) {
-    var response = CopainsDeRouteApi().likeComment(commentId);
-    response.then((value) => {
-          if (value.statusCode == 200)
-            {emit(DetailEventLikedCommentState(commentId, likes + 1))}
-          else
-            {emit(DetailEventCommentErrorState())}
-        });
+  void likeComment(int commentId, int likes) async {
+    var response = await CopainsDeRouteApi().likeComment(commentId);
+    if (response.statusCode == 200) {
+      event.comments.firstWhere((comment) => comment.id == commentId).isLiked =
+          true;
+      event.comments.firstWhere((comment) => comment.id == commentId).likes =
+          likes + 1;
+      emit(DetailEventLikedCommentState(commentId, likes + 1));
+    } else {
+      emit(DetailEventCommentErrorState());
+    }
   }
 
-  void dislikeComment(int commentId, int likes) {
-    var response = CopainsDeRouteApi().dislikeComment(commentId);
-    response.then((value) => {
-          if (value.statusCode == 200)
-            {emit(DetailEventDislikeCommentState(commentId, likes - 1))}
-          else
-            {emit(DetailEventCommentErrorState())}
-        });
+  void dislikeComment(int commentId, int likes) async {
+    var response = await CopainsDeRouteApi().dislikeComment(commentId);
+    if (response.statusCode == 200) {
+      event.comments.firstWhere((comment) => comment.id == commentId).isLiked =
+          false;
+      event.comments.firstWhere((comment) => comment.id == commentId).likes =
+          likes - 1;
+      emit(DetailEventLikedCommentState(commentId, likes - 1));
+    } else {
+      emit(DetailEventCommentErrorState());
+    }
   }
 }
