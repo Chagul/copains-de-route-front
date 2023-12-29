@@ -1,11 +1,20 @@
+import 'package:copains_de_route/cubit/detail_event/detail_event_cubit.dart';
 import 'package:copains_de_route/model/comment_dto.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CommentCard extends StatelessWidget {
+class CommentCard extends StatefulWidget {
   final CommentDTO comment;
 
-  const CommentCard({super.key, required this.comment});
+  const CommentCard({Key? key, required this.comment}) : super(key: key);
+
+  @override
+  CommentCardState createState() => CommentCardState();
+}
+
+class CommentCardState extends State<CommentCard> {
+  bool isLiked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +37,10 @@ class CommentCard extends StatelessWidget {
                               color: CustomColorScheme.customOnSecondary),
                           children: [
                         TextSpan(
-                            text: "${comment.login}, ",
+                            text: "${widget.comment.login}, ",
                             style:
                                 const TextStyle(fontWeight: FontWeight.bold)),
-                        TextSpan(text: "le ${comment.date}"),
+                        TextSpan(text: "le ${widget.comment.date}"),
                       ])),
                 ),
               ],
@@ -41,7 +50,7 @@ class CommentCard extends StatelessWidget {
               children: [
                 const SizedBox(width: 27),
                 Text(
-                  comment.content,
+                  widget.comment.content,
                   style: const TextStyle(
                       color: CustomColorScheme.customOnSecondary),
                 )
@@ -50,14 +59,27 @@ class CommentCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text("${comment.likes}",
+                Text("${widget.comment.likes}",
                     style: const TextStyle(
                         color: CustomColorScheme.customError,
                         fontWeight: FontWeight.bold)),
-                const Icon(
-                  Icons.favorite,
-                  color: CustomColorScheme.customError,
-                )
+                IconButton(
+                  icon: const Icon(Icons.favorite,
+                      color: CustomColorScheme.customError),
+                  onPressed: () {
+                    isLiked = widget.comment.isLiked ?? false;
+                    int likedCommentId = widget.comment.id!;
+                    if (!isLiked) {
+                      context
+                          .read<DetailEventCubit>()
+                          .likeComment(likedCommentId, widget.comment.likes);
+                    } else {
+                      context
+                          .read<DetailEventCubit>()
+                          .dislikeComment(likedCommentId, widget.comment.likes);
+                    }
+                  },
+                ),
               ],
             )
           ],

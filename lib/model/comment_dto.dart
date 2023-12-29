@@ -4,16 +4,20 @@ part 'comment_dto.g.dart';
 
 @JsonSerializable()
 class CommentDTO {
+  final int? id;
   final String login;
   final String content;
   final String date;
-  final int likes;
+  int likes;
+  bool? isLiked;
 
   CommentDTO(
-      {required this.login,
+      {required this.id,
+      required this.login,
       required this.content,
       required this.date,
-      required this.likes});
+      required this.likes,
+      required this.isLiked});
 
   factory CommentDTO.fromJson(Map<String, dynamic> json) =>
       _$CommentDTOFromJson(json);

@@ -1,5 +1,6 @@
 import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_state.dart';
+import 'package:copains_de_route/model/comment_dto.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/model/user_dto.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,5 +57,55 @@ class DetailEventCubit extends Cubit<DetailEventState> {
   void updateJoined(UserDTO user) {
     joined = event.participants
         .any((participant) => participant.login == user.login);
+  }
+
+  void postComment(String comment, String login, int eventId) async {
+    var response =
+        await CopainsDeRouteApi().postComment(comment, login, eventId);
+    int idComment = 0;
+    if (response.statusCode == 201) {
+      idComment = response.data;
+      emit(DetailEventCommentPostedState(comment, login, idComment));
+    } else {
+      emit(DetailEventCommentErrorState());
+    }
+  }
+
+  void addCommentToEvent(int id, String content, String login) {
+    event.comments.add(CommentDTO(
+      id: id,
+      content: content,
+      login: login,
+      date: DateTime.now().toString(),
+      likes: 0,
+      isLiked: false,
+    ));
+    emit(DetailEventCommentSucessState(event.comments));
+  }
+
+  void likeComment(int commentId, int likes) async {
+    var response = await CopainsDeRouteApi().likeComment(commentId);
+    if (response.statusCode == 200) {
+      event.comments.firstWhere((comment) => comment.id == commentId).isLiked =
+          true;
+      event.comments.firstWhere((comment) => comment.id == commentId).likes =
+          likes + 1;
+      emit(DetailEventLikedCommentState(commentId, likes + 1));
+    } else {
+      emit(DetailEventCommentErrorState());
+    }
+  }
+
+  void dislikeComment(int commentId, int likes) async {
+    var response = await CopainsDeRouteApi().dislikeComment(commentId);
+    if (response.statusCode == 200) {
+      event.comments.firstWhere((comment) => comment.id == commentId).isLiked =
+          false;
+      event.comments.firstWhere((comment) => comment.id == commentId).likes =
+          likes - 1;
+      emit(DetailEventLikedCommentState(commentId, likes - 1));
+    } else {
+      emit(DetailEventCommentErrorState());
+    }
   }
 }
