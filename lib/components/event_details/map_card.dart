@@ -53,6 +53,14 @@ class MapCard extends StatelessWidget {
                             event.steps[event.steps.length - 1].latitude,
                             event.steps[event.steps.length - 1].longitude),
                       ),
+                      for (int i = 1; i < event.steps.length - 1; i++)
+                        Marker(
+                          icon: BitmapDescriptor.defaultMarkerWithHue(
+                              BitmapDescriptor.hueGreen),
+                          markerId: MarkerId(event.steps[i].rank.toString()),
+                          position: LatLng(event.steps[i].latitude,
+                              event.steps[i].longitude),
+                        ),
                     }),
               )))
     ]);

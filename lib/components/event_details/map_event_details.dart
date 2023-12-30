@@ -51,7 +51,7 @@ class MapEventDetails extends StatelessWidget {
               position:
                   LatLng(event.steps[0].latitude, event.steps[0].longitude),
             ),
-            for (int i = 1; i < event.steps.length - 3; i++)
+            for (int i = 1; i < event.steps.length - 1; i++)
               Marker(
                 icon: BitmapDescriptor.defaultMarkerWithHue(
                     BitmapDescriptor.hueGreen),
