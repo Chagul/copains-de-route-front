@@ -63,6 +63,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   void getUser() async {
+    emit(UserLoadingState());
     var resp = CopainsDeRouteApi().getUser();
     resp.then((value) => {
           if (value.statusCode == 200)
@@ -78,7 +79,10 @@ class LoginCubit extends Cubit<LoginState> {
                   user.sentFriends.where((f) => f.status == "SENT").toList(),
               friendsToAccept =
                   user.addedFriends.where((f) => f.status == "SENT").toList(),
+              emit(UserLoadedState())
             }
+          else
+            {emit(UserLoadedFailed())}
         });
   }
 }

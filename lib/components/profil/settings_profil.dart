@@ -1,9 +1,6 @@
-import 'package:copains_de_route/cubit/profil/profil_view_cubit.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
-// ignore: must_be_immutable
 class SettingsProfilPage extends StatelessWidget {
   SettingsProfilPage({Key? key}) : super(key: key);
 
@@ -15,8 +12,6 @@ class SettingsProfilPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      final cubit = BlocProvider.of<ProfilViewCubit>(context);
-
       return SafeArea(
         child: Scaffold(
           body: SingleChildScrollView(
@@ -30,13 +25,13 @@ class SettingsProfilPage extends StatelessWidget {
                     ),
                     const Text(
                       "Paramètres",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
                 const SizedBox(height: 20),
                 InkWell(
-                  // ignore: avoid_print
                   onTap: () => {print("change avatar")},
                   child: const CircleAvatar(
                     radius: 50,
@@ -191,9 +186,9 @@ class SettingsProfilPage extends StatelessWidget {
                                     _confirmNewPasswordController.text) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      backgroundColor:
-                                          CustomColorScheme.customPrimaryColor
-                                              .withOpacity(0.5),
+                                      backgroundColor: CustomColorScheme
+                                          .customPrimaryColor
+                                          .withOpacity(0.5),
                                       content: const Text(
                                         'Les mots de passe ne correspondent pas',
                                         style: TextStyle(
@@ -208,11 +203,12 @@ class SettingsProfilPage extends StatelessWidget {
                                 }
 
                                 String message = '';
-                                  message = 'Un email a été envoyé à votre adresse mail pour confirmer le changement de login';
-                                
+                                message =
+                                    'Un email a été envoyé à votre adresse mail pour confirmer le changement de login';
 
                                 if (_newPasswordController.text.isNotEmpty) {
-                                  message = 'Un email a été envoyé à votre adresse mail pour confirmer le changement de mot de passe';
+                                  message =
+                                      'Un email a été envoyé à votre adresse mail pour confirmer le changement de mot de passe';
                                   _newPasswordController.clear();
                                   _confirmNewPasswordController.clear();
                                 }
@@ -220,9 +216,9 @@ class SettingsProfilPage extends StatelessWidget {
                                 if (message.isNotEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      backgroundColor:
-                                          CustomColorScheme.customPrimaryColor
-                                              .withOpacity(0.5),
+                                      backgroundColor: CustomColorScheme
+                                          .customPrimaryColor
+                                          .withOpacity(0.5),
                                       content: Text(
                                         message,
                                         style: const TextStyle(
@@ -235,8 +231,7 @@ class SettingsProfilPage extends StatelessWidget {
                                   );
                                 }
 
-                                Navigator.pop(
-                                    context); 
+                                Navigator.pop(context);
                               }
                             },
                             child: const Text("Sauvegarder"),
@@ -254,5 +249,3 @@ class SettingsProfilPage extends StatelessWidget {
     });
   }
 }
-
-

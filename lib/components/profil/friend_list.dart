@@ -1,6 +1,8 @@
-import 'package:copains_de_route/components/commons/loading_widget.dart';
-import 'package:copains_de_route/cubit/profil/profil_view_cubit.dart';
-import 'package:copains_de_route/cubit/profil/profil_view_state.dart';
+import 'package:copains_de_route/components/profil/add_friend.dart';
+import 'package:copains_de_route/components/profil/friend_list_tile.dart';
+import 'package:copains_de_route/cubit/login/login_cubit.dart';
+import 'package:copains_de_route/cubit/profil/add_friend_cubit.dart';
+import 'package:copains_de_route/cubit/profil/add_friend_state.dart';
 import 'package:copains_de_route/model/friends_dto.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +14,26 @@ class FriendList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      final cubit = BlocProvider.of<ProfilViewCubit>(context);
-      if (cubit.state is MyProfileState) {
+    return Scaffold(
+      body: BlocConsumer<AddFriendCubit, AddFriendState>(
+          listener: (context, state) {
+        if (state is FriendRequestAlreadyExistsState) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text(
+                  "Une demande d'ami a déjà été envoyée à cet utilisateur")));
+        }
+        if (state is AddFriendFailedState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("L'ami n'a pas pu être ajouté")));
+        }
+        if (state is AddFriendSucceedState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Une demande d'ami a été envoyée")));
+        }
+      }, builder: (context, state) {
+        final cubitFriend = BlocProvider.of<AddFriendCubit>(context);
+        final cubitLogin = BlocProvider.of<LoginCubit>(context);
+
         return SafeArea(
             child: Scaffold(
           body: SingleChildScrollView(
@@ -29,21 +48,24 @@ class FriendList extends StatelessWidget {
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 Align(
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                        onPressed: () => Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (context) {
-                              return BlocProvider.value(
-                                  value: cubit, child: const Text("test"));
-                            })),
-                        icon: const Icon(Icons.add)))
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                      icon: const Icon(Icons.add),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => AddFriend(cubit: cubitFriend)));
+                      }),
+                ),
               ],
             ),
             const SizedBox(height: 20),
             Padding(
                 padding: const EdgeInsets.all(10),
-                child: Container(
-                    color: CustomColorScheme.customPrimaryColor,
+                child: Card(
+                    color:
+                        CustomColorScheme.customPrimaryColor.withOpacity(0.5),
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Column(
@@ -54,51 +76,38 @@ class FriendList extends StatelessWidget {
                                 Icon(
                                   Icons.people,
                                   size: 60,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                 ),
                                 SizedBox(width: 20),
                                 Text("Vos Amis",
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         decoration: TextDecoration.underline))
                               ])),
                           const SizedBox(height: 20),
                           Container(
+                              padding: const EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
                               ),
                               child: ListView.builder(
                                   physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
-                                  itemCount: 20,
+                                  itemCount: cubitLogin.acceptedFriends.length,
                                   itemBuilder: (context, index) {
-                                    return ListTile(
-                                      leading: const CircleAvatar(
-                                          radius: 20,
-                                          backgroundImage: NetworkImage(
-                                              'https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png')),
-                                      title: const Text("Rick Astley",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      trailing: IconButton(
-                                          onPressed: () => {},
-                                          icon: const Icon(Icons.delete)),
-                                    );
+                                    return FriendListTile(
+                                        friend:
+                                            cubitLogin.acceptedFriends[index],
+                                        loginUser: cubitLogin.user.login);
                                   }))
                         ],
                       ),
                     ))),
           ])),
         ));
-      } else if (cubit.state is OtherProfileState) {
-        return const Text("OTHER PRFILE");
-      } else if (cubit.state is LoadingState) {
-        return const LoadingWidget();
-      } else {
-        return Container();
-      }
-    });
+      }),
+    );
   }
 }

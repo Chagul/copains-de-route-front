@@ -5,8 +5,9 @@ import 'package:copains_de_route/components/profil/friend_inkwell.dart';
 import 'package:copains_de_route/components/profil/friend_list.dart';
 import 'package:copains_de_route/components/profil/settings_profil.dart';
 import 'package:copains_de_route/cubit/login/login_cubit.dart';
-import 'package:copains_de_route/cubit/profil/profil_view_cubit.dart';
-import 'package:copains_de_route/cubit/profil/profil_view_state.dart';
+import 'package:copains_de_route/cubit/login/login_state.dart';
+import 'package:copains_de_route/cubit/profil/add_friend_cubit.dart';
+import 'package:copains_de_route/cubit/profil/add_friend_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/utils/profile_picture_utils.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,11 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfilViewCubit, ProfilViewState>(
-        builder: (context, state) {
-      if (state is LoadingState) {
+    return BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
+      LoginCubit cubit = BlocProvider.of<LoginCubit>(context);
+      if (state is UserLoadingState) {
         return const LoadingWidget();
-      } else {
+      } else if (state is UserLoadedState) {
         return SafeArea(
             child: Scaffold(
           body: SingleChildScrollView(
@@ -43,12 +44,11 @@ class ProfilePage extends StatelessWidget {
             Column(children: [
               ProfilePictureUtils.getUserProfilePicWidget(context),
               const SizedBox(height: 10),
-              if (state is MyProfileState)
-                Text(
-                  state.login,
-                  style: const TextStyle(
-                      fontSize: 25, fontWeight: FontWeight.bold),
-                )
+              Text(
+                cubit.user.login,
+                style:
+                    const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              )
             ]),
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
@@ -71,33 +71,26 @@ class ProfilePage extends StatelessWidget {
                             Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  if (BlocProvider.of<LoginCubit>(context)
-                                      .acceptedFriends
-                                      .isNotEmpty)
+                                  if (cubit.acceptedFriends.isNotEmpty)
                                     FriendInkwell(
-                                        friend:
-                                            BlocProvider.of<LoginCubit>(context)
-                                                .acceptedFriends[0]),
-                                  if (BlocProvider.of<LoginCubit>(context)
-                                          .acceptedFriends
-                                          .length >
-                                      1)
+                                        friend: cubit.acceptedFriends[0]),
+                                  if (cubit.acceptedFriends.length > 1)
                                     FriendInkwell(
-                                        friend:
-                                            BlocProvider.of<LoginCubit>(context)
-                                                .acceptedFriends[1]),
+                                        friend: cubit.acceptedFriends[1]),
                                 ]),
                             Align(
                                 alignment: Alignment.bottomRight,
                                 child: TextButton(
                                     onPressed: () => {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) => FriendList(
-                                                      friends: BlocProvider.of<
-                                                                  LoginCubit>(
-                                                              context)
-                                                          .acceptedFriends)))
+                                          Navigator.of(context).push(MaterialPageRoute(
+                                              builder: (context) => BlocProvider<
+                                                      AddFriendCubit>(
+                                                  create: (context) =>
+                                                      AddFriendCubit(
+                                                          AddFriendInitialState()),
+                                                  child: FriendList(
+                                                      friends: cubit
+                                                          .acceptedFriends))))
                                         },
                                     child: const Text("Voir plus",
                                         style: TextStyle(
@@ -105,19 +98,25 @@ class ProfilePage extends StatelessWidget {
                                                 .customOnSecondary,
                                             fontSize: 20))))
                           ]))),
-                  if (state is MyProfileState)
-                    CardStatistiques(
-                        evenementJoinedNumber:
-                            state.userdto.numberEventsParticipated.toString(),
-                        evenementCreatedNumber:
-                            state.userdto.numberEventsCreated.toString(),
-                        kmDriven: state.userdto.distanceTraveled.toString(),
-                        co2Saved: state.userdto.co2NotEmitted.toString())
+                  CardStatistiques(
+                      evenementJoinedNumber:
+                          cubit.user.numberEventsParticipated.toString(),
+                      evenementCreatedNumber:
+                          cubit.user.numberEventsCreated.toString(),
+                      kmDriven: cubit.user.distanceTraveled.toString(),
+                      co2Saved: cubit.user.co2NotEmitted.toString())
                 ],
               ),
             )
           ])),
         ));
+      } else {
+        return const Align(
+            alignment: Alignment.center,
+            child: Text(
+              "Erreur réseau : Les données de l'utilisateur n'ont pas pu être chargées",
+              style: TextStyle(color: CustomColorScheme.customOnSecondary),
+            ));
       }
     });
   }

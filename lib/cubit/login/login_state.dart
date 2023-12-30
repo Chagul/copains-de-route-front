@@ -18,6 +18,10 @@ class RegisteredState extends LoginState {}
 
 class RegisterFailedState extends LoginState {}
 
+class UserInitialState extends LoginState {}
+
 class UserLoadedState extends LoginState {}
+
+class UserLoadingState extends LoginState {}
 
 class UserLoadedFailed extends LoginState {}

@@ -1,3 +1,4 @@
+import 'package:copains_de_route/components/commons/loading_widget.dart';
 import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/cubit/position/position_cubit.dart';
@@ -39,6 +40,9 @@ class _MyAppState extends State<MyApp> {
               builder: (context, state) {
                 if (state is TokenValidState) {
                   context.read<LoginCubit>().getUser();
+                  return const LoadingWidget();
+                }
+                if (state is UserLoadedState) {
                   return _buildMainApp();
                 }
                 return const LoginScreen();
