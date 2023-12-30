@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as p;
 import 'package:copains_de_route/components/login_screen/email_widget.dart';
 import 'package:copains_de_route/components/login_screen/login_widget.dart';

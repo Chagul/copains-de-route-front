@@ -1,4 +1,3 @@
-import 'package:copains_de_route/model/friends_dto.dart';
 import 'package:copains_de_route/model/user_dto.dart';
 
 abstract class LoginState {

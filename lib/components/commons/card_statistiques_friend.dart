@@ -44,7 +44,7 @@ class CardStatistiquesFriend extends StatelessWidget {
               },
             ),
             Text(
-              "${friend.login}",
+              "$friend.login",
               style: const TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 
