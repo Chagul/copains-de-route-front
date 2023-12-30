@@ -2,6 +2,7 @@ import 'package:copains_de_route/components/commons/loading_widget.dart';
 import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/cubit/position/position_cubit.dart';
+import 'package:copains_de_route/cubit/profil/add_friend_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/views/create_itinerary_page.dart';
 import 'package:copains_de_route/views/home_page.dart';
@@ -37,8 +38,8 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
             theme: ThemeData(colorScheme: const CustomColorScheme()),
             home: BlocBuilder<LoginCubit, LoginState>(
-              buildWhen: (previous, current) {
-                return current is! UserRefreshState;
+               buildWhen: (previous, current) {
+                return current is! UserRefreshState && current is! AddFriendState;
               },
               builder: (context, state) {
                 if (state is TokenValidState) {

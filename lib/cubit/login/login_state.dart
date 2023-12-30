@@ -1,4 +1,9 @@
-abstract class LoginState {}
+import 'package:copains_de_route/model/friends_dto.dart';
+import 'package:copains_de_route/model/user_dto.dart';
+
+abstract class LoginState {
+  
+}
 
 abstract class UserRefreshState extends LoginState {}
 
@@ -39,3 +44,11 @@ class UserRefreshingState extends UserRefreshState {}
 class UserRefreshedState extends UserRefreshState {}
 
 class UserRefreshedFailState extends UserRefreshState {}
+
+ abstract class FriendState extends LoginState {}
+class FriendInfoLoadedState extends FriendState {
+  final UserDTO friend;
+  FriendInfoLoadedState(this.friend);
+}
+
+class FriendInfoErrorState extends FriendState {}
