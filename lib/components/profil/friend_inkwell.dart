@@ -21,12 +21,13 @@ class FriendInkwell extends StatelessWidget {
                 }))
               },
           child: RowImageText(
-              image:
-                  "https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png",
-              text: BlocProvider.of<LoginCubit>(context).user.login ==
-                      friend.sender
-                  ? friend.added
-                  : friend.sender));
+            friend: friend,
+            loginUser: BlocProvider.of<LoginCubit>(context).user.login,
+            text:
+                BlocProvider.of<LoginCubit>(context).user.login == friend.sender
+                    ? friend.added
+                    : friend.sender,
+          ));
     });
   }
 }

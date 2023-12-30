@@ -7,6 +7,8 @@ class FriendsDTO {
   final int id;
   final String sender;
   final String added;
+  final String? senderProfilePicLocation;
+  final String? addedProfilePicLocation;
   final String submissionTime;
   final String? acceptedTime;
   final String status;
@@ -15,6 +17,8 @@ class FriendsDTO {
       {required this.id,
       required this.sender,
       required this.added,
+      this.senderProfilePicLocation,
+      this.addedProfilePicLocation,
       required this.submissionTime,
       required this.acceptedTime,
       required this.status});

@@ -2,6 +2,7 @@ import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_cubit.dart';
 import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/model/event.dart';
+import 'package:copains_de_route/model/friends_dto.dart';
 import 'package:copains_de_route/model/user_dto.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,20 @@ class ProfilePictureUtils {
               backgroundImage: NetworkImage(
                   ProfilePictureUtils._getUrlProfilePicPromoterFromUser(
                       context.read<LoginCubit>().user)!)));
+    } else {
+      return const Icon(Icons.person);
+    }
+  }
+
+  static Widget getFriendProfilePicWidget(FriendsDTO friend, String loginUser) {
+    String? profilePicPathToDisplay = loginUser == friend.sender
+        ? friend.addedProfilePicLocation
+        : friend.senderProfilePicLocation;
+    if (profilePicPathToDisplay != null) {
+      return CircleAvatar(
+          radius: 30,
+          backgroundImage: NetworkImage(CopainsDeRouteApi()
+              .getUserProfilePicUrl(profilePicPathToDisplay)));
     } else {
       return const Icon(Icons.person);
     }

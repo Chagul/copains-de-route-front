@@ -71,6 +71,11 @@ class ProfilePage extends StatelessWidget {
                             Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+                                  if (cubit.acceptedFriends.isEmpty)
+                                    const Text("Aucun ami",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold)),
                                   if (cubit.acceptedFriends.isNotEmpty)
                                     FriendInkwell(
                                         friend: cubit.acceptedFriends[0]),

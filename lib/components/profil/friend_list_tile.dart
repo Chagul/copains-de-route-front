@@ -2,6 +2,7 @@ import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/cubit/profil/add_friend_cubit.dart';
 import 'package:copains_de_route/cubit/profil/add_friend_state.dart';
 import 'package:copains_de_route/model/friends_dto.dart';
+import 'package:copains_de_route/utils/profile_picture_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,10 +22,8 @@ class FriendListTile extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: ListTile(
-          leading: const CircleAvatar(
-              radius: 30,
-              backgroundImage: NetworkImage(
-                  'https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png')),
+          leading:
+              ProfilePictureUtils.getFriendProfilePicWidget(friend, loginUser),
           title: Text(loginUser == friend.sender ? friend.added : friend.sender,
               style: const TextStyle(fontWeight: FontWeight.bold)),
           trailing: IconButton(
