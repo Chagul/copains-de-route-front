@@ -17,8 +17,18 @@ class FriendList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<AddFriendCubit, AddFriendState>(
-          builder: (context, state) {
+      body: BlocConsumer<AddFriendCubit, AddFriendState>(
+          listener: (context, state) {
+        if (state is DeleteFriendSucceedState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("L'ami a été supprimé")));
+        }
+        if (state is DeleteFriendFailedState) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text(
+                  "Une erreur est survenue lors de la suppression de l'ami")));
+        }
+      }, builder: (context, state) {
         return SafeArea(
             child: Scaffold(
           body: SingleChildScrollView(

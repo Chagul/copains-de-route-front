@@ -42,4 +42,15 @@ class AddFriendCubit extends Cubit<AddFriendState> {
       emit(AcceptOrDenyFriendFailedState());
     }
   }
+
+  Future<void> deleteFriend(int id) async {
+    var resp = await CopainsDeRouteApi().deleteFriend(id);
+    if (resp.statusCode == 200) {
+      emit(DeleteFriendSucceedState());
+    } else if (resp.statusCode == 404) {
+      emit(DeleteFriendFailedState());
+    } else {
+      emit(AcceptOrDenyFriendFailedState());
+    }
+  }
 }

@@ -327,4 +327,20 @@ class CopainsDeRouteApi {
       return Future.error(e);
     }
   }
+
+  Future<Response> deleteFriend(int id) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.delete(
+        "/friends/delete/$id",
+        options: Options(
+            headers: {'Authorization': _getAuthorization(token)},
+            validateStatus: (status) =>
+                status == 404 || status == 400 || status == 200),
+      );
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
 }

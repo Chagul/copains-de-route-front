@@ -70,14 +70,14 @@ class AddFriend extends StatelessWidget {
               ]),
               const Text(
                 "Ajouter un ami",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: TextField(
                   controller: cubitFriend.loginToAdd,
                   decoration: const InputDecoration(
-                      filled: true, fillColor: Colors.white),
+                      filled: true, fillColor: Colors.white, hintText: "Login"),
                 ),
               ),
               ElevatedButton(
@@ -91,8 +91,19 @@ class AddFriend extends StatelessWidget {
                     cubitFriend.addFriend();
                     Navigator.of(context).pop();
                   }),
+              const SizedBox(height: 20),
+              const Divider(
+                indent: 50,
+                endIndent: 50,
+                color: Colors.black,
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                "Demandes en attente",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+              ),
               Padding(
-                padding: const EdgeInsets.all(0.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Card(
                   color: CustomColorScheme.customPrimaryColor.withOpacity(0.5),
                   child: Padding(

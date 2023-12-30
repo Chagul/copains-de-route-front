@@ -17,3 +17,7 @@ class AcceptOrDenyFriendFailedState extends AddFriendState {}
 class DenyFriendSucceedState extends AddFriendState {}
 
 class DenyFriendFailedState extends AddFriendState {}
+
+class DeleteFriendSucceedState extends AddFriendState {}
+
+class DeleteFriendFailedState extends AddFriendState {}
