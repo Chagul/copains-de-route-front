@@ -17,22 +17,8 @@ class FriendList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<AddFriendCubit, AddFriendState>(
-          listener: (context, state) {
-        if (state is FriendRequestAlreadyExistsState) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text(
-                  "Une demande d'ami a déjà été envoyée à cet utilisateur")));
-        }
-        if (state is AddFriendFailedState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("L'ami n'a pas pu être ajouté")));
-        }
-        if (state is AddFriendSucceedState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Une demande d'ami a été envoyée")));
-        }
-      }, builder: (context, state) {
+      body: BlocBuilder<AddFriendCubit, AddFriendState>(
+          builder: (context, state) {
         return SafeArea(
             child: Scaffold(
           body: SingleChildScrollView(
@@ -41,7 +27,10 @@ class FriendList extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () => {
+                          BlocProvider.of<LoginCubit>(context).refreshUser(),
+                          Navigator.of(context).pop()
+                        },
                     icon: const Icon(Icons.arrow_back)),
                 const Text("Ma liste d'amis",
                     style:

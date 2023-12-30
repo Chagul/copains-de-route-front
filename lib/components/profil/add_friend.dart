@@ -15,8 +15,44 @@ class AddFriend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddFriendCubit, AddFriendState>(
-        builder: (context, state) {
+    return BlocConsumer<AddFriendCubit, AddFriendState>(
+        listener: (context, state) {
+      if (state is FriendRequestAlreadyExistsState) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+                "Une demande d'ami a déjà été envoyée à cet utilisateur")));
+      }
+      if (state is AddFriendFailedState) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("L'ami n'a pas pu être ajouté")));
+      }
+      if (state is AddFriendSucceedState) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Une demande d'ami a été envoyée")));
+      }
+      if (state is AcceptFriendSucceedState) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("La demande d'ami a été acceptée")));
+      }
+      if (state is AcceptFriendFailedState) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content:
+                Text("Erreur : La demande d'ami n'a pas pu être acceptée")));
+      }
+      if (state is DenyFriendSucceedState) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("La demande d'ami a été refusée")));
+      }
+      if (state is DenyFriendFailedState) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content:
+                Text("Erreur : La demande d'ami n'a pas pu être refusée")));
+      }
+      if (state is AcceptOrDenyFriendFailedState) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Une erreur est survenue")));
+      }
+    }, builder: (context, state) {
       final cubitFriend = BlocProvider.of<AddFriendCubit>(context);
       return SafeArea(
         child: Scaffold(
@@ -26,7 +62,10 @@ class AddFriend extends StatelessWidget {
             children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () => {
+                          BlocProvider.of<LoginCubit>(context).refreshUser(),
+                          Navigator.of(context).pop()
+                        },
                     icon: const Icon(Icons.arrow_back)),
               ]),
               const Text(
