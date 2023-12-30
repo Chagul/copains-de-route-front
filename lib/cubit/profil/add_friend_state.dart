@@ -1,3 +1,5 @@
+import 'package:copains_de_route/model/user_dto.dart';
+
 abstract class AddFriendState {}
 
 class AddFriendInitialState extends AddFriendState {}
@@ -21,3 +23,6 @@ class DenyFriendFailedState extends AddFriendState {}
 class DeleteFriendSucceedState extends AddFriendState {}
 
 class DeleteFriendFailedState extends AddFriendState {}
+
+
+

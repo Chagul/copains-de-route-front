@@ -1,5 +1,6 @@
 import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/cubit/profil/add_friend_state.dart';
+import 'package:copains_de_route/model/user_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
@@ -53,4 +54,5 @@ class AddFriendCubit extends Cubit<AddFriendState> {
       emit(AcceptOrDenyFriendFailedState());
     }
   }
+
 }
