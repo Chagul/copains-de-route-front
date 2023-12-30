@@ -1,5 +1,6 @@
 import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_cubit.dart';
+import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/model/user_dto.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
@@ -38,22 +39,32 @@ class ProfilePictureUtils {
   }
 
   static Widget getUserProfilePicWidget(BuildContext context) {
-    if (ProfilePictureUtils._getUrlProfilePicPromoterFromEvent(
-            context.read<DetailEventCubit>().event) !=
+    if (ProfilePictureUtils._getUrlProfilePicFromUser(
+            context.read<LoginCubit>().user) !=
         null) {
       return CircleAvatar(
-        radius: 20,
+        radius: 50,
         backgroundImage: NetworkImage(
-            ProfilePictureUtils._getUrlProfilePicPromoterFromEvent(
-                context.read<DetailEventCubit>().event)!),
+            ProfilePictureUtils._getUrlProfilePicFromUser(
+                context.read<LoginCubit>().user)!),
       );
     } else {
-      return const Icon(Icons.person);
+      return CircleAvatar(
+          radius: 50,
+          backgroundColor:
+              CustomColorScheme.customPrimaryColor.withOpacity(0.5),
+          child: const CircleAvatar(
+              radius: 48,
+              child: Icon(
+                Icons.person,
+                size: 50,
+                color: Colors.black,
+              )));
     }
   }
 
-  static Widget getParticipantProfilPicWidget(UserDTO user) {
-    if (ProfilePictureUtils._getUrlProfilePicFromUser(user) != null) {
+  static Widget getParticipantProfilPicWidget(UserDTO participant) {
+    if (ProfilePictureUtils._getUrlProfilePicFromUser(participant) != null) {
       return CircleAvatar(
           radius: 17,
           backgroundColor:
@@ -61,7 +72,8 @@ class ProfilePictureUtils {
           child: CircleAvatar(
               radius: 15,
               backgroundImage: NetworkImage(
-                  ProfilePictureUtils._getUrlProfilePicFromUser(user)!)));
+                  ProfilePictureUtils._getUrlProfilePicFromUser(
+                      participant)!)));
     } else {
       return CircleAvatar(
           radius: 17,
