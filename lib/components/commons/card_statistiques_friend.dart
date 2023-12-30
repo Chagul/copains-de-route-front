@@ -17,10 +17,6 @@ class CardStatistiquesFriend extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData) {
-          return const Text('No data available');
         } else {
           var numberEventsCreated = snapshot.data!.numberEventsCreated;
           var numberEventsParticipated = snapshot.data!.numberEventsParticipated;
