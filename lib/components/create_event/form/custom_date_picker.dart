@@ -37,12 +37,11 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
                   initialDate: DateTime.now(),
                   firstDate: DateTime.now(),
                   lastDate: DateTime.now().add(const Duration(days: 365)),
-                  barrierColor: CustomColorScheme.customBackground,
                   builder: (context, child) {
                     return Theme(
                       data: Theme.of(context).copyWith(
                         colorScheme: const ColorScheme.light(
-                          primary: CustomColorScheme.customSecondaryColor,
+                          primary: Colors.yellow,
                           onPrimary: CustomColorScheme.customOnSecondary,
                           onSurface: CustomColorScheme.customOnSecondary,
                         ),
