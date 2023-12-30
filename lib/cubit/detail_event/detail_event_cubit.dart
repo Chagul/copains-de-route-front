@@ -48,9 +48,9 @@ class DetailEventCubit extends Cubit<DetailEventState> {
     var response = CopainsDeRouteApi().deleteEvent(eventId);
     response.then((value) => {
           if (value.statusCode == 200)
-            {emit(DetailEventParticipateSucessState())}
+            {emit(DeleteEventSucceedState())}
           else
-            {emit(DetailEventParticipateErrorState())}
+            {emit(DeleteEventFailedState())}
         });
   }
 

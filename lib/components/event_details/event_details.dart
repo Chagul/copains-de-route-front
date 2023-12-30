@@ -13,7 +13,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EventDetails extends StatelessWidget {
-  const EventDetails({super.key});
+  final Function refreshList;
+
+  const EventDetails({super.key, required this.refreshList});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,8 @@ class EventDetails extends StatelessWidget {
                   Row(
                     children: [
                       IconButton(
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () =>
+                              {refreshList(), Navigator.pop(context)},
                           icon: const Icon(Icons.arrow_back,
                               color: Colors.black)),
                       Text(context.read<DetailEventCubit>().event.name,
@@ -148,6 +151,7 @@ class EventDetails extends StatelessWidget {
                                               .read<DetailEventCubit>()
                                               .event
                                               .id);
+                                      refreshList;
                                       Navigator.of(context).pop();
                                     }
                                   },

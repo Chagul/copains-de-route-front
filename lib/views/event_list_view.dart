@@ -164,6 +164,7 @@ class EventListView extends StatelessWidget {
                       .length,
                   itemBuilder: (context, index) {
                     return EventCard(
+                        refreshList: context.read<ListEventCubit>().getEvents,
                         event: context
                             .read<ListEventCubit>()
                             .dataDisplayed
