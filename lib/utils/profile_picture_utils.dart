@@ -1,6 +1,5 @@
 import 'package:copains_de_route/api/copains_de_route_api.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_cubit.dart';
-import 'package:copains_de_route/cubit/profil/profil_view_cubit.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/model/user_dto.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
@@ -16,7 +15,7 @@ class ProfilePictureUtils {
     return null;
   }
 
-  static String? _getUrlProfilePicPromoterFromUser(UserDTO user) {
+  static String? _getUrlProfilePicFromUser(UserDTO user) {
     if (user.profilePicLocation != null) {
       return CopainsDeRouteApi().getUserProfilePicUrl(user.profilePicLocation!);
     }
@@ -39,20 +38,41 @@ class ProfilePictureUtils {
   }
 
   static Widget getUserProfilePicWidget(BuildContext context) {
-    if (ProfilePictureUtils._getUrlProfilePicPromoterFromUser(
-            context.read<ProfilViewCubit>().userdto) !=
+    if (ProfilePictureUtils._getUrlProfilePicPromoterFromEvent(
+            context.read<DetailEventCubit>().event) !=
         null) {
       return CircleAvatar(
-          radius: 50,
+        radius: 20,
+        backgroundImage: NetworkImage(
+            ProfilePictureUtils._getUrlProfilePicPromoterFromEvent(
+                context.read<DetailEventCubit>().event)!),
+      );
+    } else {
+      return const Icon(Icons.person);
+    }
+  }
+
+  static Widget getParticipantProfilPicWidget(UserDTO user) {
+    if (ProfilePictureUtils._getUrlProfilePicFromUser(user) != null) {
+      return CircleAvatar(
+          radius: 17,
           backgroundColor:
               CustomColorScheme.customPrimaryColor.withOpacity(0.5),
           child: CircleAvatar(
-              radius: 47,
+              radius: 15,
               backgroundImage: NetworkImage(
-                  ProfilePictureUtils._getUrlProfilePicPromoterFromUser(
-                      context.read<ProfilViewCubit>().userdto)!)));
+                  ProfilePictureUtils._getUrlProfilePicFromUser(user)!)));
     } else {
-      return const Icon(Icons.person);
+      return CircleAvatar(
+          radius: 17,
+          backgroundColor:
+              CustomColorScheme.customPrimaryColor.withOpacity(0.5),
+          child: const CircleAvatar(
+              radius: 15,
+              child: Icon(
+                Icons.person,
+                color: Colors.black,
+              )));
     }
   }
 }
