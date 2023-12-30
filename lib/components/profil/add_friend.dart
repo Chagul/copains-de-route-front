@@ -102,23 +102,22 @@ class AddFriend extends StatelessWidget {
                 "Demandes en attente",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Card(
-                  color: CustomColorScheme.customPrimaryColor.withOpacity(0.5),
-                  child: Padding(
+              BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
+                final cubitLogin = BlocProvider.of<LoginCubit>(context);
+                if ((state is UserLoadedState || state is UserRefreshedState) &&
+                    cubitLogin.pendingRequests.isNotEmpty) {
+                  return Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                        ),
-                        child: BlocBuilder<LoginCubit, LoginState>(
-                            builder: (context, state) {
-                          final cubitLogin =
-                              BlocProvider.of<LoginCubit>(context);
-                          if (state is UserLoadedState ||
-                              state is UserRefreshedState) {
-                            return ListView.builder(
+                    child: Card(
+                      color:
+                          CustomColorScheme.customPrimaryColor.withOpacity(0.5),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                            ),
+                            child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: cubitLogin.pendingRequests.length,
@@ -127,13 +126,21 @@ class AddFriend extends StatelessWidget {
                                     friend: cubitLogin.pendingRequests[index],
                                     loginUser: cubitLogin.user.login,
                                   );
-                                });
-                          }
-                          return const LoadingWidget();
-                        })),
-                  ),
-                ),
-              )
+                                })),
+                      ),
+                    ),
+                  );
+                } else if ((state is UserLoadedState ||
+                        state is UserRefreshedState) &&
+                    cubitLogin.pendingRequests.isEmpty) {
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                    child: Text("Aucune demande d'ami en attente"),
+                  );
+                } else {
+                  return const LoadingWidget();
+                }
+              })
             ],
           ),
         ),
