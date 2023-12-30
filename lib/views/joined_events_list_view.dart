@@ -90,6 +90,9 @@ class JoinedEventsListView extends StatelessWidget {
                         .length,
                     itemBuilder: (context, index) {
                       return EventCard(
+                          refreshList: context
+                              .read<ListMyEventsJoinedCubit>()
+                              .getEventsParticipated,
                           event: context
                               .read<ListMyEventsJoinedCubit>()
                               .eventsJoined

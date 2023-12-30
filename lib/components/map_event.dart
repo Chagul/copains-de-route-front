@@ -5,6 +5,7 @@ import 'package:copains_de_route/components/event_details/event_details.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_cubit.dart';
 import 'package:copains_de_route/cubit/list_event/list_events_cubit.dart';
 import 'package:copains_de_route/cubit/list_event/list_events_state.dart';
+import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/cubit/position/position_cubit.dart';
 import 'package:copains_de_route/cubit/position/position_state.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +76,10 @@ class MapEventState extends State<MapEvent> {
             Row(
               children: [
                 IconButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => {
+                          BlocProvider.of<ListEventCubit>(context).getEvents(),
+                          Navigator.pop(context)
+                        },
                     icon: const Icon(Icons.arrow_back, color: Colors.black)),
               ],
             ),
@@ -108,8 +112,12 @@ class MapEventState extends State<MapEvent> {
                                         .push(MaterialPageRoute(builder: (_) {
                                       return BlocProvider<DetailEventCubit>(
                                           create: (context) =>
-                                              DetailEventCubit(event: e),
-                                          child: const EventDetails());
+                                              DetailEventCubit(event: e)
+                                                ..updateJoined(context
+                                                    .read<LoginCubit>()
+                                                    .user),
+                                          child: EventDetails(
+                                              refreshList: () => {}));
                                     })))))
                         .toSet(),
                 },

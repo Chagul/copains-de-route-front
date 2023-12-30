@@ -49,3 +49,7 @@ class DetailEventDislikeCommentState extends DetailEventState {
   final int likes;
   DetailEventDislikeCommentState(this.commentId, this.likes);
 }
+
+class DeleteEventSucceedState extends DetailEventState {}
+
+class DeleteEventFailedState extends DetailEventState {}

@@ -8,8 +8,9 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
+  final Function refreshList;
 
-  const EventCard({super.key, required this.event});
+  const EventCard({super.key, required this.event, required this.refreshList});
 
   TextStyle _getTitleTextStyle() {
     return const TextStyle(
@@ -83,7 +84,7 @@ class EventCard extends StatelessWidget {
                         return BlocProvider<DetailEventCubit>(
                             create: (context) => DetailEventCubit(event: event)
                               ..updateJoined(context.read<LoginCubit>().user),
-                            child: const EventDetails());
+                            child: EventDetails(refreshList: refreshList));
                       }));
                     },
                     icon: const Icon(

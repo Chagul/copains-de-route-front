@@ -10,6 +10,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class ListEventCubit extends Cubit<ListEventState> {
   EventList dataDisplayed = EventList(eventList: []);
   EventList data = EventList(eventList: []);
+  EventList eventsJoined = EventList(eventList: []);
+  EventList eventsCreated = EventList(eventList: []);
   bool sortedByDistance = false;
   bool sortedByParticipants = false;
   bool sortedByDate = false;
@@ -64,10 +66,10 @@ class ListEventCubit extends Cubit<ListEventState> {
               dataDisplayed = EventList(
                   eventList:
                       data.eventList.map((e) => Event.clone(e)).toList()),
-              emit(ListEventsAroundLoadedState(data: data)),
+              emit(ListAllEventsLoadedState(data: data)),
             }
           else if (value.statusCode == 204)
-            emit(ListEventsAroundNoContentState())
+            emit(ListAllEventsNoContentState())
         });
   }
 

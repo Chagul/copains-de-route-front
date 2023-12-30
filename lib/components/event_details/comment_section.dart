@@ -15,10 +15,7 @@ class CommentSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => DetailEventCubit(event: event),
-      child: CommentSectionContent(event: event),
-    );
+    return CommentSectionContent(event: event);
   }
 }
 
