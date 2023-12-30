@@ -1,3 +1,4 @@
+import 'package:copains_de_route/utils/profile_picture_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:copains_de_route/cubit/login/login_cubit.dart';
@@ -34,24 +35,33 @@ class CardStatistiquesFriend extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                BlocProvider.of<LoginCubit>(context).refreshUser();
-                Navigator.of(context).pop();
-              },
+            SizedBox(height: 15),
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    BlocProvider.of<LoginCubit>(context).refreshUser();
+                    Navigator.of(context).pop();
+                  },
+                ),
+                Expanded(
+                  child: Text(
+                    "${friend.login}",
+                    style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                      color: Color.fromARGB(255, 77, 76, 76),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Text(
-              "$friend.login",
-              style: const TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 77, 76, 76),
-              ),
-            ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 100),
+            ProfilePictureUtils.getUserProfilePicWidget(context),
+            const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
                 color: CustomColorScheme.customPrimaryColor.withOpacity(0.5),
