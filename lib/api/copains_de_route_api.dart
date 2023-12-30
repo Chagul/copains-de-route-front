@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CopainsDeRouteApi {
-  static const baseUrl = "https://app-o5ei237sga-ew.a.run.app";
+  static const baseUrl = "http://10.0.2.2:8080";
   final _dio = Dio(BaseOptions(
       baseUrl: baseUrl, headers: {"Content-Type": Headers.jsonContentType}));
 
@@ -283,6 +283,44 @@ class CopainsDeRouteApi {
             headers: {'Authorization': _getAuthorization(token)},
             validateStatus: (status) =>
                 status == 404 || status == 400 || status == 200),
+      );
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<Response> acceptFriend(int id) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.post(
+        "/friends/accept/$id",
+        options: Options(
+            headers: {'Authorization': _getAuthorization(token)},
+            validateStatus: (status) =>
+                status == 404 ||
+                status == 403 ||
+                status == 400 ||
+                status == 200),
+      );
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<Response> denyFriend(int id) async {
+    String? token = await _getToken();
+    try {
+      var resp = await _dio.post(
+        "/friends/deny/$id",
+        options: Options(
+            headers: {'Authorization': _getAuthorization(token)},
+            validateStatus: (status) =>
+                status == 404 ||
+                status == 403 ||
+                status == 400 ||
+                status == 200),
       );
       return resp;
     } catch (e) {

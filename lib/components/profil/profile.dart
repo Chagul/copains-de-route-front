@@ -20,9 +20,9 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
       LoginCubit cubit = BlocProvider.of<LoginCubit>(context);
-      if (state is UserLoadingState) {
+      if (state is UserLoadingState || state is UserRefreshingState) {
         return const LoadingWidget();
-      } else if (state is UserLoadedState) {
+      } else if (state is UserLoadedState || state is UserRefreshedState) {
         return SafeArea(
             child: Scaffold(
           body: SingleChildScrollView(

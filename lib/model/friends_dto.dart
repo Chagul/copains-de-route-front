@@ -8,7 +8,7 @@ class FriendsDTO {
   final String sender;
   final String added;
   final String submissionTime;
-  final String acceptedTime;
+  final String? acceptedTime;
   final String status;
 
   FriendsDTO(

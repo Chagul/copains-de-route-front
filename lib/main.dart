@@ -37,6 +37,9 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
             theme: ThemeData(colorScheme: const CustomColorScheme()),
             home: BlocBuilder<LoginCubit, LoginState>(
+              buildWhen: (previous, current) {
+                return current is! UserRefreshState;
+              },
               builder: (context, state) {
                 if (state is TokenValidState) {
                   context.read<LoginCubit>().getUser();

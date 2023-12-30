@@ -11,7 +11,7 @@ FriendsDTO _$FriendsDTOFromJson(Map<String, dynamic> json) => FriendsDTO(
       sender: json['sender'] as String,
       added: json['added'] as String,
       submissionTime: json['submissionTime'] as String,
-      acceptedTime: json['acceptedTime'] as String,
+      acceptedTime: json['acceptedTime'] as String?,
       status: json['status'] as String,
     );
 

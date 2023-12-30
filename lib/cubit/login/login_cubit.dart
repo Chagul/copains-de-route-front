@@ -20,8 +20,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   late UserDTO user;
   late List<FriendsDTO> acceptedFriends;
-  late List<FriendsDTO> pendingFriends;
-  late List<FriendsDTO> friendsToAccept;
+  late List<FriendsDTO> pendingRequests;
 
   verifyToken() async {
     emit(VerifyTokenState());
@@ -75,14 +74,34 @@ class LoginCubit extends Cubit<LoginState> {
                   user.addedFriends
                       .where((f) => f.status == "ACCEPTED")
                       .toList(),
-              pendingFriends =
-                  user.sentFriends.where((f) => f.status == "SENT").toList(),
-              friendsToAccept =
+              pendingRequests =
                   user.addedFriends.where((f) => f.status == "SENT").toList(),
               emit(UserLoadedState())
             }
           else
             {emit(UserLoadedFailed())}
+        });
+  }
+
+  Future<void> refreshUser() async {
+    emit(UserRefreshingState());
+    var resp = CopainsDeRouteApi().getUser();
+    resp.then((value) => {
+          if (value.statusCode == 200)
+            {
+              user = UserDTO.fromJson(value.data),
+              acceptedFriends = user.sentFriends
+                      .where((f) => f.status == "ACCEPTED")
+                      .toList() +
+                  user.addedFriends
+                      .where((f) => f.status == "ACCEPTED")
+                      .toList(),
+              pendingRequests =
+                  user.addedFriends.where((f) => f.status == "SENT").toList(),
+              emit(UserRefreshedState())
+            }
+          else
+            {emit(UserRefreshedFailState())}
         });
   }
 }

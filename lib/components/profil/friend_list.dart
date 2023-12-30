@@ -1,6 +1,8 @@
+import 'package:copains_de_route/components/commons/loading_widget.dart';
 import 'package:copains_de_route/components/profil/add_friend.dart';
 import 'package:copains_de_route/components/profil/friend_list_tile.dart';
 import 'package:copains_de_route/cubit/login/login_cubit.dart';
+import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/cubit/profil/add_friend_cubit.dart';
 import 'package:copains_de_route/cubit/profil/add_friend_state.dart';
 import 'package:copains_de_route/model/friends_dto.dart';
@@ -31,9 +33,6 @@ class FriendList extends StatelessWidget {
               const SnackBar(content: Text("Une demande d'ami a été envoyée")));
         }
       }, builder: (context, state) {
-        final cubitFriend = BlocProvider.of<AddFriendCubit>(context);
-        final cubitLogin = BlocProvider.of<LoginCubit>(context);
-
         return SafeArea(
             child: Scaffold(
           body: SingleChildScrollView(
@@ -55,7 +54,10 @@ class FriendList extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => AddFriend(cubit: cubitFriend)));
+                                builder: (_) => BlocProvider<AddFriendCubit>(
+                                    create: (context) =>
+                                        AddFriendCubit(AddFriendInitialState()),
+                                    child: const AddFriend())));
                       }),
                 ),
               ],
@@ -92,16 +94,27 @@ class FriendList extends StatelessWidget {
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
                               ),
-                              child: ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: cubitLogin.acceptedFriends.length,
-                                  itemBuilder: (context, index) {
-                                    return FriendListTile(
-                                        friend:
-                                            cubitLogin.acceptedFriends[index],
-                                        loginUser: cubitLogin.user.login);
-                                  }))
+                              child: BlocBuilder<LoginCubit, LoginState>(
+                                  builder: (context, state) {
+                                final cubitLogin =
+                                    BlocProvider.of<LoginCubit>(context);
+                                if (state is UserLoadedState ||
+                                    state is UserRefreshedState) {
+                                  return ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount:
+                                          cubitLogin.acceptedFriends.length,
+                                      itemBuilder: (context, index) {
+                                        return FriendListTile(
+                                            friend: cubitLogin
+                                                .acceptedFriends[index],
+                                            loginUser: cubitLogin.user.login);
+                                      });
+                                }
+                                return const LoadingWidget();
+                              }))
                         ],
                       ),
                     ))),

@@ -20,4 +20,28 @@ class AddFriendCubit extends Cubit<AddFriendState> {
             {emit(FriendRequestAlreadyExistsState())}
         });
   }
+
+  Future<void> acceptFriend(int id) async {
+    var resp = CopainsDeRouteApi().acceptFriend(id);
+    resp.then((value) => {
+          if (value.statusCode == 200)
+            {emit(AddFriendSucceedState())}
+          else if (value.statusCode == 404)
+            {emit(AddFriendFailedState())}
+          else
+            {emit(FriendRequestAlreadyExistsState())}
+        });
+  }
+
+  Future<void> denyFriend(int id) async {
+    var resp = CopainsDeRouteApi().denyFriend(id);
+    resp.then((value) => {
+          if (value.statusCode == 200)
+            {emit(AddFriendSucceedState())}
+          else if (value.statusCode == 404)
+            {emit(AddFriendFailedState())}
+          else
+            {emit(FriendRequestAlreadyExistsState())}
+        });
+  }
 }

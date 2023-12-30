@@ -1,5 +1,7 @@
 abstract class LoginState {}
 
+abstract class UserRefreshState extends LoginState {}
+
 class VerifyTokenState extends LoginState {}
 
 class TokenValidState extends LoginState {}
@@ -25,3 +27,9 @@ class UserLoadedState extends LoginState {}
 class UserLoadingState extends LoginState {}
 
 class UserLoadedFailed extends LoginState {}
+
+class UserRefreshingState extends UserRefreshState {}
+
+class UserRefreshedState extends UserRefreshState {}
+
+class UserRefreshedFailState extends UserRefreshState {}
