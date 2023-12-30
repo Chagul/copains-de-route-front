@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +32,9 @@ class SettingsProfilPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 InkWell(
-                  onTap: () => {print("change avatar")},
+                  onTap: () => {
+                    ("change avatar")
+                    },
                   child: const CircleAvatar(
                     radius: 50,
                     backgroundColor: CustomColorScheme.customPrimaryColor,

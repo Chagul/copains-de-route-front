@@ -53,5 +53,4 @@ class AddFriendCubit extends Cubit<AddFriendState> {
       emit(AcceptOrDenyFriendFailedState());
     }
   }
-
 }

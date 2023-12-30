@@ -36,7 +36,7 @@ class CardStatistiquesFriend extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Row(
               children: [
                 IconButton(
@@ -48,7 +48,7 @@ class CardStatistiquesFriend extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    "${friend.login}",
+                    friend.login,
                     style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
@@ -59,7 +59,7 @@ class CardStatistiquesFriend extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 100),
+            const SizedBox(height: 50),
             ProfilePictureUtils.getUserProfilePicWidget(context),
             const SizedBox(height: 20),
             Container(
