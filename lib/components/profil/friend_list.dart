@@ -45,25 +45,7 @@ class FriendList extends StatelessWidget {
                 const Text("Ma liste d'amis",
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                if (BlocProvider.of<LoginCubit>(context)
-                    .pendingRequests
-                    .isEmpty)
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) =>
-                                        BlocProvider<AddFriendCubit>(
-                                            create: (context) => AddFriendCubit(
-                                                AddFriendInitialState()),
-                                            child: const AddFriend())));
-                          },
-                          icon: const Icon(Icons.add)))
-                else
-                  Align(
+                Align(
                     alignment: Alignment.topRight,
                     child: IconButton(
                         onPressed: () {
@@ -75,62 +57,53 @@ class FriendList extends StatelessWidget {
                                           AddFriendInitialState()),
                                       child: const AddFriend())));
                         },
-                        icon: Stack(
-                          children: [
-                            const Icon(Icons.add),
-                            Positioned(
-                                top: -5.0,
-                                right: -1,
-                                child: Container(
-                                    decoration: const BoxDecoration(
-                                        color: Colors.red,
-                                        shape: BoxShape.circle),
-                                    child: Text(
-                                        "${BlocProvider.of<LoginCubit>(context).pendingRequests.length}"))),
-                          ],
-                        )),
-                  ),
+                        icon: const Icon(Icons.add)))
               ],
             ),
             const SizedBox(height: 20),
-            Padding(
-                padding: const EdgeInsets.all(10),
-                child: Card(
-                    color:
-                        CustomColorScheme.customPrimaryColor.withOpacity(0.5),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          const Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Row(children: [
-                                Icon(
-                                  Icons.people,
-                                  size: 60,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(width: 20),
-                                Text("Vos Amis",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        decoration: TextDecoration.underline))
-                              ])),
-                          const SizedBox(height: 20),
-                          Container(
-                              padding: const EdgeInsets.all(10.0),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
+            BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
+              final cubitLogin = BlocProvider.of<LoginCubit>(context);
+              if (state is UserLoadedState || state is UserRefreshedState) {
+                return Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Card(
+                        color: CustomColorScheme.customPrimaryColor
+                            .withOpacity(0.5),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(top: 10),
+                                child: Row(children: [
+                                  Icon(
+                                    Icons.people,
+                                    size: 60,
+                                    color: Colors.black,
+                                  ),
+                                  SizedBox(width: 20),
+                                  Text("Vos Amis",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          decoration:
+                                              TextDecoration.underline)),
+                                ]),
                               ),
-                              child: BlocBuilder<LoginCubit, LoginState>(
-                                  builder: (context, state) {
-                                final cubitLogin =
-                                    BlocProvider.of<LoginCubit>(context);
-                                if (state is UserLoadedState ||
-                                    state is UserRefreshedState) {
-                                  return ListView.builder(
+                              Text(
+                                  "Vous avez ${BlocProvider.of<LoginCubit>(context).acceptedFriends.length} amis et ${BlocProvider.of<LoginCubit>(context).pendingRequests.length} demandes en attente.",
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  )),
+                              const SizedBox(height: 20),
+                              Container(
+                                  padding: const EdgeInsets.all(10.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black),
+                                  ),
+                                  child: ListView.builder(
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
@@ -141,13 +114,13 @@ class FriendList extends StatelessWidget {
                                             friend: cubitLogin
                                                 .acceptedFriends[index],
                                             loginUser: cubitLogin.user.login);
-                                      });
-                                }
-                                return const LoadingWidget();
-                              }))
-                        ],
-                      ),
-                    ))),
+                                      }))
+                            ],
+                          ),
+                        )));
+              }
+              return const LoadingWidget();
+            }),
           ])),
         ));
       }),
