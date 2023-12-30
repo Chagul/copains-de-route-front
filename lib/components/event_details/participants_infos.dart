@@ -1,6 +1,7 @@
 import 'package:copains_de_route/components/event_details/participants_infos_list_participants.dart';
 import 'package:copains_de_route/model/event.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
+import 'package:copains_de_route/utils/profile_picture_utils.dart';
 import 'package:flutter/material.dart';
 
 class ParticipantsInfos extends StatelessWidget {
@@ -27,16 +28,18 @@ class ParticipantsInfos extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Icon(Icons
-                            .person /*event.participants.firstUser.profilePic*/),
-                        const Icon(Icons
-                            .person /*event.participants.secondUser.profilePic*/),
-                        const Icon(Icons
-                            .person /*event.participants.thirdUser.profilePic*/),
+                        if (event.participants.isNotEmpty)
+                          ProfilePictureUtils.getParticipantProfilPicWidget(
+                              event.participants[0]),
+                        if (event.participants.length > 1)
+                          ProfilePictureUtils.getParticipantProfilPicWidget(
+                              event.participants[1]),
+                        if (event.participants.length > 2)
+                          ProfilePictureUtils.getParticipantProfilPicWidget(
+                              event.participants[2]),
                         const SizedBox(width: 5),
                         Text(
-                           
-                         " ${event.participants.length} participant(s)",
+                          " ${event.participants.length} participant(s)",
                           style: const TextStyle(
                               color: CustomColorScheme.customOnSecondary),
                         )

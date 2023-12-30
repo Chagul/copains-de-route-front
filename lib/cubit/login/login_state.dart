@@ -12,7 +12,13 @@ class LoggingInState extends LoginState {}
 
 class LoggedInState extends LoginState {}
 
-class LoginFailedState extends LoginState {}
+class LoginFailedState extends LoginState {
+  final String error;
+
+  LoginFailedState(this.error);
+}
+
+class LoginDoesntExistState extends LoginState {}
 
 class RegisteringState extends LoginState {}
 

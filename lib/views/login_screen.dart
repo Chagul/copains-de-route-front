@@ -13,73 +13,73 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomColorScheme.customPrimaryColor,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            const SizedBox(height: 50),
-            Container(
-              width: 230.0,
-              height: 250.0,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image:
-                      AssetImage('assets/logo_copains_de_route_withoutbg.png'),
-                  fit: BoxFit.contain,
+    return BlocConsumer<LoginCubit, LoginState>(listener: (context, state) {
+      if (state is LoginFailedState) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(state.error)));
+      }
+    }, builder: (context, state) {
+      return Scaffold(
+        backgroundColor: CustomColorScheme.customPrimaryColor,
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              const SizedBox(height: 50),
+              Container(
+                width: 230.0,
+                height: 250.0,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                        'assets/logo_copains_de_route_withoutbg.png'),
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50.0),
-              child: Form(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const LoginWidget(),
-                    const SizedBox(height: 20),
-                    const PasswordWidget(),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: _forgotPassword(context),
-                    ),
-                    _button(context),
-                    const SizedBox(height: 20),
-                    _creationCompte(context),
-                  ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                child: Form(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const LoginWidget(),
+                      const SizedBox(height: 20),
+                      const PasswordWidget(),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: _forgotPassword(context),
+                      ),
+                      _button(context),
+                      const SizedBox(height: 20),
+                      _creationCompte(context),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
+      );
+    });
+  }
+
+  Widget _forgotPassword(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ForgotPassword()),
+        );
+      },
+      style: TextButton.styleFrom(
+        foregroundColor: CustomColorScheme.customOnPrimary,
       ),
+      child: const Text('Mot de passe oublié ? '),
     );
   }
-}
 
-Widget _forgotPassword(BuildContext context) {
-  return TextButton(
-    onPressed: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const ForgotPassword()),
-      );
-    },
-    style: TextButton.styleFrom(
-      foregroundColor: CustomColorScheme.customOnPrimary,
-    ),
-    child: const Text('Mot de passe oublié ? '),
-  );
-}
-
-Widget _button(BuildContext context) {
-  return BlocConsumer<LoginCubit, LoginState>(listener: (context, state) {
-    if (state is LoginFailedState) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Erreur de connexion")));
-    }
-  }, builder: (context, state) {
+  Widget _button(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: ElevatedButton(
@@ -95,18 +95,18 @@ Widget _button(BuildContext context) {
         child: const Text('Connexion'),
       ),
     );
-  });
-}
+  }
 
-Widget _creationCompte(BuildContext context) {
-  return TextButton(
-    onPressed: () {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const CreateAccount()));
-    },
-    style: TextButton.styleFrom(
-      foregroundColor: CustomColorScheme.customOnPrimary,
-    ),
-    child: const Text('Pas encore de compte ? Créez en un !'),
-  );
+  Widget _creationCompte(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const CreateAccount()));
+      },
+      style: TextButton.styleFrom(
+        foregroundColor: CustomColorScheme.customOnPrimary,
+      ),
+      child: const Text('Pas encore de compte ? Créez en un !'),
+    );
+  }
 }

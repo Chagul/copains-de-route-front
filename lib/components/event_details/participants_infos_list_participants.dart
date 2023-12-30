@@ -1,5 +1,6 @@
 import 'package:copains_de_route/model/user_dto.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
+import 'package:copains_de_route/utils/profile_picture_utils.dart';
 import 'package:flutter/material.dart';
 
 class ParticipantsInfosListParticipants extends StatelessWidget {
@@ -51,10 +52,7 @@ class ParticipantsInfosListParticipants extends StatelessWidget {
   Widget _buildRow(UserDTO participant) {
     return Row(
       children: [
-        const Icon(
-          Icons.person,
-          color: CustomColorScheme.customOnSecondary,
-        ),
+        ProfilePictureUtils.getParticipantProfilPicWidget(participant),
         Text(
           participant.login,
           style: const TextStyle(

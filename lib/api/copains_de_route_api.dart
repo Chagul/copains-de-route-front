@@ -49,7 +49,7 @@ class CopainsDeRouteApi {
     try {
       var resp = await _dio.post("/auth/login", data: loginDTO,
           options: Options(validateStatus: (status) {
-        return status == 400 || status == 200;
+        return status == 400 || status == 200 || status == 401;
       }));
       // save token
       if (resp.statusCode == 200) {
@@ -79,8 +79,9 @@ class CopainsDeRouteApi {
     String? token = await _getToken();
     try {
       var response = await _dio.get("/events",
-          options:
-              Options(headers: {'Authorization': _getAuthorization(token)}));
+          options: Options(
+              headers: {'Authorization': _getAuthorization(token)},
+              validateStatus: (status) => status == 200 || status == 204));
       return response;
     } catch (e) {
       return Future.error(e);
@@ -91,8 +92,11 @@ class CopainsDeRouteApi {
     String? token = await _getToken();
     try {
       var response = await _dio.get("/events/createdEvents",
-          options:
-              Options(headers: {'Authorization': _getAuthorization(token)}));
+          options: Options(
+              headers: {'Authorization': _getAuthorization(token)},
+              validateStatus: (status) {
+                return status == 204 || status == 200 || status == 404;
+              }));
       return response;
     } catch (e) {
       return Future.error(e);

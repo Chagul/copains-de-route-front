@@ -17,7 +17,7 @@ class ProfilePictureUtils {
     return null;
   }
 
-  static String? _getUrlProfilePicPromoterFromUser(UserDTO user) {
+  static String? _getUrlProfilePicFromUser(UserDTO user) {
     if (user.profilePicLocation != null) {
       return CopainsDeRouteApi().getUserProfilePicUrl(user.profilePicLocation!);
     }
@@ -40,18 +40,41 @@ class ProfilePictureUtils {
   }
 
   static Widget getUserProfilePicWidget(BuildContext context) {
-    if (ProfilePictureUtils._getUrlProfilePicPromoterFromUser(
+    if (ProfilePictureUtils._getUrlProfilePicFromUser(
             context.read<LoginCubit>().user) !=
         null) {
+      return CircleAvatar(
+        radius: 50,
+        backgroundImage: NetworkImage(
+            ProfilePictureUtils._getUrlProfilePicFromUser(
+                context.read<LoginCubit>().user)!),
+      );
+    } else {
       return CircleAvatar(
           radius: 50,
           backgroundColor:
               CustomColorScheme.customPrimaryColor.withOpacity(0.5),
+          child: const CircleAvatar(
+              radius: 48,
+              child: Icon(
+                Icons.person,
+                size: 50,
+                color: Colors.black,
+              )));
+    }
+  }
+
+  static Widget getParticipantProfilPicWidget(UserDTO participant) {
+    if (ProfilePictureUtils._getUrlProfilePicFromUser(participant) != null) {
+      return CircleAvatar(
+          radius: 17,
+          backgroundColor:
+              CustomColorScheme.customPrimaryColor.withOpacity(0.5),
           child: CircleAvatar(
-              radius: 47,
+              radius: 15,
               backgroundImage: NetworkImage(
-                  ProfilePictureUtils._getUrlProfilePicPromoterFromUser(
-                      context.read<LoginCubit>().user)!)));
+                  ProfilePictureUtils._getUrlProfilePicFromUser(
+                      participant)!)));
     } else {
       return const Icon(Icons.person);
     }
@@ -67,7 +90,16 @@ class ProfilePictureUtils {
           backgroundImage: NetworkImage(CopainsDeRouteApi()
               .getUserProfilePicUrl(profilePicPathToDisplay)));
     } else {
-      return const Icon(Icons.person);
+      return CircleAvatar(
+          radius: 17,
+          backgroundColor:
+              CustomColorScheme.customPrimaryColor.withOpacity(0.5),
+          child: const CircleAvatar(
+              radius: 15,
+              child: Icon(
+                Icons.person,
+                color: Colors.black,
+              )));
     }
   }
 }

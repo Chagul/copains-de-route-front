@@ -40,8 +40,12 @@ class LoginCubit extends Cubit<LoginState> {
     resp.then((value) => {
           if (value.statusCode == 200)
             {emit(TokenValidState())}
-          else
-            {emit(LoginFailedState())}
+          else if (value.statusCode == 400)
+            {emit(LoginFailedState("Une erreur est survenue"))}
+          else if (value.statusCode == 401)
+            {emit(LoginFailedState("Mauvaise combinaison Login/Password"))}
+          else if (value.statusCode == 404)
+            {emit(LoginFailedState("L'utilisateur n'existe pas"))}
         });
   }
 
