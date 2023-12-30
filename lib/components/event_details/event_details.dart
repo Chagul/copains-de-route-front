@@ -45,69 +45,68 @@ class EventDetails extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              !context.read<DetailEventCubit>().joined
-                                  ? ElevatedButton(
-                                      onPressed: () => {
-                                            context
-                                                .read<DetailEventCubit>()
-                                                .participate(
-                                                    context
-                                                        .read<
-                                                            DetailEventCubit>()
-                                                        .event
-                                                        .id,
-                                                    context
-                                                        .read<LoginCubit>()
-                                                        .user),
-                                          },
-                                      child: const Text("Rejoindre",
-                                          style: TextStyle(
-                                              color: CustomColorScheme
-                                                  .customOnSecondary)))
-                                  : ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.yellow),
-                                      onPressed: () => {
-                                            context
-                                                .read<DetailEventCubit>()
-                                                .unsubscribe(
-                                                    context
-                                                        .read<
-                                                            DetailEventCubit>()
-                                                        .event
-                                                        .id,
-                                                    context
-                                                        .read<LoginCubit>()
-                                                        .user),
-                                          },
-                                      child: const Text("Rejoint",
-                                          style: TextStyle(
-                                              color: CustomColorScheme
-                                                  .customOnSecondary))),
+                              if (context
+                                      .read<DetailEventCubit>()
+                                      .event
+                                      .promoter !=
+                                  context.read<LoginCubit>().user.login)
+                                !context.read<DetailEventCubit>().joined
+                                    ? ElevatedButton(
+                                        onPressed: () => {
+                                              context
+                                                  .read<DetailEventCubit>()
+                                                  .participate(
+                                                      context
+                                                          .read<
+                                                              DetailEventCubit>()
+                                                          .event
+                                                          .id,
+                                                      context
+                                                          .read<LoginCubit>()
+                                                          .user),
+                                            },
+                                        child: const Text("Rejoindre",
+                                            style: TextStyle(
+                                                color: CustomColorScheme
+                                                    .customOnSecondary)))
+                                    : ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.yellow),
+                                        onPressed: () => {
+                                              context
+                                                  .read<DetailEventCubit>()
+                                                  .unsubscribe(
+                                                      context
+                                                          .read<
+                                                              DetailEventCubit>()
+                                                          .event
+                                                          .id,
+                                                      context
+                                                          .read<LoginCubit>()
+                                                          .user),
+                                            },
+                                        child: const Text("Rejoint",
+                                            style: TextStyle(
+                                                color: CustomColorScheme
+                                                    .customOnSecondary))),
                               const Spacer(),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  if (context
-                                          .read<DetailEventCubit>()
-                                          .event
-                                          .promoter !=
-                                      "")
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                            "Par ${context.read<DetailEventCubit>().event.promoter}",
-                                            style: const TextStyle(
-                                                color: CustomColorScheme
-                                                    .customOnSecondary)),
-                                        const SizedBox(width: 10),
-                                        ProfilePictureUtils
-                                            .getEventPromoterProfilePicWidget(
-                                                context),
-                                      ],
-                                    ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                          "Par ${context.read<DetailEventCubit>().event.promoter}",
+                                          style: const TextStyle(
+                                              color: CustomColorScheme
+                                                  .customOnSecondary)),
+                                      const SizedBox(width: 10),
+                                      ProfilePictureUtils
+                                          .getEventPromoterProfilePicWidget(
+                                              context),
+                                    ],
+                                  ),
                                 ],
                               ),
                               if (context
