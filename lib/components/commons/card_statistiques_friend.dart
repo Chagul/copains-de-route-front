@@ -39,15 +39,16 @@ class CardStatistiquesFriend extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
+                BlocProvider.of<LoginCubit>(context).refreshUser();
                 Navigator.of(context).pop();
               },
             ),
-             Text(
+            Text(
               "${friend.login}",
               style: const TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
-                color:  Color.fromARGB(255, 77, 76, 76),
+                color: Color.fromARGB(255, 77, 76, 76),
               ),
             ),
             const SizedBox(height: 15),
@@ -62,10 +63,12 @@ class CardStatistiquesFriend extends StatelessWidget {
                 children: [
                   _buildStatRow(Icons.directions_bike,
                       "A participé ${friend.numberEventsParticipated} événements"),
+                  _buildStatRow(Icons.pin_drop,
+                      "A créé à ${friend.numberEventsCreated} événements"),
                   _buildStatRow(
-                      Icons.pin_drop, "A créé à ${friend.numberEventsCreated} événements"),
-                  _buildStatRow(Icons.map, "A parcouru à ${friend.distanceTraveled} km"),
-                  _buildStatRow(Icons.co2, "A économisé ${friend.co2NotEmitted} g de CO2"),
+                      Icons.map, "A parcouru à ${friend.distanceTraveled} km"),
+                  _buildStatRow(Icons.co2,
+                      "A économisé ${friend.co2NotEmitted} g de CO2"),
                 ],
               ),
             ),

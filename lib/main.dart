@@ -38,8 +38,8 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
             theme: ThemeData(colorScheme: const CustomColorScheme()),
             home: BlocBuilder<LoginCubit, LoginState>(
-               buildWhen: (previous, current) {
-                return current is! UserRefreshState && current is! AddFriendState;
+              buildWhen: (previous, current) {
+                return current is! UserRefreshState && current is! FriendState;
               },
               builder: (context, state) {
                 if (state is TokenValidState) {
