@@ -45,20 +45,51 @@ class FriendList extends StatelessWidget {
                 const Text("Ma liste d'amis",
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => BlocProvider<AddFriendCubit>(
-                                    create: (context) =>
-                                        AddFriendCubit(AddFriendInitialState()),
-                                    child: const AddFriend())));
-                      }),
-                ),
+                if (BlocProvider.of<LoginCubit>(context)
+                    .pendingRequests
+                    .isEmpty)
+                  Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        BlocProvider<AddFriendCubit>(
+                                            create: (context) => AddFriendCubit(
+                                                AddFriendInitialState()),
+                                            child: const AddFriend())));
+                          },
+                          icon: const Icon(Icons.add)))
+                else
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => BlocProvider<AddFriendCubit>(
+                                      create: (context) => AddFriendCubit(
+                                          AddFriendInitialState()),
+                                      child: const AddFriend())));
+                        },
+                        icon: Stack(
+                          children: [
+                            const Icon(Icons.add),
+                            Positioned(
+                                top: -5.0,
+                                right: -1,
+                                child: Container(
+                                    decoration: const BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle),
+                                    child: Text(
+                                        "${BlocProvider.of<LoginCubit>(context).pendingRequests.length}"))),
+                          ],
+                        )),
+                  ),
               ],
             ),
             const SizedBox(height: 20),
