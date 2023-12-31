@@ -32,7 +32,9 @@ class SettingsProfilPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 InkWell(
-                  onTap: () => {print("change avatar")},
+                  onTap: () => {
+                    ("change avatar")
+                    },
                   child: const CircleAvatar(
                     radius: 50,
                     backgroundColor: CustomColorScheme.customPrimaryColor,

@@ -108,4 +108,22 @@ class LoginCubit extends Cubit<LoginState> {
             {emit(UserRefreshedFailState())}
         });
   }
+
+  void getFriendInfo(String login) async {
+    var resp = await CopainsDeRouteApi().getFriendInfo(login);
+    if (resp.statusCode == 200) {
+      UserDTO user = UserDTO(
+          login: resp.data["login"],
+          distanceTraveled: resp.data["distanceTraveled"],
+          co2NotEmitted: resp.data["co2NotEmitted"],
+          numberEventsCreated: resp.data["numberEventsCreated"],
+          numberEventsParticipated: resp.data["numberEventsParticipated"],
+          profilePicLocation: "",
+          addedFriends: [],
+          sentFriends: []);
+      emit(FriendInfoLoadedState(user));
+    } else {
+      emit(FriendInfoErrorState());
+    }
+  }
 }

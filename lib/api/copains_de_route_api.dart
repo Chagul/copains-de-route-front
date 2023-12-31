@@ -231,6 +231,18 @@ class CopainsDeRouteApi {
     }
   }
 
+  Future<Response> getFriendInfo (String login) async {
+    String? token = await _getToken();
+    try {
+      var response = await _dio.get("/users/$login",
+          options:
+          Options(headers: {'Authorization': _getAuthorization(token)}));
+      return response;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
   Future<Response> updateUser(String newLogin) async {
     try {
       String? token = await _getToken();
