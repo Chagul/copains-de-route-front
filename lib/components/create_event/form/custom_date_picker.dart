@@ -34,6 +34,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
             onTap: () async {
               DateTime? eventDate = await showDatePicker(
                   context: context,
+                  locale: const Locale("fr", "FR"),
                   initialDate: DateTime.now(),
                   firstDate: DateTime.now(),
                   lastDate: DateTime.now().add(const Duration(days: 365)),

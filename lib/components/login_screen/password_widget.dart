@@ -35,7 +35,7 @@ class PasswordWidgetState extends State<PasswordWidget> {
           },
           obscureText: true,
           decoration: InputDecoration(
-            border: OutlineInputBorder(
+            border: UnderlineInputBorder(
               borderRadius: BorderRadius.circular(5.0),
             ),
             filled: true,

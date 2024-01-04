@@ -31,7 +31,7 @@ class _EmailWidgetState extends State<EmailWidget> {
       controller: _controller,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
+        border: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(5.0),
         ),
         filled: true,

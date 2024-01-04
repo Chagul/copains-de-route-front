@@ -77,6 +77,7 @@ class RouteInfosMoreInfos extends StatelessWidget {
     return Row(
       children: [
         Icon(icon, color: iconColor),
+        const SizedBox(width: 10),
         Flexible(
             child: Text(
           text,

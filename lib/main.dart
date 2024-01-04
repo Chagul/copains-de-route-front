@@ -10,6 +10,7 @@ import 'package:copains_de_route/views/my_events_page.dart';
 import 'package:copains_de_route/views/profil_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
@@ -35,6 +36,13 @@ class _MyAppState extends State<MyApp> {
     return BlocProvider(
         create: (context) => PositionCubit()..initPosition(),
         child: MaterialApp(
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate
+            ],
+            supportedLocales: const [
+              Locale('en'),
+              Locale('fr')
+            ],
             theme: ThemeData(colorScheme: const CustomColorScheme()),
             home: BlocBuilder<LoginCubit, LoginState>(
               buildWhen: (previous, current) {

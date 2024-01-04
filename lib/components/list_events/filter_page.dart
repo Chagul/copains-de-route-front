@@ -101,7 +101,7 @@ class FilterPage extends StatelessWidget {
                                                         fillColor: Colors.white,
                                                         filled: true,
                                                         border:
-                                                            OutlineInputBorder(),
+                                                            UnderlineInputBorder(),
                                                         labelText: "Min",
                                                         labelStyle: TextStyle(
                                                             color: CustomColorScheme
@@ -127,7 +127,7 @@ class FilterPage extends StatelessWidget {
                                                         fillColor: Colors.white,
                                                         filled: true,
                                                         border:
-                                                            OutlineInputBorder(),
+                                                            UnderlineInputBorder(),
                                                         labelText: "Max",
                                                         labelStyle: TextStyle(
                                                             color: CustomColorScheme
@@ -233,7 +233,7 @@ class FilterPage extends StatelessWidget {
                                         )),
                                     const SizedBox(height: 20),
                                     const CustomCategoryTitle(
-                                        name: "Type de route"),
+                                        name: "Type de vélo"),
                                     Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Row(
@@ -311,7 +311,7 @@ class FilterPage extends StatelessWidget {
                                             ])),
                                     const SizedBox(height: 20),
                                     const CustomCategoryTitle(
-                                        name: "Visbilité"),
+                                        name: "Visibilité"),
                                     Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Row(
