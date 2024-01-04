@@ -33,7 +33,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         BlocProvider.of<LoginCubit>(context).loginField = value;
       },
       decoration: InputDecoration(
-        border: OutlineInputBorder(
+        border: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(5.0),
         ),
         filled: true,

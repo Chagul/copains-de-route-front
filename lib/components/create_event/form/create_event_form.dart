@@ -73,6 +73,8 @@ class CreateEventForm extends StatelessWidget {
                                   ],
                                   decoration: const InputDecoration(
                                     labelText: "Nom de l'événement",
+                                    fillColor: Colors.white,
+                                    filled: true,
                                   ),
                                   textColor: MaterialStateColor.resolveWith(
                                       (states) =>
@@ -84,6 +86,7 @@ class CreateEventForm extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: DateTimeFieldBlocBuilder(
+                                        locale: const Locale("fr", "FR"),
                                         dateTimeFieldBloc: formBloc.eventDate,
                                         format: DateFormat('yyyy-MM-dd'),
                                         initialDate: today,
@@ -91,6 +94,8 @@ class CreateEventForm extends StatelessWidget {
                                         lastDate: DateTime(today.year + 1,
                                             today.month, today.day),
                                         decoration: const InputDecoration(
+                                          fillColor: Colors.white,
+                                          filled: true,
                                           labelText: 'Date',
                                           prefixIcon:
                                               Icon(Icons.calendar_today),
@@ -101,12 +106,19 @@ class CreateEventForm extends StatelessWidget {
                                                     .customOnSecondary),
                                       ),
                                     ),
+                                    const VerticalDivider(
+                                      color: Colors.black,
+                                      thickness: 1,
+                                    ),
                                     Expanded(
                                       child: TimeFieldBlocBuilder(
+                                        locale: const Locale("fr", "FR"),
                                         timeFieldBloc: formBloc.eventTime,
                                         format: DateFormat('HH:mm'),
                                         initialTime: TimeOfDay.now(),
                                         decoration: const InputDecoration(
+                                          fillColor: Colors.white,
+                                          filled: true,
                                           labelText: 'Heure',
                                           prefixIcon: Icon(Icons.access_time),
                                         ),
@@ -120,6 +132,8 @@ class CreateEventForm extends StatelessWidget {
                                   minLines: 5,
                                   maxLines: 10,
                                   decoration: const InputDecoration(
+                                    fillColor: Colors.white,
+                                    filled: true,
                                     labelText: "Description",
                                   ),
                                 ),
@@ -129,6 +143,8 @@ class CreateEventForm extends StatelessWidget {
                                   keyboardType: TextInputType.phone,
                                   decoration: const InputDecoration(
                                     labelText: "Nombre de participants max",
+                                    fillColor: Colors.white,
+                                    filled: true,
                                   ),
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.digitsOnly
@@ -239,6 +255,10 @@ class CreateEventForm extends StatelessWidget {
                                           SizedBox(
                                             width: 60,
                                             child: SwitchFieldBlocBuilder(
+                                              trackColor:
+                                                  MaterialStateProperty.all(
+                                                      CustomColorScheme
+                                                          .customPrimaryColor),
                                               booleanFieldBloc:
                                                   formBloc.eventIsPublic,
                                               body: const SizedBox(),
@@ -317,6 +337,11 @@ class CreateEventForm extends StatelessWidget {
                                         ),
                                         ElevatedButton(
                                           onPressed: formBloc.submit,
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      CustomColorScheme
+                                                          .customSecondaryColor)),
                                           child: const Text('Confirmer'),
                                         ),
                                       ]),

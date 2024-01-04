@@ -75,7 +75,7 @@ class CommentSectionContent extends StatelessWidget {
             decoration: InputDecoration(
               fillColor: Colors.white,
               filled: true,
-              border: const OutlineInputBorder(),
+              border: const UnderlineInputBorder(),
               labelText: "Postez votre commentaire ...",
               labelStyle: const TextStyle(
                 color: CustomColorScheme.customOnSecondary,

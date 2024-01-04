@@ -14,7 +14,7 @@ class EventCard extends StatelessWidget {
 
   TextStyle _getTitleTextStyle() {
     return const TextStyle(
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: FontWeight.bold,
         color: CustomColorScheme.customOnSecondary);
   }
@@ -37,62 +37,45 @@ class EventCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
             side: const BorderSide(color: CustomColorScheme.customOnSecondary),
             borderRadius: BorderRadius.circular(10.0)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: Column(
           children: [
-            const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Icon(Icons.event)],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "${event.name} - ${event.distance} km",
-                  style: _getTitleTextStyle(),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
+            ListTile(
+              leading: const Icon(Icons.event),
+              title: Center(
+                child: Text("${event.name} - ${event.distance} km",
+                    style: _getTitleTextStyle()),
+              ),
+              subtitle: Column(children: [
                 Text(
                   "Organisé par ${event.promoter}",
                   style: _getNormalTextStyle(),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Text(
                   "Le ${event.startDate} à ${event.startTime}",
                   style: _getNormalTextStyle(),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
                 Text(
                   "${event.participants.length} / ${event.maxParticipants} participants",
                   style: _getNormalTextStyle(),
                 ),
-              ],
+              ]),
+              trailing: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                      return BlocProvider<DetailEventCubit>(
+                          create: (context) => DetailEventCubit(event: event)
+                            ..updateJoined(context.read<LoginCubit>().user),
+                          child: EventDetails(refreshList: refreshList));
+                    }));
+                  },
+                  icon: const Icon(
+                    Icons.arrow_forward_outlined,
+                    color: CustomColorScheme.customOnSecondary,
+                  )),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (_) {
-                        return BlocProvider<DetailEventCubit>(
-                            create: (context) => DetailEventCubit(event: event)
-                              ..updateJoined(context.read<LoginCubit>().user),
-                            child: EventDetails(refreshList: refreshList));
-                      }));
-                    },
-                    icon: const Icon(
-                      Icons.arrow_forward_outlined,
-                      color: CustomColorScheme.customOnSecondary,
-                    ))
-              ],
-            )
           ],
         ));
   }

@@ -21,7 +21,7 @@ class PasswordConfirmationWidgetState
         TextFormField(
           obscureText: true,
           decoration: InputDecoration(
-            border: OutlineInputBorder(
+            border: UnderlineInputBorder(
               borderRadius: BorderRadius.circular(5.0),
             ),
             filled: true,
@@ -39,13 +39,13 @@ class PasswordConfirmationWidgetState
           obscureText: true,
           decoration: InputDecoration(
             errorStyle: const TextStyle(color: CustomColorScheme.customError),
-            border: OutlineInputBorder(
+            border: UnderlineInputBorder(
               borderRadius: BorderRadius.circular(5.0),
             ),
             filled: true,
             fillColor: CustomColorScheme.customOnPrimary,
-            hintText: 'password',
-            labelText: 'Confirm your password',
+            hintText: 'Mot de passe',
+            labelText: 'Confirmer votre mot de passe',
           ),
           style: const TextStyle(color: Colors.black),
           validator: (value) {
