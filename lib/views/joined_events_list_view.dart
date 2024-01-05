@@ -18,7 +18,7 @@ class JoinedEventsListView extends StatelessWidget {
             .getEventsParticipated();
         return const LoadingWidget();
       }
-      if (state is ListMyEventsJoinedLoadedState) {
+      if (state is ListMyEventsJoinedLoadedState || state is ListSortedState) {
         return SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(8.0),

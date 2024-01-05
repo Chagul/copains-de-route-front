@@ -1,8 +1,8 @@
 import 'package:copains_de_route/cubit/create_event_global/create_itinerary_cubit.dart';
 import 'package:copains_de_route/cubit/create_event/event_form_cubit.dart';
 import 'package:copains_de_route/components/create_event/form/custom_category_title.dart';
+import 'package:copains_de_route/cubit/navigation/navigation_cubit.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
-import 'package:copains_de_route/views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
@@ -48,11 +48,7 @@ class CreateEventForm extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("L'événement a été créé")));
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomePage()),
-                            (r) => false);
+                        BlocProvider.of<NavigationCubit>(context).navigateTo(1);
                       },
                       onFailure: (context, state) {
                         ScaffoldMessenger.of(context).showSnackBar(

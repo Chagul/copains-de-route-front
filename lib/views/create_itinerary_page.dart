@@ -20,6 +20,6 @@ class CreateItineraryPage extends StatelessWidget {
       BlocProvider<MapCreateItineraryCubit>(
         create: (context) => MapCreateItineraryCubit(),
       )
-    ], child: const MapWithBottomWidget());
+    ], child: const Scaffold(body: MapWithBottomWidget()));
   }
 }
