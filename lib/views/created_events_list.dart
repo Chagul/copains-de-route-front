@@ -17,7 +17,7 @@ class CreatedEventsListView extends StatelessWidget {
         BlocProvider.of<ListMyEventsCubit>(context).getMyEvents();
         return const LoadingWidget();
       }
-      if (state is ListMyEventsLoadedState) {
+      if (state is ListMyEventsLoadedState || state is ListSortedState) {
         return SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
