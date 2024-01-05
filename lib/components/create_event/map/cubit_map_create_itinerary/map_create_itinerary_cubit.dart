@@ -125,10 +125,12 @@ class MapCreateItineraryCubit extends Cubit<MapCreateItineraryState> {
         markerEndInit = false;
         alternative = true;
         clearSteps();
-        selectedWidget = 1;
         if (markerStart == null || markerEnd == null) {
           emit(DisplayWarning("Le départ ou l'arrivée ne peut pas être vide"));
+          break;
         }
+        selectedWidget = 1;
+
       case SubComponentCreateItineraryPage.drawItineraryWidget:
         markerStepsInit = true;
         selectedWidget = 2;
