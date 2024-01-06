@@ -21,6 +21,7 @@ class CreateAccount extends StatefulWidget {
 
 class CreateAccountState extends State<CreateAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
   File? _image;
 
   Future getImage() async {
@@ -121,7 +122,7 @@ class CreateAccountState extends State<CreateAccount> {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      const EmailWidget(),
+                       EmailWidget(controller : emailController),
                       const SizedBox(height: 20),
                       const LoginWidget(),
                       const SizedBox(height: 20),
