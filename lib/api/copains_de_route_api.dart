@@ -260,8 +260,7 @@ class CopainsDeRouteApi {
   Future<Response> sendResetPasswordLink (String email) {
     try {
       var resp = _dio.post(
-        "/users/sendEmail",
-        queryParameters: {'email': email},
+        "/users/sendEmail/$email",
         options: Options(validateStatus: (status) {
           return status == 200;
         }),
