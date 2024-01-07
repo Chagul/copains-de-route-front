@@ -112,12 +112,10 @@ class LoginCubit extends Cubit<LoginState> {
 
     var resp = CopainsDeRouteApi().sendResetPasswordLink(email);
     resp.then((value) => {
-      if (value.statusCode == 200)
-        {
+      if (value.statusCode == 200){
           emit(ResetPasswordLinkSentState())
         }
-      else
-        {
+      else if (value.statusCode == 404){
           emit(ResetPasswordLinkFailedState())
         }
     });

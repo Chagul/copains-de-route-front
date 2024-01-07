@@ -262,7 +262,7 @@ class CopainsDeRouteApi {
       var resp = _dio.post(
         "/users/sendEmail/$email",
         options: Options(validateStatus: (status) {
-          return status == 200;
+          return status == 200 || status == 404;
         }),
       );
       return resp;

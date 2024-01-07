@@ -28,12 +28,13 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CustomColorScheme.customPrimaryColor,
-      body: BlocBuilder<LoginCubit, LoginState>(
-        builder: (context, state) {
+      body: BlocConsumer<LoginCubit, LoginState>(
+        listener: (context, state) {
           if (state is ResetPasswordLinkSentState) {
             _showSnackBar(context);
           }
-
+        },
+        builder: (context, state) {
           return SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -99,29 +100,29 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
   }
 
   void _showSnackBar(BuildContext context) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text(
-          'Un email vous a été envoyé pour réinitialiser votre mot de passe',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            'Un email vous a été envoyé pour réinitialiser votre mot de passe',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          backgroundColor: Colors.white.withOpacity(0.5),
+          duration: const Duration(seconds: 5),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          margin: const EdgeInsets.all(8.0),
         ),
-        backgroundColor: Colors.white.withOpacity(0.5),
-        duration: const Duration(seconds: 5),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        margin: const EdgeInsets.all(8.0),
-      ),
-    );
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const LoginScreen()),
-    );
-  });
-}
+      );
 
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+    });
+  }
 }
