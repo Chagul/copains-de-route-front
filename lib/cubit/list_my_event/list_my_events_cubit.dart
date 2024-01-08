@@ -50,36 +50,48 @@ class ListMyEventsCubit extends Cubit<ListMyEventsState> {
         });
   }
 
+  void deletedEvent(int eventId) {
+    emit(ListSortingState());
+    myEvents.eventList.removeWhere((element) => element.id == eventId);
+    emit(ListSortedState(data: myEvents));
+  }
+
   void sortEventsByDistance() {
     emit(ListSortingState());
 
-    var (resSortedByDistance, resDataDisplayed) =
+    var (resSortedByDistance, resmyEvents) =
         SortUtils().sortByDistance(myEvents, sortedByDistance);
 
     sortedByDistance = resSortedByDistance;
-    myEvents = resDataDisplayed;
+    sortedByDate = !sortedByDistance;
+    sortedByParticipants = !sortedByDistance;
+    myEvents = resmyEvents;
 
     emit(ListSortedState(data: myEvents));
   }
 
   void sortEventsByParticipants() {
     emit(ListSortingState());
-    var (resSortedByParticipants, resDataDisplayed) =
+    var (resSortedByParticipants, resmyEvents) =
         SortUtils().sortByParticipants(myEvents, sortedByParticipants);
 
     sortedByParticipants = resSortedByParticipants;
-    myEvents = resDataDisplayed;
+    sortedByDate = !sortedByParticipants;
+    sortedByDistance = !sortedByParticipants;
+    myEvents = resmyEvents;
 
     emit(ListSortedState(data: myEvents));
   }
 
   void sortEventsByDate() {
     emit(ListSortingState());
-    var (resSortedByDate, resDataDisplayed) =
+    var (resSortedByDate, resmyEvents) =
         SortUtils().sortByDate(myEvents, sortedByDate);
 
     sortedByDate = resSortedByDate;
-    myEvents = resDataDisplayed;
+    sortedByParticipants = !sortedByDate;
+    sortedByDistance = !sortedByDate;
+    myEvents = resmyEvents;
 
     emit(ListSortedState(data: myEvents));
   }

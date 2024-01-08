@@ -19,13 +19,13 @@ class RouteInfosMoreInfos extends StatelessWidget {
                   children: [
                     IconButton(
                         onPressed: () => Navigator.pop(context),
-                        icon:
-                            const Icon(Icons.arrow_back, color: Colors.black)),
+                        icon: const Icon(Icons.arrow_back,
+                            color: CustomColorScheme.customOnSurface)),
                     Text(event.name,
                         style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black))
+                            color: CustomColorScheme.customOnSurface))
                   ],
                 ),
                 Expanded(
@@ -91,20 +91,24 @@ class RouteInfosMoreInfos extends StatelessWidget {
   Widget _buildDescription() {
     return Row(
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Text("Description : ",
-                style: TextStyle(
-                    fontSize: 14,
-                    color: CustomColorScheme.customOnSecondary,
-                    fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
-            Text(event.description,
-                style: const TextStyle(
-                    fontSize: 14, color: CustomColorScheme.customOnSecondary))
-          ],
-        )
+        Flexible(
+            child: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text("Description : ",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: CustomColorScheme.customOnSecondary,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
+                    Text(event.description,
+                        style: const TextStyle(
+                            fontSize: 14,
+                            color: CustomColorScheme.customOnSecondary))
+                  ],
+                )))
       ],
     );
   }

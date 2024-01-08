@@ -48,7 +48,8 @@ class EventListView extends StatelessWidget {
                   child: Padding(
                       padding: const EdgeInsets.only(right: 8.0, top: 8.0),
                       child: TextField(
-                        style: const TextStyle(color: Colors.black),
+                        style: const TextStyle(
+                            color: CustomColorScheme.customOnSurface),
                         onSubmitted: (text) {
                           context
                               .read<ListEventCubit>()
@@ -81,7 +82,8 @@ class EventListView extends StatelessWidget {
                                 ? Colors.lightBlue
                                 : Colors.white,
                         padding: const EdgeInsets.all(5.0),
-                        side: const BorderSide(color: Colors.black)),
+                        side: const BorderSide(
+                            color: CustomColorScheme.customOnSurface)),
                     onPressed: () {
                       context.read<ListEventCubit>().sortEventsByDate();
                     },
@@ -93,7 +95,8 @@ class EventListView extends StatelessWidget {
                               ? Colors.lightBlue
                               : Colors.white,
                       padding: const EdgeInsets.all(5.0),
-                      side: const BorderSide(color: Colors.black),
+                      side: const BorderSide(
+                          color: CustomColorScheme.customOnSurface),
                     ),
                     onPressed: () {
                       context.read<ListEventCubit>().sortEventsByDistance();
@@ -106,7 +109,8 @@ class EventListView extends StatelessWidget {
                               ? Colors.lightBlue
                               : Colors.white,
                       padding: const EdgeInsets.all(5.0),
-                      side: const BorderSide(color: Colors.black),
+                      side: const BorderSide(
+                          color: CustomColorScheme.customOnSurface),
                     ),
                     onPressed: () {
                       context.read<ListEventCubit>().sortEventsByParticipants();
@@ -120,7 +124,8 @@ class EventListView extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       padding: const EdgeInsets.all(5.0),
-                      side: const BorderSide(color: Colors.black),
+                      side: const BorderSide(
+                          color: CustomColorScheme.customOnSurface),
                     ),
                     onPressed: () {
                       Navigator.of(context)
@@ -140,7 +145,8 @@ class EventListView extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       padding: const EdgeInsets.all(5.0),
-                      side: const BorderSide(color: Colors.black),
+                      side: const BorderSide(
+                          color: CustomColorScheme.customOnSurface),
                     ),
                     onPressed: () {
                       context.read<ListEventCubit>().resetFilter();

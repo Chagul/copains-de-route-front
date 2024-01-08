@@ -29,7 +29,7 @@ class PasswordConfirmationWidgetState
             hintText: 'Mot de passe',
             labelText: 'Mot de passe',
           ),
-          style: const TextStyle(color: Colors.black),
+          style: const TextStyle(color: CustomColorScheme.customOnSurface),
           onChanged: (value) {
             _password = value;
           },
@@ -47,13 +47,13 @@ class PasswordConfirmationWidgetState
             hintText: 'Mot de passe',
             labelText: 'Confirmer votre mot de passe',
           ),
-          style: const TextStyle(color: Colors.black),
+          style: const TextStyle(color: CustomColorScheme.customOnSurface),
           validator: (value) {
             if (value != _password) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: const Text(
-                    'Les mots de passe ne correspondent pas',
+                    'Les mots de passe ne correspondent pas.',
                     style: TextStyle(
                         color: CustomColorScheme.customError,
                         fontWeight: FontWeight.bold),
@@ -65,7 +65,7 @@ class PasswordConfirmationWidgetState
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
-                  margin: const EdgeInsets.all(.0),
+                  margin: const EdgeInsets.only(bottom: 10.0),
                 ),
               );
               return 'Mot de passe invalide';

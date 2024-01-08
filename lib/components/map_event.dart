@@ -8,6 +8,7 @@ import 'package:copains_de_route/cubit/list_event/list_events_state.dart';
 import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/cubit/position/position_cubit.dart';
 import 'package:copains_de_route/cubit/position/position_state.dart';
+import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,63 +75,63 @@ class MapEventState extends State<MapEvent> {
               child: Scaffold(
                   body: Column(children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                     onPressed: () => {
                           BlocProvider.of<ListEventCubit>(context).getEvents(),
                           Navigator.pop(context)
                         },
-                    icon: const Icon(Icons.arrow_back, color: Colors.black)),
+                    icon: const Icon(Icons.arrow_back,
+                        color: CustomColorScheme.customOnSurface)),
+                const Text("Retour à la liste"),
+                IconButton(
+                    onPressed: () => {
+                          BlocProvider.of<ListEventCubit>(context)
+                              .getEventsAround(
+                            mapController,
+                          ),
+                        },
+                    icon: const Icon(Icons.refresh))
               ],
             ),
             Flexible(
-                child: Stack(children: [
-              GoogleMap(
-                onMapCreated: onMapCreated,
-                initialCameraPosition: CameraPosition(
-                  target: BlocProvider.of<PositionCubit>(context).position,
-                  zoom: 11,
-                ),
-                markers: {
-                  if (stateListEvent is ListAllEventsLoadedState ||
-                      stateListEvent is ListEventsAroundLoadedState)
-                    ...BlocProvider.of<ListEventCubit>(context)
-                        .dataDisplayed
-                        .eventList
-                        .map((e) => Marker(
-                            flat: false,
-                            icon: e.visibility == "PRIVATE"
-                                ? markerIconPrivate
-                                : markerIconPublic,
-                            markerId: MarkerId(e.id.toString()),
-                            position: LatLng(
-                                e.steps[0].latitude, e.steps[0].longitude),
-                            infoWindow: InfoWindow(
-                                title: e.name,
-                                snippet: e.description,
-                                onTap: () => Navigator.of(context)
-                                        .push(MaterialPageRoute(builder: (_) {
-                                      return BlocProvider<DetailEventCubit>(
-                                          create: (context) =>
-                                              DetailEventCubit(event: e)
-                                                ..updateJoined(context
-                                                    .read<LoginCubit>()
-                                                    .user),
-                                          child: EventDetails(
-                                              refreshList: () => {}));
-                                    })))))
-                        .toSet(),
-                },
+                child: GoogleMap(
+              onMapCreated: onMapCreated,
+              initialCameraPosition: CameraPosition(
+                target: BlocProvider.of<PositionCubit>(context).position,
+                zoom: 11,
               ),
-              IconButton(
-                  onPressed: () => {
-                        BlocProvider.of<ListEventCubit>(context)
-                            .getEventsAround(
-                          mapController,
-                        ),
-                      },
-                  icon: const Icon(Icons.refresh))
-            ]))
+              markers: {
+                if (stateListEvent is ListAllEventsLoadedState ||
+                    stateListEvent is ListEventsAroundLoadedState)
+                  ...BlocProvider.of<ListEventCubit>(context)
+                      .dataDisplayed
+                      .eventList
+                      .map((e) => Marker(
+                          flat: false,
+                          icon: e.visibility == "PRIVATE"
+                              ? markerIconPrivate
+                              : markerIconPublic,
+                          markerId: MarkerId(e.id.toString()),
+                          position:
+                              LatLng(e.steps[0].latitude, e.steps[0].longitude),
+                          infoWindow: InfoWindow(
+                              title: e.name,
+                              snippet: e.description,
+                              onTap: () => Navigator.of(context)
+                                      .push(MaterialPageRoute(builder: (_) {
+                                    return BlocProvider<DetailEventCubit>(
+                                        create: (context) => DetailEventCubit(
+                                            event: e)
+                                          ..updateJoined(
+                                              context.read<LoginCubit>().user),
+                                        child: EventDetails(
+                                            refreshList: () => {}));
+                                  })))))
+                      .toSet(),
+              },
+            ))
           ])));
         });
       }

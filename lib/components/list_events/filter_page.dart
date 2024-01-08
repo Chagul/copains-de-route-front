@@ -20,12 +20,13 @@ class FilterPage extends StatelessWidget {
         children: [
           IconButton(
               onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back, color: Colors.black)),
+              icon: const Icon(Icons.arrow_back,
+                  color: CustomColorScheme.customOnSurface)),
           const Text("Filtres",
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black))
+                  color: CustomColorScheme.customOnSurface))
         ],
       ),
       BlocBuilder<FilterFormCubit, FilterFormState>(builder: (context, state) {
@@ -40,7 +41,9 @@ class FilterPage extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                     side: const BorderSide(
-                                        color: Colors.black, width: 1)),
+                                        color:
+                                            CustomColorScheme.customOnSurface,
+                                        width: 1)),
                                 color: CustomColorScheme.customSurface,
                                 child: Column(
                                   children: [

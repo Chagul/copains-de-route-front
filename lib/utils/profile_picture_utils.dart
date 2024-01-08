@@ -59,7 +59,7 @@ class ProfilePictureUtils {
               child: Icon(
                 Icons.person,
                 size: 50,
-                color: Colors.black,
+                color: CustomColorScheme.customOnSurface,
               )));
     }
   }
@@ -98,7 +98,7 @@ class ProfilePictureUtils {
               radius: 15,
               child: Icon(
                 Icons.person,
-                color: Colors.black,
+                color: CustomColorScheme.customOnSurface,
               )));
     }
   }

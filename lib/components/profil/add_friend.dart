@@ -77,7 +77,9 @@ class AddFriend extends StatelessWidget {
                 child: TextField(
                   controller: cubitFriend.loginToAdd,
                   decoration: const InputDecoration(
-                      filled: true, fillColor: Colors.white, hintText: "Login"),
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: "Identifiant"),
                 ),
               ),
               ElevatedButton(
@@ -85,7 +87,7 @@ class AddFriend extends StatelessWidget {
                       backgroundColor: CustomColorScheme.customSecondaryColor),
                   child: const Text(
                     "Envoyer une demande d'ami",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: CustomColorScheme.customOnSurface),
                   ),
                   onPressed: () {
                     cubitFriend.addFriend();
@@ -95,7 +97,7 @@ class AddFriend extends StatelessWidget {
               const Divider(
                 indent: 50,
                 endIndent: 50,
-                color: Colors.black,
+                color: CustomColorScheme.customOnSurface,
               ),
               const SizedBox(height: 20),
               const Text(
@@ -115,7 +117,8 @@ class AddFriend extends StatelessWidget {
                         padding: const EdgeInsets.all(10.0),
                         child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
+                              border: Border.all(
+                                  color: CustomColorScheme.customOnSurface),
                             ),
                             child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),

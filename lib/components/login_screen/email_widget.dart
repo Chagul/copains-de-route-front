@@ -29,9 +29,9 @@ class _EmailWidgetState extends State<EmailWidget> {
         filled: true,
         fillColor: CustomColorScheme.customOnPrimary,
         hintText: 'you@copainderoute.com',
-        labelText: 'Email',
+        labelText: 'Adresse mail',
       ),
-      style: const TextStyle(color: Colors.black),
+      style: const TextStyle(color: CustomColorScheme.customOnSurface),
       validator: (value) {
         if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
             .hasMatch(value!)) {
@@ -53,7 +53,7 @@ class _EmailWidgetState extends State<EmailWidget> {
               margin: const EdgeInsets.all(10.0),
             ),
           );
-          return 'Email invalide';
+          return 'Adresse mail invalide';
         } else {
           BlocProvider.of<LoginCubit>(context).registerEmailField = value;
           return null;

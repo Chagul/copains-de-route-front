@@ -1,5 +1,6 @@
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_cubit.dart';
 import 'package:copains_de_route/components/create_event/map/cubit_map_create_itinerary/map_create_itinerary_state.dart';
+import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/utils/enum_subcomponent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +41,8 @@ class AddStepsItinerary extends StatelessWidget {
                                   },
                               child: const Text(
                                 "Calculer un itinéraire",
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(
+                                    color: CustomColorScheme.customOnSurface),
                               ))
                         ])),
                     Expanded(
@@ -62,7 +64,8 @@ class AddStepsItinerary extends StatelessWidget {
                                   },
                               child: const Text(
                                 "Retour",
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(
+                                    color: CustomColorScheme.customOnSurface),
                               )),
                           if (state is MapPolylinesLoaded)
                             ElevatedButton(
@@ -80,7 +83,8 @@ class AddStepsItinerary extends StatelessWidget {
                                     },
                                 child: const Text(
                                   "Confirmer",
-                                  style: TextStyle(color: Colors.black),
+                                  style: TextStyle(
+                                      color: CustomColorScheme.customOnSurface),
                                 ))
                         ])),
                   ])),
