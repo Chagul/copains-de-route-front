@@ -21,8 +21,6 @@ class ProfilePage extends StatelessWidget {
     return BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
       LoginCubit cubit = BlocProvider.of<LoginCubit>(context);
       String login = cubit.user.login;
-
-
       if (state is UserLoadingState || state is UserRefreshingState) {
         return const LoadingWidget();
       } else if (state is UserLoadedState || state is UserRefreshedState) {

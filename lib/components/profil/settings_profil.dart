@@ -210,7 +210,6 @@ class SettingsProfilPage extends StatelessWidget {
                                   message =
                                       'Votre login a été changé avec succès.';
                                   cubit.updateUser(_loginController.text);
-                                  cubit.user.login = _loginController.text;
                                 }
 
                                 if (_newPasswordController.text.isNotEmpty) {
