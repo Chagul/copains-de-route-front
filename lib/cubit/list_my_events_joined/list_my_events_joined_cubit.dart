@@ -38,8 +38,10 @@ class ListMyEventsJoinedCubit extends Cubit<ListMyEventsJoinedState> {
         SortUtils().sortByDistance(eventsJoined, sortedByDistance);
 
     sortedByDistance = resSortedByDistance;
-    sortedByDate = !sortedByDistance;
-    sortedByParticipants = !sortedByDistance;
+    if (sortedByDistance) {
+      sortedByParticipants = false;
+      sortedByDate = false;
+    }
     eventsJoined = resmyEvents;
 
     emit(ListSortedState(data: eventsJoined));
@@ -51,8 +53,10 @@ class ListMyEventsJoinedCubit extends Cubit<ListMyEventsJoinedState> {
         SortUtils().sortByParticipants(eventsJoined, sortedByParticipants);
 
     sortedByParticipants = resSortedByParticipants;
-    sortedByDate = !sortedByParticipants;
-    sortedByDistance = !sortedByParticipants;
+    if (sortedByParticipants) {
+      sortedByDate = false;
+      sortedByDistance = false;
+    }
     eventsJoined = resmyEvents;
 
     emit(ListSortedState(data: eventsJoined));
@@ -64,8 +68,10 @@ class ListMyEventsJoinedCubit extends Cubit<ListMyEventsJoinedState> {
         SortUtils().sortByDate(eventsJoined, sortedByDate);
 
     sortedByDate = resSortedByDate;
-    sortedByParticipants = !sortedByDate;
-    sortedByDistance = !sortedByDate;
+    if (sortedByDate) {
+      sortedByDistance = false;
+      sortedByParticipants = false;
+    }
     eventsJoined = resmyEvents;
 
     emit(ListSortedState(data: eventsJoined));
