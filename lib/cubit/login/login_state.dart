@@ -1,8 +1,6 @@
 import 'package:copains_de_route/model/user_dto.dart';
 
-abstract class LoginState {
-  
-}
+abstract class LoginState {}
 
 abstract class UserRefreshState extends LoginState {}
 
@@ -40,11 +38,14 @@ class UserLoadedFailed extends LoginState {}
 
 class UserRefreshingState extends UserRefreshState {}
 
-class UserRefreshedState extends UserRefreshState {}
+class UserRefreshedState extends UserRefreshState {
+  String message = "Votre profil a été mis à jour";
+}
 
 class UserRefreshedFailState extends UserRefreshState {}
 
- abstract class FriendState extends LoginState {}
+abstract class FriendState extends LoginState {}
+
 class FriendInfoLoadedState extends FriendState {
   final UserDTO friend;
   FriendInfoLoadedState(this.friend);

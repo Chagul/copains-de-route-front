@@ -113,20 +113,25 @@ class LoginCubit extends Cubit<LoginState> {
                       .toList(),
               pendingRequests =
                   user.addedFriends.where((f) => f.status == "SENT").toList(),
-              emit(UserRefreshedState())
+              emit(UserRefreshedState(
+                
+              ))
             }
           else
             {emit(UserRefreshedFailState())}
         });
   }
 
-  updateUser(String login) {
+  Future<void> updateUser(String login) async {
     var response = CopainsDeRouteApi().updateUser(login);
     response.then((value) => {
           if (value.statusCode == 200){
               user = UserDTO.fromJson(value.data["user"]),
-              emit(UserLoadedState())
+              emit(
+                UserRefreshedState()
+                )
               }
+            
         });
   }
 

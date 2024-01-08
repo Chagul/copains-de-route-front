@@ -1,8 +1,8 @@
 import 'package:copains_de_route/cubit/login/login_cubit.dart';
+import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 class SettingsProfilPage extends StatelessWidget {
   SettingsProfilPage({Key? key}) : super(key: key);
 
@@ -13,8 +13,10 @@ class SettingsProfilPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LoginCubit cubit = context.read<LoginCubit>();
-    return Builder(builder: (context) {
+    return BlocBuilder<LoginCubit, LoginState>(
+      builder: (context, state) {
+        final cubit = context.read<LoginCubit>();
+
       return SafeArea(
         child: Scaffold(
           body: SingleChildScrollView(
@@ -187,55 +189,28 @@ class SettingsProfilPage extends StatelessWidget {
                               if (_formKey.currentState!.validate()) {
                                 if (_newPasswordController.text !=
                                     _confirmNewPasswordController.text) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      backgroundColor: CustomColorScheme
-                                          .customPrimaryColor
-                                          .withOpacity(0.5),
-                                      content: const Text(
-                                        'Les mots de passe ne correspondent pas',
-                                        style: TextStyle(
-                                          color:
-                                              CustomColorScheme.customOnSurface,
-                                          fontSize: 17,
-                                        ),
-                                      ),
-                                    ),
-                                  );
+                                  _buildSnackBar(
+                                      "Les mots de passe ne correspondent pas",
+                                      context);
                                   return;
                                 }
 
-                                String message = '';
                                 if (_loginController.text.isNotEmpty) {
-                                  message =
-                                      'Votre login a été changé avec succès.';
                                   cubit.updateUser(_loginController.text);
+                                  if (state is UserRefreshedState){
+                                    _buildSnackBar(
+                                      state.message, context);
                                 }
-
+                                  }
+                                  
                                 if (_newPasswordController.text.isNotEmpty) {
-                                  message =
-                                      'Un email a été envoyé à votre adresse mail pour confirmer le changement de mot de passe';
                                   _newPasswordController.clear();
                                   _confirmNewPasswordController.clear();
+                                  _buildSnackBar(
+                                      "Votre mot de passe a été modifié",
+                                      context);
                                 }
 
-                                if (message.isNotEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      backgroundColor: CustomColorScheme
-                                          .customPrimaryColor
-                                          .withOpacity(0.5),
-                                      content: Text(
-                                        message,
-                                        style: const TextStyle(
-                                          color:
-                                              CustomColorScheme.customOnSurface,
-                                          fontSize: 17,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
                                 Navigator.pop(context);
                               }
                             },
@@ -252,5 +227,20 @@ class SettingsProfilPage extends StatelessWidget {
         ),
       );
     });
+  }
+
+  void _buildSnackBar(String message, BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: CustomColorScheme.customPrimaryColor.withOpacity(0.5),
+        content: Text(
+          message,
+          style: const TextStyle(
+            color: CustomColorScheme.customOnSurface,
+            fontSize: 17,
+          ),
+        ),
+      ),
+    );
   }
 }
