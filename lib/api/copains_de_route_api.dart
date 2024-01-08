@@ -244,18 +244,24 @@ class CopainsDeRouteApi {
   }
 
   Future<Response> updateUser(String newLogin) async {
-    try {
-      String? token = await _getToken();
-      var resp = await _dio.patch(
-        "/users/me",
-        queryParameters: {'login': newLogin},
-        options: Options(headers: {'Authorization': _getAuthorization(token)}),
-      );
-      return resp;
-    } catch (e) {
-      return Future.error(e);
+  try {
+    String? token = await _getToken();
+    var resp = await _dio.patch(
+      "/users/me",
+      queryParameters: {'login': newLogin},
+      options: Options(headers: {'Authorization': _getAuthorization(token)}),
+    );
+
+    if (resp.statusCode == 200) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString("token", resp.data["login"]["token"]);
     }
+
+    return resp;
+  } catch (e) {
+    return Future.error(e);
   }
+}
 
   Future<Response> getEventsAround(GpsCoordinateDto gpsCoordinates) async {
     String? token = await _getToken();

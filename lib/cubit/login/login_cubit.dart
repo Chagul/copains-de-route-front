@@ -109,6 +109,19 @@ class LoginCubit extends Cubit<LoginState> {
         });
   }
 
+  updateUser(String login) {
+    var response = CopainsDeRouteApi().updateUser(login);
+
+    response.then((value) => {
+          if (value.statusCode == 200)
+            {
+              user = UserDTO.fromJson(value.data["user"])}
+            else
+              {}
+        });
+  }
+
+
   void getFriendInfo(String login) async {
     var resp = await CopainsDeRouteApi().getFriendInfo(login);
     if (resp.statusCode == 200) {

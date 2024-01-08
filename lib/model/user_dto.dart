@@ -5,7 +5,7 @@ part 'user_dto.g.dart';
 
 @JsonSerializable()
 class UserDTO {
-  final String login;
+ String login;
   final int numberEventsCreated;
   final int numberEventsParticipated;
   final int distanceTraveled;

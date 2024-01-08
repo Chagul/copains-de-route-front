@@ -1,5 +1,7 @@
+import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SettingsProfilPage extends StatelessWidget {
   SettingsProfilPage({Key? key}) : super(key: key);
@@ -11,6 +13,7 @@ class SettingsProfilPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LoginCubit cubit = context.read<LoginCubit>();
     return Builder(builder: (context) {
       return SafeArea(
         child: Scaffold(
@@ -205,8 +208,14 @@ class SettingsProfilPage extends StatelessWidget {
                                 }
 
                                 String message = '';
+                                if (_loginController.text.isNotEmpty){
+
                                 message =
                                     'Un email a été envoyé à votre adresse mail pour confirmer le changement de login';
+                                cubit.updateUser( _loginController.text);
+                                cubit.user.login = _loginController.text;
+
+                                }
 
                                 if (_newPasswordController.text.isNotEmpty) {
                                   message =
