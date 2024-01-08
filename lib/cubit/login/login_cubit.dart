@@ -111,13 +111,20 @@ class LoginCubit extends Cubit<LoginState> {
 
   updateUser(String login) {
     var response = CopainsDeRouteApi().updateUser(login);
-
     response.then((value) => {
-          if (value.statusCode == 200)
-            {
-              user = UserDTO.fromJson(value.data["user"])}
-            else
-              {}
+          if (value.statusCode == 200){
+              user = UserDTO.fromJson(value.data["user"]),
+              acceptedFriends = user.sentFriends
+                      .where((f) => f.status == "ACCEPTED")
+                      .toList() +
+                  user.addedFriends
+                      .where((f) => f.status == "ACCEPTED")
+                      .toList(),
+              pendingRequests =
+                  user.addedFriends.where((f) => f.status == "SENT").toList(),
+              emit(UserLoadedState())
+              
+              }
         });
   }
 

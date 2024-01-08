@@ -35,9 +35,7 @@ class SettingsProfilPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 InkWell(
-                  onTap: () => {
-                    ("change avatar")
-                    },
+                  onTap: () => {("change avatar")},
                   child: const CircleAvatar(
                     radius: 50,
                     backgroundColor: CustomColorScheme.customPrimaryColor,
@@ -208,13 +206,11 @@ class SettingsProfilPage extends StatelessWidget {
                                 }
 
                                 String message = '';
-                                if (_loginController.text.isNotEmpty){
-
-                                message =
-                                    'Un email a été envoyé à votre adresse mail pour confirmer le changement de login';
-                                cubit.updateUser( _loginController.text);
-                                cubit.user.login = _loginController.text;
-
+                                if (_loginController.text.isNotEmpty) {
+                                  message =
+                                      'Votre login a été changé avec succès.';
+                                  cubit.updateUser(_loginController.text);
+                                  cubit.user.login = _loginController.text;
                                 }
 
                                 if (_newPasswordController.text.isNotEmpty) {
@@ -241,7 +237,6 @@ class SettingsProfilPage extends StatelessWidget {
                                     ),
                                   );
                                 }
-
                                 Navigator.pop(context);
                               }
                             },
