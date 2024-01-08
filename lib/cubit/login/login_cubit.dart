@@ -64,7 +64,18 @@ class LoginCubit extends Cubit<LoginState> {
             {emit(RegisterFailedState())}
         });
   }
+  void sendResetPasswordLink (String email) {
 
+    var resp = CopainsDeRouteApi().sendResetPasswordLink(email);
+    resp.then((value) => {
+      if (value.statusCode == 200){
+          emit(ResetPasswordLinkSentState())
+        }
+      else if (value.statusCode == 404){
+          emit(ResetPasswordLinkFailedState())
+        }
+    });
+  }
   void getUser() async {
     emit(UserLoadingState());
     var resp = CopainsDeRouteApi().getUser();
@@ -146,4 +157,6 @@ class LoginCubit extends Cubit<LoginState> {
       emit(FriendInfoErrorState());
     }
   }
+
+
 }
