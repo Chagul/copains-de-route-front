@@ -35,7 +35,8 @@ class RouteInfos extends StatelessWidget {
                         const Icon(Icons.access_time,
                             color: CustomColorScheme.customOnSecondary),
                         const SizedBox(width: 5),
-                        Text("Le ${event.startDate} à ${event.startTime}",
+                        Text(
+                            "Le ${event.getDateFormated()} à ${event.startTime}",
                             style: const TextStyle(
                                 color: CustomColorScheme.customOnSecondary)),
                       ],

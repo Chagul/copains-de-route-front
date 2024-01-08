@@ -1,6 +1,7 @@
 import 'package:copains_de_route/model/comment_dto.dart';
 import 'package:copains_de_route/model/point_custom.dart';
 import 'package:copains_de_route/model/user_dto.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'event.g.dart';
@@ -51,6 +52,10 @@ class Event {
       this.route,
       this.startAddress,
       this.endAddress);
+
+  getDateFormated() {
+    return DateFormat("dd/MM/yyyy").format(DateTime.parse(startDate));
+  }
 
   getRoadTypes() {
     String roadTypes = "";
