@@ -32,9 +32,7 @@ class SettingsProfilPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 InkWell(
-                  onTap: () => {
-                    ("change avatar")
-                    },
+                  onTap: () => {("change avatar")},
                   child: const CircleAvatar(
                     radius: 50,
                     backgroundColor: CustomColorScheme.customPrimaryColor,
@@ -57,7 +55,7 @@ class SettingsProfilPage extends StatelessWidget {
                             const Align(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                "Login",
+                                "Identifiant",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
@@ -81,7 +79,7 @@ class SettingsProfilPage extends StatelessWidget {
                             const Align(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                "Email",
+                                "Adresse mail",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
@@ -182,6 +180,15 @@ class SettingsProfilPage extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomRight,
                           child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  CustomColorScheme.customSecondaryColor,
+                              foregroundColor:
+                                  CustomColorScheme.customOnSurface,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 if (_newPasswordController.text !=
@@ -192,7 +199,7 @@ class SettingsProfilPage extends StatelessWidget {
                                           .customPrimaryColor
                                           .withOpacity(0.5),
                                       content: const Text(
-                                        'Les mots de passe ne correspondent pas',
+                                        'Les mots de passe ne correspondent pas.',
                                         style: TextStyle(
                                           color:
                                               CustomColorScheme.customOnSurface,
@@ -206,11 +213,11 @@ class SettingsProfilPage extends StatelessWidget {
 
                                 String message = '';
                                 message =
-                                    'Un email a été envoyé à votre adresse mail pour confirmer le changement de login';
+                                    'Un email à été envoyé à votre adresse mail pour confirmer le changement de login';
 
                                 if (_newPasswordController.text.isNotEmpty) {
                                   message =
-                                      'Un email a été envoyé à votre adresse mail pour confirmer le changement de mot de passe';
+                                      'Un email à été envoyé à votre adresse mail pour confirmer le changement de mot de passe';
                                   _newPasswordController.clear();
                                   _confirmNewPasswordController.clear();
                                 }
@@ -218,6 +225,8 @@ class SettingsProfilPage extends StatelessWidget {
                                 if (message.isNotEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
+                                      margin:
+                                          const EdgeInsets.only(bottom: 10.0),
                                       backgroundColor: CustomColorScheme
                                           .customPrimaryColor
                                           .withOpacity(0.5),
@@ -236,7 +245,8 @@ class SettingsProfilPage extends StatelessWidget {
                                 Navigator.pop(context);
                               }
                             },
-                            child: const Text("Sauvegarder"),
+                            child: const Text("Sauvegarder",
+                                style: TextStyle(fontWeight: FontWeight.bold)),
                           ),
                         ),
                       ],

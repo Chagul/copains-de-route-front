@@ -40,7 +40,7 @@ class CardStatistiques extends StatelessWidget {
                         color: CustomColorScheme.customOnSecondary),
                     const SizedBox(width: 10),
                     Text(
-                      "A participé à $evenementJoinedNumber événement",
+                      "A participé à $evenementJoinedNumber événement(s)",
                       style: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.bold),
                     )
@@ -51,7 +51,7 @@ class CardStatistiques extends StatelessWidget {
                         color: CustomColorScheme.customOnSecondary),
                     const SizedBox(width: 10),
                     Text(
-                      "A créé à $evenementCreatedNumber événements",
+                      "A créé $evenementCreatedNumber événement(s)",
                       style: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.bold),
                     )
@@ -62,7 +62,7 @@ class CardStatistiques extends StatelessWidget {
                         color: CustomColorScheme.customOnSecondary),
                     const SizedBox(width: 10),
                     Text(
-                      "A parcouru à $kmDriven km",
+                      "A parcouru $kmDriven km",
                       style: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.bold),
                     )

@@ -25,8 +25,9 @@ class _CustomTextInputState extends State<CustomTextInput> {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
         widget.name,
-        style:
-            const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+            color: CustomColorScheme.customOnSurface,
+            fontWeight: FontWeight.bold),
       ),
       TextFormField(
         controller: widget.value,

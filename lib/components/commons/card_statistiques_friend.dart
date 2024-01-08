@@ -72,11 +72,11 @@ class CardStatistiquesFriend extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _buildStatRow(Icons.directions_bike,
-                      "A participé ${friend.numberEventsParticipated} événements"),
+                      "A participé ${friend.numberEventsParticipated} événement(s)"),
                   _buildStatRow(Icons.pin_drop,
-                      "A créé à ${friend.numberEventsCreated} événements"),
+                      "A créé ${friend.numberEventsCreated} événement(s)"),
                   _buildStatRow(
-                      Icons.map, "A parcouru à ${friend.distanceTraveled} km"),
+                      Icons.map, "A parcouru ${friend.distanceTraveled} km"),
                   _buildStatRow(Icons.co2,
                       "A économisé ${friend.co2NotEmitted} g de CO2"),
                 ],

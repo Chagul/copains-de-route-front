@@ -61,3 +61,7 @@ class PositionUserLoaded extends MapCreateItineraryState {
 class MapMarkerUpdated extends MapCreateItineraryState {}
 
 class PolylineSelected extends MapCreateItineraryState {}
+
+class PickStartState extends MapCreateItineraryState {}
+
+class PickEndState extends MapCreateItineraryState {}

@@ -100,12 +100,14 @@ class MapCreateItineraryCubit extends Cubit<MapCreateItineraryState> {
   }
 
   startPickStart() {
+    emit(PickStartState());
     markerStartInit = true;
     markerEndInit = false;
     markerStepsInit = false;
   }
 
   startPickEnd() {
+    emit(PickEndState());
     markerStartInit = false;
     markerEndInit = true;
     markerStepsInit = false;

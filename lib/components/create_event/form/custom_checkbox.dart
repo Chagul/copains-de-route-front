@@ -44,7 +44,8 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
               onChanged: (bool? change) {
                 widget.updateBoolean(change);
               }),
-          Text(widget.name, style: const TextStyle(color: Colors.black)),
+          Text(widget.name,
+              style: const TextStyle(color: CustomColorScheme.customOnSurface)),
         ],
       );
     });

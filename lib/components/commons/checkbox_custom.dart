@@ -1,3 +1,4 @@
+import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -32,7 +33,7 @@ class _CheckboxCustomState extends State<CheckboxCustom> {
       if (states.any(interactiveStates.contains)) {
         return Colors.blue;
       }
-      return Colors.black;
+      return CustomColorScheme.customOnSurface;
     }
 
     widget.value = false;
@@ -40,7 +41,8 @@ class _CheckboxCustomState extends State<CheckboxCustom> {
         builder: (BuildContext context, StateSetter setState) {
       return Row(
         children: [
-          Text(widget.name, style: const TextStyle(color: Colors.black)),
+          Text(widget.name,
+              style: const TextStyle(color: CustomColorScheme.customOnSurface)),
           Checkbox(
               value: widget.value,
               checkColor: Colors.red,

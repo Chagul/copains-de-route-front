@@ -5,7 +5,6 @@ import 'package:copains_de_route/components/event_details/participants_infos.dar
 import 'package:copains_de_route/components/event_details/route_infos.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_cubit.dart';
 import 'package:copains_de_route/cubit/detail_event/detail_event_state.dart';
-import 'package:copains_de_route/cubit/list_event/list_events_cubit.dart';
 import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:copains_de_route/utils/profile_picture_utils.dart';
@@ -19,7 +18,15 @@ class EventDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DetailEventCubit, DetailEventState>(
+    return BlocConsumer<DetailEventCubit, DetailEventState>(
+        listener: (context, state) {
+          if (state is DeleteEventSucceedState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("L'événement a été supprimé")));
+            refreshList();
+            Navigator.pop(context);
+          }
+        },
         builder: (context, state) => SafeArea(
                 child: Scaffold(
                     body: Column(
@@ -31,12 +38,18 @@ class EventDetails extends StatelessWidget {
                           onPressed: () =>
                               {refreshList(), Navigator.pop(context)},
                           icon: const Icon(Icons.arrow_back,
-                              color: Colors.black)),
-                      Text(context.read<DetailEventCubit>().event.name,
-                          style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black))
+                              color: CustomColorScheme.customOnSurface)),
+                      Flexible(
+                          child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Text(
+                                  context.read<DetailEventCubit>().event.name,
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                          CustomColorScheme.customOnSurface))))
                     ],
                   ),
                   Expanded(
@@ -137,7 +150,7 @@ class EventDetails extends StatelessWidget {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                               content: Text(
-                                                  "Modification de l'évènement ${event.name} : A venir !")));
+                                                  "Modification de l'événement ${event.name} : A venir !")));
                                     } else if (value == "Supprimer") {
                                       context
                                           .read<DetailEventCubit>()
@@ -145,14 +158,6 @@ class EventDetails extends StatelessWidget {
                                               .read<DetailEventCubit>()
                                               .event
                                               .id);
-                                      context
-                                          .read<ListEventCubit>()
-                                          .deletedEvent(context
-                                              .read<DetailEventCubit>()
-                                              .event
-                                              .id);
-                                      refreshList;
-                                      Navigator.of(context).pop();
                                     }
                                   },
                                 )

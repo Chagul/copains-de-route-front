@@ -34,33 +34,39 @@ class ListMyEventsJoinedCubit extends Cubit<ListMyEventsJoinedState> {
   void sortEventsByDistance() {
     emit(ListSortingState());
 
-    var (resSortedByDistance, resDataDisplayed) =
+    var (resSortedByDistance, resmyEvents) =
         SortUtils().sortByDistance(eventsJoined, sortedByDistance);
 
     sortedByDistance = resSortedByDistance;
-    eventsJoined = resDataDisplayed;
+    sortedByDate = !sortedByDistance;
+    sortedByParticipants = !sortedByDistance;
+    eventsJoined = resmyEvents;
 
     emit(ListSortedState(data: eventsJoined));
   }
 
   void sortEventsByParticipants() {
     emit(ListSortingState());
-    var (resSortedByParticipants, resDataDisplayed) =
+    var (resSortedByParticipants, resmyEvents) =
         SortUtils().sortByParticipants(eventsJoined, sortedByParticipants);
 
     sortedByParticipants = resSortedByParticipants;
-    eventsJoined = resDataDisplayed;
+    sortedByDate = !sortedByParticipants;
+    sortedByDistance = !sortedByParticipants;
+    eventsJoined = resmyEvents;
 
     emit(ListSortedState(data: eventsJoined));
   }
 
   void sortEventsByDate() {
     emit(ListSortingState());
-    var (resSortedByDate, resDataDisplayed) =
+    var (resSortedByDate, resmyEvents) =
         SortUtils().sortByDate(eventsJoined, sortedByDate);
 
     sortedByDate = resSortedByDate;
-    eventsJoined = resDataDisplayed;
+    sortedByParticipants = !sortedByDate;
+    sortedByDistance = !sortedByDate;
+    eventsJoined = resmyEvents;
 
     emit(ListSortedState(data: eventsJoined));
   }

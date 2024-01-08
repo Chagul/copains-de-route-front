@@ -23,7 +23,8 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
       ElevatedButton(
-          child: Text(widget.name, style: const TextStyle(color: Colors.black)),
+          child: Text(widget.name,
+              style: const TextStyle(color: CustomColorScheme.customOnSurface)),
           onPressed: () async {
             TimeOfDay? time = await showTimePicker(
                 context: context,

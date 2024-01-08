@@ -98,7 +98,7 @@ class MyAppState extends State<MyApp> {
                 AssetImage('assets/icon_my_itinerary.png'),
                 color: CustomColorScheme.customPrimaryColor,
               ),
-              label: 'Mes itinéraires',
+              label: 'Mes événements',
             ),
             NavigationDestination(
               icon: Icon(

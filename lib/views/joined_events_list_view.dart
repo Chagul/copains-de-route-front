@@ -36,7 +36,8 @@ class JoinedEventsListView extends StatelessWidget {
                                 ? Colors.lightBlue
                                 : Colors.white,
                             padding: const EdgeInsets.all(5.0),
-                            side: const BorderSide(color: Colors.black)),
+                            side: const BorderSide(
+                                color: CustomColorScheme.customOnSurface)),
                         onPressed: () {
                           context
                               .read<ListMyEventsJoinedCubit>()
@@ -51,7 +52,8 @@ class JoinedEventsListView extends StatelessWidget {
                               ? Colors.lightBlue
                               : Colors.white,
                           padding: const EdgeInsets.all(5.0),
-                          side: const BorderSide(color: Colors.black),
+                          side: const BorderSide(
+                              color: CustomColorScheme.customOnSurface),
                         ),
                         onPressed: () {
                           context
@@ -67,7 +69,8 @@ class JoinedEventsListView extends StatelessWidget {
                               ? Colors.lightBlue
                               : Colors.white,
                           padding: const EdgeInsets.all(5.0),
-                          side: const BorderSide(color: Colors.black),
+                          side: const BorderSide(
+                              color: CustomColorScheme.customOnSurface),
                         ),
                         onPressed: () {
                           context
@@ -106,7 +109,7 @@ class JoinedEventsListView extends StatelessWidget {
         );
       } else if (state is ListMyEventsJoinedNoContentState) {
         return const Center(
-          child: Text("Aucun événement participé"),
+          child: Text("Aucun événement rejoint"),
         );
       } else {
         return const LoadingWidget();

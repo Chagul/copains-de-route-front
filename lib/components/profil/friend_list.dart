@@ -79,12 +79,13 @@ class FriendList extends StatelessWidget {
                                   Icon(
                                     Icons.people,
                                     size: 60,
-                                    color: Colors.black,
+                                    color: CustomColorScheme.customOnSurface,
                                   ),
                                   SizedBox(width: 20),
                                   Text("Vos Amis",
                                       style: TextStyle(
-                                          color: Colors.black,
+                                          color:
+                                              CustomColorScheme.customOnSurface,
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           decoration:
@@ -92,29 +93,43 @@ class FriendList extends StatelessWidget {
                                 ]),
                               ),
                               Text(
-                                  "Vous avez ${BlocProvider.of<LoginCubit>(context).acceptedFriends.length} amis et ${BlocProvider.of<LoginCubit>(context).pendingRequests.length} demandes en attente.",
+                                  "Vous avez ${BlocProvider.of<LoginCubit>(context).acceptedFriends.length} ami(s) et ${BlocProvider.of<LoginCubit>(context).pendingRequests.length} demande(s) en attente.",
                                   style: const TextStyle(
-                                    color: Colors.black,
+                                    color: CustomColorScheme.customOnSurface,
                                     fontSize: 16,
                                   )),
                               const SizedBox(height: 20),
                               Container(
                                   padding: const EdgeInsets.all(10.0),
+                                  constraints: BoxConstraints(
+                                      minWidth:
+                                          MediaQuery.of(context).size.width *
+                                              0.8),
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black),
+                                    border: Border.all(
+                                        color:
+                                            CustomColorScheme.customOnSurface),
                                   ),
-                                  child: ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount:
-                                          cubitLogin.acceptedFriends.length,
-                                      itemBuilder: (context, index) {
-                                        return FriendListTile(
-                                            friend: cubitLogin
-                                                .acceptedFriends[index],
-                                            loginUser: cubitLogin.user.login);
-                                      }))
+                                  child: cubitLogin.acceptedFriends.isNotEmpty
+                                      ? ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              cubitLogin.acceptedFriends.length,
+                                          itemBuilder: (context, index) {
+                                            return FriendListTile(
+                                                friend: cubitLogin
+                                                    .acceptedFriends[index],
+                                                loginUser:
+                                                    cubitLogin.user.login);
+                                          })
+                                      : const Center(
+                                          child: Text(
+                                          "Aucun ami pour le moment ! Ajoutez en !",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ))),
                             ],
                           ),
                         )));
