@@ -60,7 +60,7 @@ class SettingsProfilPage extends StatelessWidget {
                             const Align(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                "Identifiant",
+                                "Login",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
@@ -84,7 +84,7 @@ class SettingsProfilPage extends StatelessWidget {
                             const Align(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                "Adresse mail",
+                                "Email",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
@@ -185,15 +185,6 @@ class SettingsProfilPage extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomRight,
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  CustomColorScheme.customSecondaryColor,
-                              foregroundColor:
-                                  CustomColorScheme.customOnSurface,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                            ),
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 if (_newPasswordController.text !=
@@ -223,8 +214,7 @@ class SettingsProfilPage extends StatelessWidget {
                                 Navigator.pop(context);
                               }
                             },
-                            child: const Text("Sauvegarder",
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            child: const Text("Sauvegarder"),
                           ),
                         ),
                       ],
