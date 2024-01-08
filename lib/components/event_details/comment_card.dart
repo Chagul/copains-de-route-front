@@ -42,7 +42,7 @@ class CommentCardState extends State<CommentCard> {
                                 const TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(
                             text:
-                                "le ${DateFormat("dd/MM/yyyy hh:mm").format(DateTime.parse(widget.comment.date))}"),
+                                "le ${DateFormat("dd MM yyyy hh:mm").format(DateTime.parse(widget.comment.date))}"),
                       ])),
                 ),
               ],

@@ -3,8 +3,6 @@ import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/number_symbols_data.dart';
-
 class SettingsProfilPage extends StatelessWidget {
   SettingsProfilPage({Key? key}) : super(key: key);
 
@@ -16,8 +14,10 @@ class SettingsProfilPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
-      final cubit = context.read<LoginCubit>();
+    return BlocBuilder<LoginCubit, LoginState>(
+      builder: (context, state) {
+        final cubit = context.read<LoginCubit>();
+
       return SafeArea(
         child: Scaffold(
           body: SingleChildScrollView(
@@ -80,6 +80,7 @@ class SettingsProfilPage extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 20),
+                        
                         Column(
                           children: [
                             const Align(
@@ -94,7 +95,7 @@ class SettingsProfilPage extends StatelessWidget {
                               ),
                             ),
                             TextFormField(
-                              controller : _currentPasswordController,
+                              controller: _currentPasswordController,
                               obscureText: true,
                               enableSuggestions: false,
                               autocorrect: false,
@@ -171,32 +172,35 @@ class SettingsProfilPage extends StatelessWidget {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content: Text(
-                                        "Les mots de passe ne correspondent pas"),
+                                        "Les mots de passe ne correspondent pas",
+                                      ),
                                     ),
                                   );
+                                  return;
                                 }
+                                  cubit.updateUser(_loginController.text,
+                                  _currentPasswordController.text,
+                                  _newPasswordController.text);
 
-                                cubit.updateUser(
-                                    _loginController.text,
-                                    _currentPasswordController.text,
-                                    _newPasswordController.text);
-                                if (state is UserRefreshedState) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
+                                  if (state is UserRefreshedState){
+                                   ScaffoldMessenger.of(context).showSnackBar(
                                      SnackBar(
                                       content: Text(
-                                        state.message),
-                                    ),
+                                        state.message,
+                                      ),
+                                    )
+                                  );
+                                }
+                                else if (state is UserRefreshedFailState){
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        "Erreur lors de la mise à jour du profil",
+                                      ),
+                                    )
                                   );
                                 }
 
-                                else if (state is UserRefreshedFailState) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                     const SnackBar(
-                                      content: Text(
-                                        "Erreur lors de la mise à jour"),
-                                    ),
-                                  );
-                                }
                                 Navigator.pop(context);
                               }
                             },
@@ -214,4 +218,5 @@ class SettingsProfilPage extends StatelessWidget {
       );
     });
   }
+
 }
