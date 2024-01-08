@@ -210,6 +210,7 @@ class SettingsProfilPage extends StatelessWidget {
                                       "Votre mot de passe a été modifié",
                                       context);
                                 }
+
                                 Navigator.pop(context);
                               }
                             },
@@ -232,7 +233,6 @@ class SettingsProfilPage extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: CustomColorScheme.customPrimaryColor.withOpacity(0.5),
-        duration: const Duration(seconds: 4),
         content: Text(
           message,
           style: const TextStyle(
