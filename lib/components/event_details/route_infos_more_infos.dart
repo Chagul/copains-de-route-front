@@ -47,7 +47,7 @@ class RouteInfosMoreInfos extends StatelessWidget {
                             _buildRow(
                                 Icons.compare_arrows,
                                 CustomColorScheme.customOnSecondary,
-                                "Distance : ${event.distance}"),
+                                "Distance : ${event.distance} km"),
                             const SizedBox(height: 10),
                             _buildRow(
                                 Icons.edit_road,
