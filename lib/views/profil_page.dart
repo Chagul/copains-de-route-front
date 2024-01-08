@@ -10,11 +10,8 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<LoginCubit>(context).refreshUser();
     return BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
-      if (state is UserLoadedState) {
-        BlocProvider.of<LoginCubit>(context).refreshUser();
-        return const LoadingWidget();
-      }
       if (state is UserRefreshingState) {
         return const LoadingWidget();
       }
