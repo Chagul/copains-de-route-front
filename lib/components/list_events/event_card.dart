@@ -44,8 +44,18 @@ class EventCard extends StatelessWidget {
                   ? const Icon(Icons.public)
                   : const Icon(Icons.lock),
               title: Center(
-                child: Text("${event.name} - ${event.distance} km",
-                    style: _getTitleTextStyle()),
+                child: Column(
+                  children: [
+                    Text(
+                      event.name,
+                      style: _getTitleTextStyle(),
+                    ),
+                    Text(
+                      "${event.distance} km",
+                      style: _getTitleTextStyle(),
+                    ),
+                  ],
+                ),
               ),
               subtitle: Column(children: [
                 Text(
@@ -56,7 +66,7 @@ class EventCard extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  "Le ${event.startDate} à ${event.startTime}",
+                  "Le ${event.getDateFormated()} à ${event.startTime}",
                   style: _getNormalTextStyle(),
                 ),
                 Text(
