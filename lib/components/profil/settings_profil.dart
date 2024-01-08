@@ -210,7 +210,6 @@ class SettingsProfilPage extends StatelessWidget {
                                       "Votre mot de passe a été modifié",
                                       context);
                                 }
-
                                 Navigator.pop(context);
                               }
                             },
