@@ -19,8 +19,9 @@ class _CustomNumberInputState extends State<CustomNumberInput> {
     return Column(children: [
       Text(
         widget.name,
-        style:
-            const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+            color: CustomColorScheme.customOnSurface,
+            fontWeight: FontWeight.bold),
       ),
       SizedBox(
         width: 70.0,

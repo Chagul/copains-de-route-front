@@ -45,7 +45,8 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
                   height: 250.0,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/logo_copains_de_route_withoutbg.png'),
+                      image: AssetImage(
+                          'assets/logo_copains_de_route_withoutbg.png'),
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -83,18 +84,38 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
       child: ElevatedButton(
         onPressed: () {
           if (formKey.currentState!.validate()) {
-            context.read<LoginCubit>().sendResetPasswordLink(emailController.text);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text(
+                  'Un email vous a été envoyé pour réinitialiser votre mot de passe',
+                  style: TextStyle(
+                    color: CustomColorScheme.customOnSurface,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                backgroundColor: Colors.white.withOpacity(0.5),
+                duration: const Duration(seconds: 5),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                margin: const EdgeInsets.all(8.0),
+              ),
+            );
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const LoginScreen()));
           }
         },
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
+          foregroundColor: CustomColorScheme.customPrimaryColor,
           backgroundColor: CustomColorScheme.customSecondaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),
           minimumSize: const Size(400, 50),
         ),
-        child: const Text('Réinitialiser le mot de passe'),
+        child: const Text('Réinitialiser le mot de passe',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),
     );
   }

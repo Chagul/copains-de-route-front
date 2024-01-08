@@ -55,13 +55,16 @@ class Event {
   getRoadTypes() {
     String roadTypes = "";
     if (roadType1 != null) {
-      roadTypes = _concatenateStringWithComma(roadTypes, roadType1);
+      roadTypes = _concatenateStringWithComma(
+          roadTypes, _convertRoadTypeEnumToString(roadType1!));
     }
     if (roadType2 != null) {
-      roadTypes = _concatenateStringWithComma(roadTypes, roadType2);
+      roadTypes = _concatenateStringWithComma(
+          roadTypes, _convertRoadTypeEnumToString(roadType2!));
     }
     if (roadType3 != null) {
-      roadTypes = _concatenateStringWithComma(roadTypes, roadType3);
+      roadTypes = _concatenateStringWithComma(
+          roadTypes, _convertRoadTypeEnumToString(roadType3!));
     }
     return roadTypes;
   }
@@ -69,10 +72,12 @@ class Event {
   getBikeTypes() {
     String bikeTypes = "";
     if (bikeType1 != null) {
-      bikeTypes = _concatenateStringWithComma(bikeTypes, bikeType1);
+      bikeTypes = _concatenateStringWithComma(
+          bikeTypes, _convertBikeTypeEnumToString(bikeType1!));
     }
     if (bikeType2 != null) {
-      bikeTypes = _concatenateStringWithComma(bikeTypes, bikeType2);
+      bikeTypes = _concatenateStringWithComma(
+          bikeTypes, _convertBikeTypeEnumToString(bikeType2!));
     }
     return bikeTypes;
   }
@@ -82,6 +87,40 @@ class Event {
       return base + toAdd!;
     } else {
       return "$base, $toAdd";
+    }
+  }
+
+  _convertBikeTypeEnumToString(String bikeType) {
+    switch (bikeType) {
+      case "CITY":
+        return "Ville";
+      case "ALL_TERRAIN":
+        return "Tout terrains";
+      case "GRAVEL":
+        return "Graviers";
+      case "BMX":
+        return "BMX";
+      default:
+        return "Inconnu";
+    }
+  }
+
+  _convertRoadTypeEnumToString(String roadType) {
+    switch (roadType) {
+      case "DIRT":
+        return "Terre";
+      case "ROAD":
+        return "Route";
+      case "GRAVEL":
+        return "Gravier";
+      case "CYCLE_PATH":
+        return "Piste cyclable";
+      case "PAVING_STONE":
+        return "Pavés";
+      case "OTHERS":
+        return "Autres";
+      default:
+        return "Inconnu";
     }
   }
 

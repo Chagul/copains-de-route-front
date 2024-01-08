@@ -21,18 +21,18 @@ class MyEventsPage extends StatelessWidget {
               create: (context) =>
                   ListMyEventsJoinedCubit(ListMyEventsJoinedStateInitial()))
         ],
-        child: Scaffold(
-            body: DefaultTabController(
+        child: SafeArea(
+            child: DefaultTabController(
                 length: 2,
-                child: SafeArea(
-                    child: Scaffold(
+                child: Scaffold(
                   appBar: AppBar(
+                    title: const Center(child: Text("Mes événements")),
                     bottom: const TabBar(
                       tabs: [
                         Tab(
-                          text: "Mes événements créés",
+                          text: "Créés",
                         ),
-                        Tab(text: "Mes événements rejoints"),
+                        Tab(text: "Rejoints"),
                       ],
                     ),
                   ),
@@ -42,6 +42,6 @@ class MyEventsPage extends StatelessWidget {
                       JoinedEventsListView(),
                     ],
                   ),
-                )))));
+                ))));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:copains_de_route/model/event.dart';
+import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -16,12 +17,13 @@ class MapEventDetails extends StatelessWidget {
         children: [
           IconButton(
               onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back, color: Colors.black)),
+              icon: const Icon(Icons.arrow_back,
+                  color: CustomColorScheme.customOnSurface)),
           const Text("Trajet",
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black))
+                  color: CustomColorScheme.customOnSurface))
         ],
       ),
       Flexible(

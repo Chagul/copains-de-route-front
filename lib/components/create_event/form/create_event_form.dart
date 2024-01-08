@@ -63,6 +63,7 @@ class CreateEventForm extends StatelessWidget {
                                 const CustomCategoryTitle(
                                     name: 'Détails de l\'événement'),
                                 TextFieldBlocBuilder(
+                                  maxLength: 30,
                                   textFieldBloc: formBloc.eventName,
                                   autofillHints: const [
                                     AutofillHints.username,
@@ -103,7 +104,7 @@ class CreateEventForm extends StatelessWidget {
                                       ),
                                     ),
                                     const VerticalDivider(
-                                      color: Colors.black,
+                                      color: CustomColorScheme.customOnSurface,
                                       thickness: 1,
                                     ),
                                     Expanded(
@@ -127,6 +128,7 @@ class CreateEventForm extends StatelessWidget {
                                   textFieldBloc: formBloc.eventDescription,
                                   minLines: 5,
                                   maxLines: 10,
+                                  maxLength: 255,
                                   decoration: const InputDecoration(
                                     fillColor: Colors.white,
                                     filled: true,
@@ -149,7 +151,7 @@ class CreateEventForm extends StatelessWidget {
                                 const Divider(
                                   indent: 100,
                                   endIndent: 100,
-                                  color: Colors.black,
+                                  color: CustomColorScheme.customOnSurface,
                                 ),
                                 const SizedBox(height: 10),
                                 const CustomCategoryTitle(
@@ -233,7 +235,7 @@ class CreateEventForm extends StatelessWidget {
                                 const Divider(
                                   indent: 100,
                                   endIndent: 100,
-                                  color: Colors.black,
+                                  color: CustomColorScheme.customOnSurface,
                                 ),
                                 const CustomCategoryTitle(name: 'Visibilité'),
                                 const SizedBox(height: 10),
@@ -251,8 +253,8 @@ class CreateEventForm extends StatelessWidget {
                                           SizedBox(
                                             width: 60,
                                             child: SwitchFieldBlocBuilder(
-                                              trackColor:
-                                                  MaterialStateProperty.all(
+                                              trackColor: MaterialStateProperty
+                                                  .resolveWith((states) =>
                                                       CustomColorScheme
                                                           .customPrimaryColor),
                                               booleanFieldBloc:
@@ -270,7 +272,7 @@ class CreateEventForm extends StatelessWidget {
                                 const Divider(
                                   indent: 100,
                                   endIndent: 100,
-                                  color: Colors.black,
+                                  color: CustomColorScheme.customOnSurface,
                                 ),
                                 const CustomCategoryTitle(name: 'Type de vélo'),
                                 const SizedBox(height: 10),
@@ -334,6 +336,10 @@ class CreateEventForm extends StatelessWidget {
                                         ElevatedButton(
                                           onPressed: formBloc.submit,
                                           style: ButtonStyle(
+                                              foregroundColor:
+                                                  MaterialStateProperty.all(
+                                                      CustomColorScheme
+                                                          .customOnSurface),
                                               backgroundColor:
                                                   MaterialStateProperty.all(
                                                       CustomColorScheme

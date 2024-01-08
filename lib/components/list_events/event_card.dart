@@ -40,7 +40,9 @@ class EventCard extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              leading: const Icon(Icons.event),
+              leading: event.visibility == "PUBLIC"
+                  ? const Icon(Icons.public)
+                  : const Icon(Icons.lock),
               title: Center(
                 child: Text("${event.name} - ${event.distance} km",
                     style: _getTitleTextStyle()),

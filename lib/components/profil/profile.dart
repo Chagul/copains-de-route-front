@@ -101,6 +101,7 @@ class ProfilePage extends StatelessWidget {
                                         style: TextStyle(
                                             color: CustomColorScheme
                                                 .customOnSecondary,
+                                            fontWeight: FontWeight.bold,
                                             fontSize: 20))))
                           ]))),
                   CardStatistiques(

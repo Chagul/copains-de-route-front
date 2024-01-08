@@ -24,12 +24,12 @@ class ParticipantsInfosListParticipants extends StatelessWidget {
                               onPressed: () =>
                                   Navigator.of(context).pop(context),
                               icon: const Icon(Icons.arrow_back,
-                                  color: Colors.black)),
+                                  color: CustomColorScheme.customOnSurface)),
                           const Text("Participants",
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black))
+                                  color: CustomColorScheme.customOnSurface))
                         ],
                       ),
                       if (participants.isEmpty)

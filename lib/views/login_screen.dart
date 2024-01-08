@@ -86,13 +86,14 @@ class LoginScreen extends StatelessWidget {
         onPressed: () => {BlocProvider.of<LoginCubit>(context).login()},
         style: ElevatedButton.styleFrom(
           backgroundColor: CustomColorScheme.customSecondaryColor,
-          foregroundColor: CustomColorScheme.customOnPrimary,
+          foregroundColor: CustomColorScheme.customOnSurface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),
           minimumSize: const Size(400, 50),
         ),
-        child: const Text('Connexion'),
+        child: const Text('Connexion',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),
     );
   }
@@ -106,7 +107,7 @@ class LoginScreen extends StatelessWidget {
       style: TextButton.styleFrom(
         foregroundColor: CustomColorScheme.customOnPrimary,
       ),
-      child: const Text('Pas encore de compte ? Créez en un !'),
+      child: const Text('Pas encore de compte ? Créez-en un !'),
     );
   }
 }

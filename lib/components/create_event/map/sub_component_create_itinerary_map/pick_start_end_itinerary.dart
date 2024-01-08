@@ -33,6 +33,10 @@ class PickStartEndItinerary extends StatelessWidget {
                           "Cliquez sur la map après avoir choisi départ ou arrivée !")),
                   TextButton(
                       style: TextButton.styleFrom(
+                          side: state is PickStartState
+                              ? const BorderSide(
+                                  color: CustomColorScheme.customOnPrimary)
+                              : null,
                           minimumSize: const Size(100, 40),
                           backgroundColor:
                               CustomColorScheme.customPrimaryColor),
@@ -45,6 +49,10 @@ class PickStartEndItinerary extends StatelessWidget {
                       )),
                   TextButton(
                       style: TextButton.styleFrom(
+                          side: state is PickEndState
+                              ? const BorderSide(
+                                  color: CustomColorScheme.customOnPrimary)
+                              : null,
                           minimumSize: const Size(100, 40),
                           backgroundColor:
                               CustomColorScheme.customPrimaryColor),
@@ -65,7 +73,8 @@ class PickStartEndItinerary extends StatelessWidget {
                                   .choseItineraryWidget),
                       child: const Text(
                         "Confirmer",
-                        style: TextStyle(color: Colors.black),
+                        style:
+                            TextStyle(color: CustomColorScheme.customOnSurface),
                       )),
                 ])),
       );

@@ -83,7 +83,9 @@ class PickRecommandedItinerary extends StatelessWidget {
                                           },
                                       child: const Text(
                                         "Retour",
-                                        style: TextStyle(color: Colors.black),
+                                        style: TextStyle(
+                                            color: CustomColorScheme
+                                                .customOnSurface),
                                       )),
                                   ElevatedButton(
                                       style: TextButton.styleFrom(
@@ -118,7 +120,9 @@ class PickRecommandedItinerary extends StatelessWidget {
                                           },
                                       child: const Text(
                                         "Confirmer",
-                                        style: TextStyle(color: Colors.black),
+                                        style: TextStyle(
+                                            color: CustomColorScheme
+                                                .customOnSurface),
                                       ))
                                 ]))),
                   ])),

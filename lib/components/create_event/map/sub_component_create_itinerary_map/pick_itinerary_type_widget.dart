@@ -68,7 +68,8 @@ class PickItineraryType extends StatelessWidget {
                             },
                         child: const Text(
                           "Retour",
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(
+                              color: CustomColorScheme.customOnSurface),
                         )),
                   ])));
     });

@@ -23,7 +23,8 @@ class _CustomSwitchInputState extends State<CustomSwitchInput> {
   @override
   Widget build(Object context) {
     return Row(children: [
-      Text(widget.name1, style: const TextStyle(color: Colors.black)),
+      Text(widget.name1,
+          style: const TextStyle(color: CustomColorScheme.customOnSurface)),
       Switch(
         value: widget.value,
         activeColor: CustomColorScheme.customPrimaryColor,
@@ -31,7 +32,8 @@ class _CustomSwitchInputState extends State<CustomSwitchInput> {
           widget.updateBoolean(value);
         },
       ),
-      Text(widget.name2, style: const TextStyle(color: Colors.black)),
+      Text(widget.name2,
+          style: const TextStyle(color: CustomColorScheme.customOnSurface)),
     ]);
   }
 }

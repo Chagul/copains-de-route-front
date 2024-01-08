@@ -19,7 +19,8 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(widget.name, style: const TextStyle(color: Colors.black)),
+        Text(widget.name,
+            style: const TextStyle(color: CustomColorScheme.customOnSurface)),
         SizedBox(
           width: 140,
           child: TextField(

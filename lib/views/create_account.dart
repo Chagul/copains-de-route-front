@@ -45,7 +45,7 @@ class CreateAccountState extends State<CreateAccount> {
               content: const Text(
                 'Un email confirmant la création du compte a été envoyé à l’adresse mail spécifiée',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: CustomColorScheme.customOnSurface,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -67,7 +67,7 @@ class CreateAccountState extends State<CreateAccount> {
               content: const Text(
                 'Une erreur est survenue lors de la création du compte',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: CustomColorScheme.customOnSurface,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -159,14 +159,15 @@ class CreateAccountState extends State<CreateAccount> {
           }
         },
         style: ElevatedButton.styleFrom(
-          foregroundColor: CustomColorScheme.customOnPrimary,
+          foregroundColor: CustomColorScheme.customOnSurface,
           backgroundColor: CustomColorScheme.customSecondaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),
           minimumSize: const Size(400, 50),
         ),
-        child: const Text('Créez votre compte'),
+        child: const Text('Créez votre compte',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),
     );
   }

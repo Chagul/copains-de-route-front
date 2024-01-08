@@ -46,7 +46,7 @@ class FriendRequestTile extends StatelessWidget {
               },
               child: const Text(
                 "ACCEPTER",
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: CustomColorScheme.customOnSurface),
               ),
             ),
             ElevatedButton(
@@ -57,7 +57,8 @@ class FriendRequestTile extends StatelessWidget {
                   await cubitLogin.refreshUser();
                 },
                 child: const Text("REFUSER",
-                    style: TextStyle(color: Colors.black))),
+                    style:
+                        TextStyle(color: CustomColorScheme.customOnSurface))),
           ],
         )
       ]));
