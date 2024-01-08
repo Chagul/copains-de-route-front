@@ -51,3 +51,7 @@ class FriendInfoLoadedState extends FriendState {
 }
 
 class FriendInfoErrorState extends FriendState {}
+
+class ResetPasswordLinkSentState extends LoginState {}
+
+class ResetPasswordLinkFailedState extends LoginState {}

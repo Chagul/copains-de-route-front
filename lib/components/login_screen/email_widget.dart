@@ -4,26 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EmailWidget extends StatefulWidget {
-  const EmailWidget({Key? key}) : super(key: key);
+  final TextEditingController controller;
+
+  const EmailWidget({Key? key, required this.controller}) : super(key: key);
 
   @override
-  State<EmailWidget> createState() => _EmailWidgetState();
+  State<EmailWidget> createState() => _EmailWidgetState(controller);
 }
 
 class _EmailWidgetState extends State<EmailWidget> {
-  late TextEditingController _controller;
+  final TextEditingController _controller;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  _EmailWidgetState(this._controller);
 
   @override
   Widget build(BuildContext context) {

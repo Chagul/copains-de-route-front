@@ -257,6 +257,20 @@ class CopainsDeRouteApi {
     }
   }
 
+  Future<Response> sendResetPasswordLink (String email) {
+    try {
+      var resp = _dio.post(
+        "/users/sendEmail/$email",
+        options: Options(validateStatus: (status) {
+          return status == 200 || status == 404;
+        }),
+      );
+      return resp;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
   Future<Response> getEventsAround(GpsCoordinateDto gpsCoordinates) async {
     String? token = await _getToken();
     try {
