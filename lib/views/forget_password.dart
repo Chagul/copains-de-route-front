@@ -84,6 +84,9 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
       child: ElevatedButton(
         onPressed: () {
           if (formKey.currentState!.validate()) {
+            context
+                .read<LoginCubit>()
+                .sendResetPasswordLink(emailController.text);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: const Text(
@@ -121,7 +124,7 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
   }
 
   void _showSnackBar(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
