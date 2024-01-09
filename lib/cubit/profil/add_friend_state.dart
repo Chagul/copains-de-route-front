@@ -8,6 +8,8 @@ class AddFriendSucceedState extends AddFriendState {}
 
 class FriendRequestAlreadyExistsState extends AddFriendState {}
 
+class FriendRequestCannotAddItSelfState extends AddFriendState {}
+
 class AcceptFriendSucceedState extends AddFriendState {}
 
 class AcceptFriendFailedState extends AddFriendState {}

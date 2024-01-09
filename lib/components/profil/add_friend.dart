@@ -22,6 +22,10 @@ class AddFriend extends StatelessWidget {
             content: Text(
                 "Une demande d'ami a déjà été envoyée à cet utilisateur")));
       }
+      if (state is FriendRequestCannotAddItSelfState) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Vous ne pouvez pas vous ajouter vous même")));
+      }
       if (state is AddFriendFailedState) {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("L'ami n'a pas pu être ajouté")));
