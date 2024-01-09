@@ -232,7 +232,8 @@ class SettingsProfilPage extends StatelessWidget {
   void _buildSnackBar(String message, BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        backgroundColor: CustomColorScheme.customPrimaryColor.withOpacity(0.5),
+        backgroundColor: CustomColorScheme.customBackground.withOpacity(0.9),
+        behavior: SnackBarBehavior.floating,
         content: Text(
           message,
           style: const TextStyle(
