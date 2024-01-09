@@ -43,7 +43,7 @@ class PasswordWidgetState extends State<PasswordWidget> {
             hintText: 'Mot de passe',
             labelText: 'Mot de passe',
           ),
-          style: const TextStyle(color: CustomColorScheme.customPrimaryColor),
+          style: const TextStyle(color: CustomColorScheme.customOnSurface),
           validator: (value) {
             if (value!.isEmpty) {
               return 'Veuillez entrer votre mot de passe';

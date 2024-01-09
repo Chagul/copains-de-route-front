@@ -36,22 +36,8 @@ class _EmailWidgetState extends State<EmailWidget> {
         if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
             .hasMatch(value!)) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text(
-                'Veuillez entrer une adresse email valide',
-                style: TextStyle(
-                    color: CustomColorScheme.customError,
-                    fontWeight: FontWeight.bold),
-              ),
-              backgroundColor:
-                  CustomColorScheme.customOnPrimary.withOpacity(0.6),
-              duration: const Duration(seconds: 3),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              margin: const EdgeInsets.all(10.0),
-            ),
+            const SnackBar(
+                content: Text('Veuillez entrer une adresse email valide')),
           );
           return 'Adresse mail invalide';
         } else {

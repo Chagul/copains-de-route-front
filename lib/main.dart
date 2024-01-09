@@ -11,6 +11,7 @@ import 'package:copains_de_route/views/login_screen.dart';
 import 'package:copains_de_route/views/my_events_page.dart';
 import 'package:copains_de_route/views/profil_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -34,6 +35,9 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => PositionCubit()..initPosition()),
