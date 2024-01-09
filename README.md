@@ -11,6 +11,7 @@ Le projet est compatible en Android à partir du SDK 20
 
 ## Pré-Requis
 - [Flutter](https://docs.flutter.dev/get-started/install)
+
 Si vous souhaitez lancer l'application localement, il vous faudra un émulateur Android notamment pour émuler la localisation de l'appareil. Vous pouvez suivre ce [tutoriel](https://developer.android.com/studio/run/managing-avds?hl=fr).
 Vous aurez alors probablement besoin d'[Android Studio](https://developer.android.com/studio)
 
