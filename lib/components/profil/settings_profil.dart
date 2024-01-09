@@ -3,20 +3,21 @@ import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/number_symbols_data.dart';
+
 class SettingsProfilPage extends StatelessWidget {
   SettingsProfilPage({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
   final _loginController = TextEditingController();
+  final _currentPasswordController = TextEditingController();
   final _newPasswordController = TextEditingController();
   final _confirmNewPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, LoginState>(
-      builder: (context, state) {
-        final cubit = context.read<LoginCubit>();
-
+    return BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
+      final cubit = context.read<LoginCubit>();
       return SafeArea(
         child: Scaffold(
           body: SingleChildScrollView(
@@ -84,29 +85,6 @@ class SettingsProfilPage extends StatelessWidget {
                             const Align(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                "Email",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ),
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                hintText: 'rick.asley@gmail.com',
-                                filled: true,
-                                fillColor: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Column(
-                          children: [
-                            const Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
                                 "Mot de passe actuel",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -116,6 +94,7 @@ class SettingsProfilPage extends StatelessWidget {
                               ),
                             ),
                             TextFormField(
+                              controller : _currentPasswordController,
                               obscureText: true,
                               enableSuggestions: false,
                               autocorrect: false,
@@ -189,28 +168,35 @@ class SettingsProfilPage extends StatelessWidget {
                               if (_formKey.currentState!.validate()) {
                                 if (_newPasswordController.text !=
                                     _confirmNewPasswordController.text) {
-                                  _buildSnackBar(
-                                      "Les mots de passe ne correspondent pas",
-                                      context);
-                                  return;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        "Les mots de passe ne correspondent pas"),
+                                    ),
+                                  );
                                 }
 
-                                if (_loginController.text.isNotEmpty) {
-                                  cubit.updateUser(_loginController.text);
-                                  if (state is UserRefreshedState){
-                                    _buildSnackBar(
-                                      state.message, context);
-                                }
-                                  }
-                                  
-                                if (_newPasswordController.text.isNotEmpty) {
-                                  _newPasswordController.clear();
-                                  _confirmNewPasswordController.clear();
-                                  _buildSnackBar(
-                                      "Votre mot de passe a été modifié",
-                                      context);
+                                cubit.updateUser(
+                                    _loginController.text,
+                                    _currentPasswordController.text,
+                                    _newPasswordController.text);
+                                if (state is UserRefreshedState) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                     SnackBar(
+                                      content: Text(
+                                        state.message),
+                                    ),
+                                  );
                                 }
 
+                                else if (state is UserRefreshedFailState) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                     const SnackBar(
+                                      content: Text(
+                                        "Erreur lors de la mise à jour"),
+                                    ),
+                                  );
+                                }
                                 Navigator.pop(context);
                               }
                             },
@@ -227,21 +213,5 @@ class SettingsProfilPage extends StatelessWidget {
         ),
       );
     });
-  }
-
-  void _buildSnackBar(String message, BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: CustomColorScheme.customBackground.withOpacity(0.9),
-        behavior: SnackBarBehavior.floating,
-        content: Text(
-          message,
-          style: const TextStyle(
-            color: CustomColorScheme.customOnSurface,
-            fontSize: 17,
-          ),
-        ),
-      ),
-    );
   }
 }

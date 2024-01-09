@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CopainsDeRouteApi {
-  static const baseUrl = "https://app-o5ei237sga-ew.a.run.app";
+  static const baseUrl = "http://10.0.2.2:8080";
   final _dio = Dio(BaseOptions(
       baseUrl: baseUrl, headers: {"Content-Type": Headers.jsonContentType}));
 
@@ -243,12 +243,16 @@ class CopainsDeRouteApi {
     }
   }
 
-  Future<Response> updateUser(String newLogin) async {
+  Future<Response> updateUser(String newLogin, String oldPassword, String newPassword) async {
   try {
     String? token = await _getToken();
     var resp = await _dio.patch(
       "/users/me",
-      queryParameters: {'login': newLogin},
+      data: {
+        "login": newLogin,
+        "oldPassword": oldPassword,
+        "newPassword": newPassword
+      },
       options: Options(headers: {'Authorization': _getAuthorization(token)}),
     );
 

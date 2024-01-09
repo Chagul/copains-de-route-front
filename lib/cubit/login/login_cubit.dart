@@ -122,8 +122,8 @@ class LoginCubit extends Cubit<LoginState> {
         });
   }
 
-  Future<void> updateUser(String login) async {
-    var response = CopainsDeRouteApi().updateUser(login);
+  Future<void> updateUser(String login, String oldPassword, String newPassword) async {
+    var response = CopainsDeRouteApi().updateUser(login, oldPassword, newPassword);
     response.then((value) => {
           if (value.statusCode == 200){
               user = UserDTO.fromJson(value.data["user"]),
@@ -131,6 +131,9 @@ class LoginCubit extends Cubit<LoginState> {
                 UserRefreshedState()
                 )
               }
+          else {
+            emit(UserRefreshedFailState())
+          }
             
         });
   }
