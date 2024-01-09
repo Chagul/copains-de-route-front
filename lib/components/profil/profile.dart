@@ -80,6 +80,7 @@ class ProfilePage extends StatelessWidget {
                                   if (cubit.acceptedFriends.isNotEmpty)
                                     FriendInkwell(
                                         friend: cubit.acceptedFriends[0]),
+                                  const SizedBox(height: 10),
                                   if (cubit.acceptedFriends.length > 1)
                                     FriendInkwell(
                                         friend: cubit.acceptedFriends[1]),

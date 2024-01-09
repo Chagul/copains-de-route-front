@@ -64,6 +64,28 @@ class ProfilePictureUtils {
     }
   }
 
+  static Widget getBigFriendProfilePicWidget(UserDTO friend) {
+    if (friend.profilePicLocation != null) {
+      return CircleAvatar(
+        radius: 50,
+        backgroundImage: NetworkImage(CopainsDeRouteApi()
+            .getUserProfilePicUrl(friend.profilePicLocation!)),
+      );
+    } else {
+      return CircleAvatar(
+          radius: 50,
+          backgroundColor:
+              CustomColorScheme.customPrimaryColor.withOpacity(0.5),
+          child: const CircleAvatar(
+              radius: 48,
+              child: Icon(
+                Icons.person,
+                size: 50,
+                color: CustomColorScheme.customOnSurface,
+              )));
+    }
+  }
+
   static Widget getParticipantProfilPicWidget(UserDTO participant) {
     if (ProfilePictureUtils._getUrlProfilePicFromUser(participant) != null) {
       return CircleAvatar(

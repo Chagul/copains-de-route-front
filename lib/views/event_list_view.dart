@@ -185,7 +185,7 @@ class EventListView extends StatelessWidget {
               const Align(
                   alignment: Alignment.center,
                   child: Text(
-                    "Pas d'événements :psad:",
+                    "Il n'y aucun événement prévu pour le moment. Créez-en un !",
                     style:
                         TextStyle(color: CustomColorScheme.customOnSecondary),
                   ))
