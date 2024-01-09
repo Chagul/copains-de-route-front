@@ -231,12 +231,12 @@ class CopainsDeRouteApi {
     }
   }
 
-  Future<Response> getFriendInfo (String login) async {
+  Future<Response> getFriendInfo(String login) async {
     String? token = await _getToken();
     try {
       var response = await _dio.get("/users/$login",
           options:
-          Options(headers: {'Authorization': _getAuthorization(token)}));
+              Options(headers: {'Authorization': _getAuthorization(token)}));
       return response;
     } catch (e) {
       return Future.error(e);
@@ -257,7 +257,7 @@ class CopainsDeRouteApi {
     }
   }
 
-  Future<Response> sendResetPasswordLink (String email) {
+  Future<Response> sendResetPasswordLink(String email) {
     try {
       var resp = _dio.post(
         "/users/sendEmail/$email",
@@ -312,7 +312,10 @@ class CopainsDeRouteApi {
         options: Options(
             headers: {'Authorization': _getAuthorization(token)},
             validateStatus: (status) =>
-                status == 404 || status == 400 || status == 200),
+                status == 404 ||
+                status == 400 ||
+                status == 200 ||
+                status == 403),
       );
       return resp;
     } catch (e) {
