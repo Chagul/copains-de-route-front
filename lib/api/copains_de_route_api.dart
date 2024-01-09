@@ -243,29 +243,38 @@ class CopainsDeRouteApi {
     }
   }
 
-  Future<Response> updateUser(String newLogin, String oldPassword, String newPassword) async {
-  try {
-    String? token = await _getToken();
-    var resp = await _dio.patch(
-      "/users/me",
-      data: {
-        "login": newLogin,
-        "oldPassword": oldPassword,
-        "newPassword": newPassword
-      },
-      options: Options(headers: {'Authorization': _getAuthorization(token)}),
-    );
+  Future<Response> updateUser(
+      String newLogin, String oldPassword, String newPassword) async {
+    try {
+      String? token = await _getToken();
+      var resp = await _dio.patch(
+        "/users/me",
+        data: {
+          "login": newLogin,
+          "oldPassword": oldPassword,
+          "newPassword": newPassword
+        },
+        options: Options(
+          headers: {'Authorization': _getAuthorization(token)},
+          validateStatus: (status) {
+            return status == 200 ||
+                status == 403 ||
+                status == 404 ||
+                status == 400;
+          },
+        ),
+      );
 
-    if (resp.statusCode == 200) {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString("token", resp.data["login"]["token"]);
+      if (resp.statusCode == 200) {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString("token", resp.data["login"]["token"]);
+      }
+
+      return resp;
+    } catch (e) {
+      return Future.error(e);
     }
-
-    return resp;
-  } catch (e) {
-    return Future.error(e);
   }
-}
 
   Future<Response> sendResetPasswordLink(String email) {
     try {

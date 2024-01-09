@@ -3,6 +3,7 @@ import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 class SettingsProfilPage extends StatelessWidget {
   SettingsProfilPage({Key? key}) : super(key: key);
 
@@ -14,9 +15,31 @@ class SettingsProfilPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, LoginState>(
-      builder: (context, state) {
-        final cubit = context.read<LoginCubit>();
+    return BlocConsumer<LoginCubit, LoginState>(listener: (context, state) {
+      if (state is UserAlreadyTakenState) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+            "Cet identifiant est déjà pris",
+          ),
+        ));
+      }
+      if (state is UserRefreshedState) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+            state.message,
+          ),
+        ));
+        Navigator.pop(context);
+      }
+      if (state is UserRefreshedFailState) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+            "Erreur lors de la mise à jour du profil",
+          ),
+        ));
+      }
+    }, builder: (context, state) {
+      final cubit = context.read<LoginCubit>();
 
       return SafeArea(
         child: Scaffold(
@@ -80,7 +103,6 @@ class SettingsProfilPage extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        
                         Column(
                           children: [
                             const Align(
@@ -187,30 +209,10 @@ class SettingsProfilPage extends StatelessWidget {
                                   );
                                   return;
                                 }
-                                  cubit.updateUser(_loginController.text,
-                                  _currentPasswordController.text,
-                                  _newPasswordController.text);
-
-                                  if (state is UserRefreshedState){
-                                   ScaffoldMessenger.of(context).showSnackBar(
-                                     SnackBar(
-                                      content: Text(
-                                        state.message,
-                                      ),
-                                    )
-                                  );
-                                }
-                                else if (state is UserRefreshedFailState){
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                        "Erreur lors de la mise à jour du profil",
-                                      ),
-                                    )
-                                  );
-                                }
-
-                                Navigator.pop(context);
+                                cubit.updateUser(
+                                    _loginController.text,
+                                    _currentPasswordController.text,
+                                    _newPasswordController.text);
                               }
                             },
                             child: const Text("Sauvegarder",
@@ -228,5 +230,4 @@ class SettingsProfilPage extends StatelessWidget {
       );
     });
   }
-
 }
