@@ -20,6 +20,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
       LoginCubit cubit = BlocProvider.of<LoginCubit>(context);
+      String login = cubit.user.login;
       if (state is UserLoadingState || state is UserRefreshingState) {
         return const LoadingWidget();
       } else if (state is UserLoadedState || state is UserRefreshedState) {
@@ -45,7 +46,7 @@ class ProfilePage extends StatelessWidget {
               ProfilePictureUtils.getUserProfilePicWidget(context),
               const SizedBox(height: 10),
               Text(
-                cubit.user.login,
+                login,
                 style:
                     const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               )

@@ -1,17 +1,23 @@
+import 'package:copains_de_route/cubit/login/login_cubit.dart';
+import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 class SettingsProfilPage extends StatelessWidget {
   SettingsProfilPage({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
   final _loginController = TextEditingController();
+  final _currentPasswordController = TextEditingController();
   final _newPasswordController = TextEditingController();
   final _confirmNewPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
+    return BlocBuilder<LoginCubit, LoginState>(
+      builder: (context, state) {
+        final cubit = context.read<LoginCubit>();
+
       return SafeArea(
         child: Scaffold(
           body: SingleChildScrollView(
@@ -74,29 +80,7 @@ class SettingsProfilPage extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        Column(
-                          children: [
-                            const Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                "Adresse mail",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ),
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                hintText: 'rick.asley@gmail.com',
-                                filled: true,
-                                fillColor: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
+                        
                         Column(
                           children: [
                             const Align(
@@ -111,6 +95,7 @@ class SettingsProfilPage extends StatelessWidget {
                               ),
                             ),
                             TextFormField(
+                              controller: _currentPasswordController,
                               obscureText: true,
                               enableSuggestions: false,
                               autocorrect: false,
@@ -195,30 +180,33 @@ class SettingsProfilPage extends StatelessWidget {
                                     _confirmNewPasswordController.text) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                        content: Text(
-                                            'Les mots de passe ne correspondent pas.')),
+                                      content: Text(
+                                        "Les mots de passe ne correspondent pas",
+                                      ),
+                                    ),
                                   );
                                   return;
                                 }
+                                  cubit.updateUser(_loginController.text,
+                                  _currentPasswordController.text,
+                                  _newPasswordController.text);
 
-                                String message = '';
-                                message =
-                                    'Un email à été envoyé à votre adresse mail pour confirmer le changement de login';
-
-                                if (_newPasswordController.text.isNotEmpty) {
-                                  message =
-                                      'Un email à été envoyé à votre adresse mail pour confirmer le changement de mot de passe';
-                                  _newPasswordController.clear();
-                                  _confirmNewPasswordController.clear();
-                                }
-
-                                if (message.isNotEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
+                                  if (state is UserRefreshedState){
+                                   ScaffoldMessenger.of(context).showSnackBar(
+                                     SnackBar(
                                       content: Text(
-                                        message,
+                                        state.message,
                                       ),
-                                    ),
+                                    )
+                                  );
+                                }
+                                else if (state is UserRefreshedFailState){
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        "Erreur lors de la mise à jour du profil",
+                                      ),
+                                    )
                                   );
                                 }
 
@@ -240,4 +228,5 @@ class SettingsProfilPage extends StatelessWidget {
       );
     });
   }
+
 }
