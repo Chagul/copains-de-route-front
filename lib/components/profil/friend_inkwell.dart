@@ -17,12 +17,13 @@ class FriendInkwell extends StatelessWidget {
       return InkWell(
           onTap: () => {
                 Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                  String loginOfFriend = BlocProvider.of<LoginCubit>(context)
-                      .user
-                      .login == friend.sender
-                      ? friend.added
-                      : friend.sender;
-                  return CardStatistiquesFriend(loginFriend: loginOfFriend);
+                  String loginOfFriend =
+                      BlocProvider.of<LoginCubit>(context).user.login ==
+                              friend.sender
+                          ? friend.added
+                          : friend.sender;
+                  return CardStatistiquesFriend(
+                      friend: friend, loginOfFriend: loginOfFriend);
                 }))
               },
           child: RowImageText(

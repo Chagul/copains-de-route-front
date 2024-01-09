@@ -1,3 +1,4 @@
+import 'package:copains_de_route/model/friends_dto.dart';
 import 'package:copains_de_route/utils/profile_picture_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,14 +8,16 @@ import 'package:copains_de_route/model/user_dto.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
 
 class CardStatistiquesFriend extends StatelessWidget {
-  final String loginFriend;
+  final FriendsDTO friend;
+  final String loginOfFriend;
 
-  const CardStatistiquesFriend({Key? key, required this.loginFriend})
+  const CardStatistiquesFriend(
+      {Key? key, required this.friend, required this.loginOfFriend})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    context.read<LoginCubit>().getFriendInfo(loginFriend);
+    context.read<LoginCubit>().getFriendInfo(loginOfFriend);
     return BlocBuilder<LoginCubit, LoginState>(
       builder: (context, loginState) {
         if (loginState is FriendInfoLoadedState) {
@@ -60,7 +63,7 @@ class CardStatistiquesFriend extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 50),
-            ProfilePictureUtils.getUserProfilePicWidget(context),
+            ProfilePictureUtils.getBigFriendProfilePicWidget(friend),
             const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
