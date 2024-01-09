@@ -30,9 +30,10 @@ class FriendListTile extends StatelessWidget {
                 child: InkWell(
                   child: Row(children: [
                     Expanded(
-                        flex: 25,
+                        flex: 20,
                         child: ProfilePictureUtils.getFriendProfilePicWidget(
                             friend, loginUser)),
+                    const Spacer(flex: 5),
                     Expanded(
                         flex: 75,
                         child: Text(
@@ -49,7 +50,8 @@ class FriendListTile extends StatelessWidget {
                                   friend.sender
                               ? friend.added
                               : friend.sender;
-                      return CardStatistiquesFriend(loginFriend: loginOfFriend);
+                      return CardStatistiquesFriend(
+                          friend: friend, loginOfFriend: loginOfFriend);
                     }))
                   },
                 )),
