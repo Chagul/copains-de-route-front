@@ -1,3 +1,4 @@
+import 'package:copains_de_route/components/commons/card_statistiques_friend.dart';
 import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/cubit/profil/add_friend_cubit.dart';
 import 'package:copains_de_route/cubit/profil/add_friend_state.dart';
@@ -21,17 +22,46 @@ class FriendListTile extends StatelessWidget {
       final cubitLogin = BlocProvider.of<LoginCubit>(context);
       return Padding(
         padding: const EdgeInsets.only(top: 8.0),
-        child: ListTile(
-          leading:
-              ProfilePictureUtils.getFriendProfilePicWidget(friend, loginUser),
-          title: Text(loginUser == friend.sender ? friend.added : friend.sender,
-              style: const TextStyle(fontWeight: FontWeight.bold)),
-          trailing: IconButton(
-              onPressed: () async {
-                await cubitFriend.deleteFriend(friend.id);
-                await cubitLogin.refreshUser();
-              },
-              icon: const Icon(Icons.delete)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+                flex: 75,
+                child: InkWell(
+                  child: Row(children: [
+                    Expanded(
+                        flex: 25,
+                        child: ProfilePictureUtils.getFriendProfilePicWidget(
+                            friend, loginUser)),
+                    Expanded(
+                        flex: 75,
+                        child: Text(
+                            loginUser == friend.sender
+                                ? friend.added
+                                : friend.sender,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20))),
+                  ]),
+                  onTap: () => {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                      String loginOfFriend =
+                          BlocProvider.of<LoginCubit>(context).user.login ==
+                                  friend.sender
+                              ? friend.added
+                              : friend.sender;
+                      return CardStatistiquesFriend(loginFriend: loginOfFriend);
+                    }))
+                  },
+                )),
+            Expanded(
+                flex: 25,
+                child: IconButton(
+                    onPressed: () async {
+                      await cubitFriend.deleteFriend(friend.id);
+                      await cubitLogin.refreshUser();
+                    },
+                    icon: const Icon(Icons.delete)))
+          ],
         ),
       );
     });

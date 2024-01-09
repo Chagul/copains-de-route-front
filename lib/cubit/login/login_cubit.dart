@@ -121,7 +121,6 @@ class LoginCubit extends Cubit<LoginState> {
             {emit(UserRefreshedFailState())}
         });
   }
-
   Future<void> updateUser(String login, String oldPassword, String newPassword) async {
     var response = CopainsDeRouteApi().updateUser(login, oldPassword, newPassword);
     response.then((value) => {
@@ -137,6 +136,7 @@ class LoginCubit extends Cubit<LoginState> {
             
         });
   }
+
 
 
   void getFriendInfo(String login) async {
@@ -156,6 +156,4 @@ class LoginCubit extends Cubit<LoginState> {
       emit(FriendInfoErrorState());
     }
   }
-
-
 }
