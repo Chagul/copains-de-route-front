@@ -16,8 +16,8 @@ class AddFriendCubit extends Cubit<AddFriendState> {
             {emit(AddFriendSucceedState())}
           else if (value.statusCode == 404)
             {emit(AddFriendFailedState())}
-          else if (value.statusCode == 403)
-            {emit(FriendRequestCannotAddItSelfState())}
+          else if (value.statusCode == 400)
+            {emit((FriendRequestCannotAddItSelfState()))}
           else
             {emit(FriendRequestAlreadyExistsState())}
         });
