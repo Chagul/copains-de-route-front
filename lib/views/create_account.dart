@@ -41,45 +41,19 @@ class CreateAccountState extends State<CreateAccount> {
       listener: (context, state) {
         if (state is RegisteredState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text(
-                'Un email confirmant la création du compte a été envoyé à l’adresse mail spécifiée',
-                style: TextStyle(
-                  color: CustomColorScheme.customOnSurface,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              backgroundColor:
-                  CustomColorScheme.customOnPrimary.withOpacity(0.5),
-              duration: const Duration(seconds: 5),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              margin: const EdgeInsets.all(.0),
+            const SnackBar(
+              content: Text(
+                  'Un email confirmant la création du compte a été envoyé à l’adresse mail spécifiée'),
             ),
           );
           Navigator.of(context).pop();
         }
         if (state is RegisterFailedState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text(
-                'Une erreur est survenue lors de la création du compte',
-                style: TextStyle(
-                  color: CustomColorScheme.customOnSurface,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              backgroundColor:
-                  CustomColorScheme.customOnPrimary.withOpacity(0.5),
-              duration: const Duration(seconds: 5),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              margin: const EdgeInsets.all(.0),
-            ),
+            const SnackBar(
+                content: Text(
+              'Une erreur est survenue lors de la création du compte',
+            )),
           );
         }
       },
@@ -122,7 +96,7 @@ class CreateAccountState extends State<CreateAccount> {
                         ],
                       ),
                       const SizedBox(height: 20),
-                       EmailWidget(controller : emailController),
+                      EmailWidget(controller: emailController),
                       const SizedBox(height: 20),
                       const LoginWidget(),
                       const SizedBox(height: 20),
