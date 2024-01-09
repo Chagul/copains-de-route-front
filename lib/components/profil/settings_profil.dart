@@ -194,19 +194,9 @@ class SettingsProfilPage extends StatelessWidget {
                                 if (_newPasswordController.text !=
                                     _confirmNewPasswordController.text) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      backgroundColor: CustomColorScheme
-                                          .customPrimaryColor
-                                          .withOpacity(0.5),
-                                      content: const Text(
-                                        'Les mots de passe ne correspondent pas.',
-                                        style: TextStyle(
-                                          color:
-                                              CustomColorScheme.customOnSurface,
-                                          fontSize: 17,
-                                        ),
-                                      ),
-                                    ),
+                                    const SnackBar(
+                                        content: Text(
+                                            'Les mots de passe ne correspondent pas.')),
                                   );
                                   return;
                                 }
@@ -225,18 +215,8 @@ class SettingsProfilPage extends StatelessWidget {
                                 if (message.isNotEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      margin:
-                                          const EdgeInsets.only(bottom: 10.0),
-                                      backgroundColor: CustomColorScheme
-                                          .customPrimaryColor
-                                          .withOpacity(0.5),
                                       content: Text(
                                         message,
-                                        style: const TextStyle(
-                                          color:
-                                              CustomColorScheme.customOnSurface,
-                                          fontSize: 17,
-                                        ),
                                       ),
                                     ),
                                   );

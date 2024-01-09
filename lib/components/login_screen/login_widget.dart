@@ -44,24 +44,8 @@ class _LoginWidgetState extends State<LoginWidget> {
       style: const TextStyle(color: CustomColorScheme.customOnSurface),
       validator: (value) {
         if (value!.isEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text(
-                'Veuillez entrer votre identifiant',
-                style: TextStyle(
-                    color: CustomColorScheme.customError,
-                    fontWeight: FontWeight.bold),
-              ),
-              backgroundColor:
-                  CustomColorScheme.customOnPrimary.withOpacity(0.6),
-              duration: const Duration(seconds: 3),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              margin: const EdgeInsets.all(10.0),
-            ),
-          );
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Veuillez entrer votre identifiant')));
           return '';
         }
         return null;

@@ -31,7 +31,14 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
       body: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state is ResetPasswordLinkSentState) {
-            _showSnackBar(context);
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  content: Text(
+                      'Un email vous a été envoyé pour réinitialiser votre mot de passe')),
+            );
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const LoginScreen()),
+            );
           }
         },
         builder: (context, state) {
@@ -88,22 +95,10 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
                 .read<LoginCubit>()
                 .sendResetPasswordLink(emailController.text);
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text(
-                  'Un email vous a été envoyé pour réinitialiser votre mot de passe',
-                  style: TextStyle(
-                    color: CustomColorScheme.customOnSurface,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                backgroundColor: Colors.white.withOpacity(0.5),
-                duration: const Duration(seconds: 5),
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                margin: const EdgeInsets.all(8.0),
-              ),
+              const SnackBar(
+                  content: Text(
+                'Un email vous a été envoyé pour réinitialiser votre mot de passe',
+              )),
             );
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => const LoginScreen()));
@@ -118,35 +113,11 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
           minimumSize: const Size(400, 50),
         ),
         child: const Text('Réinitialiser le mot de passe',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: CustomColorScheme.customOnSurface)),
       ),
     );
-  }
-
-  void _showSnackBar(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text(
-            'Un email vous a été envoyé pour réinitialiser votre mot de passe',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          backgroundColor: Colors.white.withOpacity(0.5),
-          duration: const Duration(seconds: 5),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          margin: const EdgeInsets.all(8.0),
-        ),
-      );
-
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
-    });
   }
 }
