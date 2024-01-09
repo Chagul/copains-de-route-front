@@ -64,18 +64,17 @@ class LoginCubit extends Cubit<LoginState> {
             {emit(RegisterFailedState())}
         });
   }
-  void sendResetPasswordLink (String email) {
 
+  void sendResetPasswordLink(String email) {
     var resp = CopainsDeRouteApi().sendResetPasswordLink(email);
     resp.then((value) => {
-      if (value.statusCode == 200){
-          emit(ResetPasswordLinkSentState())
-        }
-      else if (value.statusCode == 404){
-          emit(ResetPasswordLinkFailedState())
-        }
-    });
+          if (value.statusCode == 200)
+            {emit(ResetPasswordLinkSentState())}
+          else if (value.statusCode == 404)
+            {emit(ResetPasswordLinkFailedState())}
+        });
   }
+
   void getUser() async {
     emit(UserLoadingState());
     var resp = CopainsDeRouteApi().getUser();
@@ -113,31 +112,29 @@ class LoginCubit extends Cubit<LoginState> {
                       .toList(),
               pendingRequests =
                   user.addedFriends.where((f) => f.status == "SENT").toList(),
-              emit(UserRefreshedState(
-                
-              ))
+              emit(UserRefreshedState())
             }
           else
             {emit(UserRefreshedFailState())}
         });
   }
-  Future<void> updateUser(String login, String oldPassword, String newPassword) async {
-    var response = CopainsDeRouteApi().updateUser(login, oldPassword, newPassword);
+
+  Future<void> updateUser(
+      String login, String oldPassword, String newPassword) async {
+    var response =
+        CopainsDeRouteApi().updateUser(login, oldPassword, newPassword);
     response.then((value) => {
-          if (value.statusCode == 200){
+          if (value.statusCode == 200)
+            {
               user = UserDTO.fromJson(value.data["user"]),
-              emit(
-                UserRefreshedState()
-                )
-              }
-          else {
-            emit(UserRefreshedFailState())
-          }
-            
+              emit(UserRefreshedState())
+            }
+          else if (value.statusCode == 403)
+            {emit(UserAlreadyTakenState())}
+          else
+            {emit(UserRefreshedFailState())}
         });
   }
-
-
 
   void getFriendInfo(String login) async {
     var resp = await CopainsDeRouteApi().getFriendInfo(login);

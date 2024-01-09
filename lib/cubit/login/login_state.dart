@@ -42,6 +42,8 @@ class UserRefreshedState extends UserRefreshState {
   String message = "Votre profil a été mis à jour";
 }
 
+class UserAlreadyTakenState extends UserRefreshState {}
+
 class UserRefreshedFailState extends UserRefreshState {}
 
 abstract class FriendState extends LoginState {}
