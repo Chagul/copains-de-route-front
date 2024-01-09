@@ -4,7 +4,6 @@ import 'package:copains_de_route/components/login_screen/email_widget.dart';
 import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
-import 'package:copains_de_route/views/login_screen.dart';
 
 class ForgotPassword extends StatelessWidget {
   const ForgotPassword({Key? key}) : super(key: key);
@@ -36,9 +35,7 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
                   content: Text(
                       'Un email vous a été envoyé pour réinitialiser votre mot de passe')),
             );
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const LoginScreen()),
-            );
+            Navigator.of(context).pop();
           }
         },
         builder: (context, state) {
@@ -100,8 +97,7 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
                 'Un email vous a été envoyé pour réinitialiser votre mot de passe',
               )),
             );
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const LoginScreen()));
+            Navigator.of(context).pop();
           }
         },
         style: ElevatedButton.styleFrom(
