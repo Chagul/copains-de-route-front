@@ -3,6 +3,7 @@ import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/model/create_user_dto.dart';
 import 'package:copains_de_route/model/friends_dto.dart';
 import 'package:copains_de_route/model/login_dto.dart';
+import 'package:copains_de_route/model/update_user_dto.dart';
 import 'package:copains_de_route/model/user_dto.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -119,10 +120,8 @@ class LoginCubit extends Cubit<LoginState> {
         });
   }
 
-  Future<void> updateUser(
-      String login, String oldPassword, String newPassword) async {
-    var response =
-        CopainsDeRouteApi().updateUser(login, oldPassword, newPassword);
+  Future<void> updateUser(UpdateUserDTO updateUserDTO) async {
+    var response = CopainsDeRouteApi().updateUser(updateUserDTO);
     response.then((value) => {
           if (value.statusCode == 200)
             {

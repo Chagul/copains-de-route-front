@@ -36,7 +36,7 @@ class ProfilePage extends StatelessWidget {
               child: IconButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                    return SettingsProfilPage();
+                    return const SettingsProfilPage();
                   }));
                 },
                 icon: const Icon(Icons.settings),
