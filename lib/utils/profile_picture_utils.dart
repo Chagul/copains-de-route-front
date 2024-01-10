@@ -89,11 +89,11 @@ class ProfilePictureUtils {
   static Widget getParticipantProfilPicWidget(UserDTO participant) {
     if (ProfilePictureUtils._getUrlProfilePicFromUser(participant) != null) {
       return CircleAvatar(
-          radius: 17,
+          radius: 25,
           backgroundColor:
               CustomColorScheme.customPrimaryColor.withOpacity(0.5),
           child: CircleAvatar(
-              radius: 15,
+              radius: 23,
               backgroundImage: NetworkImage(
                   ProfilePictureUtils._getUrlProfilePicFromUser(
                       participant)!)));

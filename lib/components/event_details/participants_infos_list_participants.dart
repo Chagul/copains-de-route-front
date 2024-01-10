@@ -50,15 +50,19 @@ class ParticipantsInfosListParticipants extends StatelessWidget {
   }
 
   Widget _buildRow(UserDTO participant) {
-    return Row(
-      children: [
-        ProfilePictureUtils.getParticipantProfilPicWidget(participant),
-        Text(
-          participant.login,
-          style: const TextStyle(
-              color: CustomColorScheme.customOnSecondary, fontSize: 17),
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(3.0),
+      child: Row(
+        children: [
+          ProfilePictureUtils.getParticipantProfilPicWidget(participant),
+          const SizedBox(width: 10),
+          Text(
+            participant.login,
+            style: const TextStyle(
+                color: CustomColorScheme.customOnSecondary, fontSize: 17),
+          ),
+        ],
+      ),
     );
   }
 }
