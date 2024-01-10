@@ -19,8 +19,6 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
-      LoginCubit cubit = BlocProvider.of<LoginCubit>(context);
-      String login = cubit.user.login;
       if (state is UserLoadingState || state is UserRefreshingState) {
         return const LoadingWidget();
       } else if (state is UserLoadedState || state is UserRefreshedState) {
@@ -46,7 +44,7 @@ class ProfilePage extends StatelessWidget {
               ProfilePictureUtils.getUserProfilePicWidget(context),
               const SizedBox(height: 10),
               Text(
-                login,
+                context.read<LoginCubit>().user.login,
                 style:
                     const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               )
@@ -72,18 +70,32 @@ class ProfilePage extends StatelessWidget {
                             Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  if (cubit.acceptedFriends.isEmpty)
+                                  if (context
+                                      .read<LoginCubit>()
+                                      .acceptedFriends
+                                      .isEmpty)
                                     const Text("Aucun ami",
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold)),
-                                  if (cubit.acceptedFriends.isNotEmpty)
+                                  if (context
+                                      .read<LoginCubit>()
+                                      .acceptedFriends
+                                      .isNotEmpty)
                                     FriendInkwell(
-                                        friend: cubit.acceptedFriends[0]),
+                                        friend: context
+                                            .read<LoginCubit>()
+                                            .acceptedFriends[0]),
                                   const SizedBox(height: 10),
-                                  if (cubit.acceptedFriends.length > 1)
+                                  if (context
+                                          .read<LoginCubit>()
+                                          .acceptedFriends
+                                          .length >
+                                      1)
                                     FriendInkwell(
-                                        friend: cubit.acceptedFriends[1]),
+                                        friend: context
+                                            .read<LoginCubit>()
+                                            .acceptedFriends[1]),
                                 ]),
                             Align(
                                 alignment: Alignment.bottomRight,
@@ -96,7 +108,8 @@ class ProfilePage extends StatelessWidget {
                                                       AddFriendCubit(
                                                           AddFriendInitialState()),
                                                   child: FriendList(
-                                                      friends: cubit
+                                                      friends: context
+                                                          .read<LoginCubit>()
                                                           .acceptedFriends))))
                                         },
                                     child: const Text("Voir plus",
@@ -107,12 +120,26 @@ class ProfilePage extends StatelessWidget {
                                             fontSize: 20))))
                           ]))),
                   CardStatistiques(
-                      evenementJoinedNumber:
-                          cubit.user.numberEventsParticipated.toString(),
-                      evenementCreatedNumber:
-                          cubit.user.numberEventsCreated.toString(),
-                      kmDriven: cubit.user.distanceTraveled.toString(),
-                      co2Saved: cubit.user.co2NotEmitted.toString())
+                      evenementJoinedNumber: context
+                          .read<LoginCubit>()
+                          .user
+                          .numberEventsParticipated
+                          .toString(),
+                      evenementCreatedNumber: context
+                          .read<LoginCubit>()
+                          .user
+                          .numberEventsCreated
+                          .toString(),
+                      kmDriven: context
+                          .read<LoginCubit>()
+                          .user
+                          .distanceTraveled
+                          .toString(),
+                      co2Saved: context
+                          .read<LoginCubit>()
+                          .user
+                          .co2NotEmitted
+                          .toString())
                 ],
               ),
             )
