@@ -43,7 +43,7 @@ class CreateAccountState extends State<CreateAccount> {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text(
-                  'Un email confirmant la création du compte a été envoyé à l’adresse mail spécifiée'),
+                  'Votre compte a été créé avec succès!'),
             ),
           );
           Navigator.of(context).pop();
