@@ -1,17 +1,41 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:copains_de_route/model/update_user_dto.dart';
+import 'package:path/path.dart' as p;
 import 'package:copains_de_route/cubit/login/login_cubit.dart';
 import 'package:copains_de_route/cubit/login/login_state.dart';
 import 'package:copains_de_route/theme/custom_color_scheme.dart';
+import 'package:copains_de_route/utils/profile_picture_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
-class SettingsProfilPage extends StatelessWidget {
-  SettingsProfilPage({Key? key}) : super(key: key);
+class SettingsProfilPage extends StatefulWidget {
+  const SettingsProfilPage({Key? key}) : super(key: key);
 
+  @override
+  State<StatefulWidget> createState() => SettingsProfilPageState();
+}
+
+class SettingsProfilPageState extends State<SettingsProfilPage> {
   final _formKey = GlobalKey<FormState>();
   final _loginController = TextEditingController();
   final _currentPasswordController = TextEditingController();
   final _newPasswordController = TextEditingController();
   final _confirmNewPasswordController = TextEditingController();
+  File? _image;
+
+  Future getImage() async {
+    final ImagePicker picker = ImagePicker();
+    final image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      setState(() {
+        _image = File(image.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,19 +84,23 @@ class SettingsProfilPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
-                InkWell(
-                  onTap: () => {("change avatar")},
-                  child: const CircleAvatar(
-                    radius: 50,
-                    backgroundColor: CustomColorScheme.customPrimaryColor,
+                if (_image == null) ...{
+                  InkWell(
+                    onTap: () async {
+                      await getImage();
+                    },
+                    child: ProfilePictureUtils.getUserProfilePicWidget(context),
+                  ),
+                } else
+                  InkWell(
+                    onTap: () async {
+                      await getImage();
+                    },
                     child: CircleAvatar(
-                      radius: 47,
-                      backgroundImage: NetworkImage(
-                        'https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png',
-                      ),
+                      radius: 50,
+                      backgroundImage: FileImage(_image!),
                     ),
                   ),
-                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 30, right: 30, top: 60),
                   child: Form(
@@ -94,8 +122,8 @@ class SettingsProfilPage extends StatelessWidget {
                             ),
                             TextFormField(
                               controller: _loginController,
-                              decoration: const InputDecoration(
-                                hintText: 'rickasley',
+                              decoration: InputDecoration(
+                                hintText: cubit.user.login,
                                 filled: true,
                                 fillColor: Colors.white,
                               ),
@@ -209,10 +237,30 @@ class SettingsProfilPage extends StatelessWidget {
                                   );
                                   return;
                                 }
-                                cubit.updateUser(
-                                    _loginController.text,
-                                    _currentPasswordController.text,
-                                    _newPasswordController.text);
+                                if (_image != null) {
+                                  Uint8List bytes = _image!.readAsBytesSync();
+                                  String base64Image = base64.encode(bytes);
+                                  cubit.base64ProfilePic = base64Image;
+                                  cubit.profilePicFormat =
+                                      p.extension(_image!.path);
+
+                                  cubit.updateUser(UpdateUserDTO(
+                                      login: _loginController.text,
+                                      oldPassword:
+                                          _currentPasswordController.text,
+                                      newPassword: _newPasswordController.text,
+                                      base64ProfilePic: cubit.base64ProfilePic!,
+                                      profilePicFormat:
+                                          cubit.profilePicFormat!));
+                                } else {
+                                  cubit.updateUser(UpdateUserDTO(
+                                      login: _loginController.text,
+                                      oldPassword:
+                                          _currentPasswordController.text,
+                                      newPassword: _newPasswordController.text,
+                                      base64ProfilePic: null,
+                                      profilePicFormat: null));
+                                }
                               }
                             },
                             child: const Text("Sauvegarder",

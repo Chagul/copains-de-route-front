@@ -54,6 +54,7 @@ dependencies:
   json_serializable: ^6.7.1
   image_picker: ^1.0.4
   shared_preferences: ^2.2.2
+  path : any
 dev_dependencies:
   flutter_test:
     sdk: flutter

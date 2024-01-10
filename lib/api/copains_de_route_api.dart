@@ -4,6 +4,7 @@ import 'package:copains_de_route/model/edit_event_dto.dart';
 import 'package:copains_de_route/model/filter_evenement.dart';
 import 'package:copains_de_route/model/gps_coordinates_dto.dart';
 import 'package:copains_de_route/model/login_dto.dart';
+import 'package:copains_de_route/model/update_user_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -243,17 +244,12 @@ class CopainsDeRouteApi {
     }
   }
 
-  Future<Response> updateUser(
-      String newLogin, String oldPassword, String newPassword) async {
+  Future<Response> updateUser(UpdateUserDTO updateUserDTO) async {
     try {
       String? token = await _getToken();
       var resp = await _dio.patch(
         "/users/me",
-        data: {
-          "login": newLogin,
-          "oldPassword": oldPassword,
-          "newPassword": newPassword
-        },
+        data: updateUserDTO,
         options: Options(
           headers: {'Authorization': _getAuthorization(token)},
           validateStatus: (status) {
