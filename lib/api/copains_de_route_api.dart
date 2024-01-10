@@ -301,7 +301,7 @@ class CopainsDeRouteApi {
   }
 
   getUserProfilePicUrl(String profilePicPath) {
-    return baseUrl + profilePicPath;
+    return "$baseUrl$profilePicPath?v=${DateTime.now()}";
   }
 
   Future<Response> filterEvent(FilterEvenement filterEvenement) async {
