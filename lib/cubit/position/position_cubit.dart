@@ -6,7 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class PositionCubit extends Cubit<PositionState> {
   PositionCubit() : super(PositionInitial());
 
-  LatLng position = const LatLng(48.864716, 2.349014);
+  LatLng position = const LatLng(50.633333, 3.066667);
 
   Future<void> initPosition() async {
     emit(PositionLoading());
@@ -21,23 +21,19 @@ class PositionCubit extends Cubit<PositionState> {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error('denied forever');
+      emit(PositionSuccess(latlng: position));
+      return;
     } else if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('denied');
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        emit(PositionSuccess(latlng: position));
+        return;
       }
     }
     positionResult = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     position = LatLng(positionResult.latitude, positionResult.longitude);
     emit(PositionSuccess(latlng: position));
-  }
-
-  void getPosition() async {
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-
-    emit(
-        PositionSuccess(latlng: LatLng(position.latitude, position.longitude)));
   }
 }
