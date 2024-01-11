@@ -42,8 +42,7 @@ class CreateAccountState extends State<CreateAccount> {
         if (state is RegisteredState) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text(
-                  'Votre compte a été créé avec succès!'),
+              content: Text('Votre compte a été créé avec succès!'),
             ),
           );
           Navigator.of(context).pop();
@@ -53,6 +52,22 @@ class CreateAccountState extends State<CreateAccount> {
             const SnackBar(
                 content: Text(
               'Une erreur est survenue lors de la création du compte',
+            )),
+          );
+        }
+        if (state is RegisterUserAlreadyTakenState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text(
+              'Cet utilisateur existe déjà',
+            )),
+          );
+        }
+        if (state is RegisterEmailAlreadyTakenState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text(
+              'Cet email existe déjà',
             )),
           );
         }

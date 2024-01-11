@@ -39,7 +39,10 @@ class CopainsDeRouteApi {
 
   Future<Response> register(CreateUserDTO createUser) async {
     try {
-      var resp = await _dio.post("/auth/register", data: createUser);
+      var resp = await _dio.post("/auth/register", data: createUser,
+          options: Options(validateStatus: (status) {
+        return status == 500 || status == 403 || status == 201 || status == 409;
+      }));
       return resp;
     } catch (e) {
       return Future.error(e);
