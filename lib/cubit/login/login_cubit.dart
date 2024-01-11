@@ -61,6 +61,10 @@ class LoginCubit extends Cubit<LoginState> {
     resp.then((value) => {
           if (value.statusCode == 201)
             {emit(RegisteredState())}
+          else if (value.statusCode == 403)
+            {emit(RegisterUserAlreadyTakenState())}
+          else if (value.statusCode == 409)
+            {emit(RegisterEmailAlreadyTakenState())}
           else
             {emit(RegisterFailedState())}
         });
