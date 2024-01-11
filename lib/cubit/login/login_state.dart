@@ -28,6 +28,10 @@ class RegisteredState extends LoginState {}
 
 class RegisterFailedState extends LoginState {}
 
+class RegisterUserAlreadyTakenState extends LoginState {}
+
+class RegisterEmailAlreadyTakenState extends LoginState {}
+
 class UserInitialState extends LoginState {}
 
 class UserLoadedState extends LoginState {}
